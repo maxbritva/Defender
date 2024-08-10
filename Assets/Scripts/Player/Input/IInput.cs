@@ -1,8 +1,8 @@
-namespace Player.Inputs
+namespace Player.Input
 {
     public interface IInput
     {
-        
-        public float ReadInput();
+        public float ReadRotationInput();
+        public bool IsFireButtonActive();
     }
 }

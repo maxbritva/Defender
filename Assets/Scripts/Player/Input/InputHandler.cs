@@ -1,23 +1,13 @@
-using System;
-using JetBrains.Annotations;
-
 namespace Player.Input
 {
-    public class InputHandler: IDisposable
+    public class InputHandler
     {
-        private DesktopInput _input;
-
-
-
+        private IInput _input;
         
-        public InputHandler()
-        {
-            _input = new DesktopInput();
-            
-        }
-        public void Dispose()
-        {
-           
-        }
+        public InputHandler(IInput input) => _input = input;
+
+        public float Rotate() => _input.ReadRotationInput();
+        
+        public bool IsFire() => _input.IsFireButtonActive();
     }
 }
