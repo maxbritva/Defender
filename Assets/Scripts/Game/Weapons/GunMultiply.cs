@@ -14,9 +14,11 @@ namespace Game.Weapons
 		{
 			for (int i = 0; i < _shootPoints.Count; i++) {
 				GameObject bulletFromPool = GetBulletFromPool(targetPool);
+				bulletFromPool.transform.SetParent(transform);
 				bulletFromPool.transform.position = _shootPoints[i].position;
 				bulletFromPool.transform.rotation = _shootPoints[i].rotation;
 			}
 		}
+		
     }
     }

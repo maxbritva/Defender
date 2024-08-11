@@ -1,5 +1,5 @@
-﻿using Game.ObjectPool;
-using Game.Weapons;
+﻿using Game.Interfaces;
+using Game.ObjectPool;
 using Player.Input;
 using UnityEngine;
 using Zenject;
@@ -9,13 +9,16 @@ namespace Player.Platform
     public class PlatformShoot : MonoBehaviour
     {
         [SerializeField] private ObjectPool _projectilePool;
-        [SerializeField] private GunMultiply _weapon; /// <summary>
-                                                      /// нужна абстракция
-                                                      /// </summary>
         private InputHandler _inputHandler;
-        private float _fireRate = 0.5f;
+        private IWeapon _weapon;
+        private float _fireRate = 0.5f; // playerData
         private float _timer;
-        
+
+        [Inject] private void Construct(InputHandler inputHandler, IWeapon weapon) 
+        {
+            _inputHandler = inputHandler;
+            _weapon = weapon;
+        }
         private void Update()
         {
             if (_inputHandler.IsFire() == false) return;
@@ -26,9 +29,7 @@ namespace Player.Platform
         
         private void Shot() {
             _weapon.Shot(_projectilePool);
-                _timer = 0;
+            _timer = 0;
         }
-
-        [Inject] private void Construct(InputHandler inputHandler) => _inputHandler = inputHandler;
     }
 }

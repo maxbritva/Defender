@@ -1,5 +1,4 @@
-﻿using UnityEngine.EventSystems;
-using Zenject;
+﻿using Zenject;
 
 namespace Player.Input
 {

@@ -11,6 +11,7 @@ namespace Game.Weapons
         public void Shot(ObjectPool.ObjectPool targetPool)
         {
             GameObject bulletFromPool = GetBulletFromPool(targetPool);
+            bulletFromPool.transform.SetParent(transform);
             bulletFromPool.transform.position = _shootPoint.position;
             bulletFromPool.transform.rotation = _shootPoint.rotation;
            // _muzzleParticles.Play();

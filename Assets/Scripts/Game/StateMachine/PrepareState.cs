@@ -1,6 +1,4 @@
-﻿using System;
-using Player;
-using Player.Platform;
+﻿using Player;
 using UnityEngine;
 using Zenject;
 
@@ -8,20 +6,14 @@ namespace Game.StateMachine
 {
     public class PrepareState : MonoBehaviour
     {
+        [SerializeField] private GameObject _platformShoot;
         private PlayerData _playerData;
-        private PlatformInitialize _platformInitialize;
+        
 
-        private void Awake()
-        {
-            _platformInitialize.Initialize(_playerData.PlatformGunLevel);
-        }
-
-      
-
-        [Inject] private void Construct(PlayerData data, PlatformInitialize platform)
+        [Inject] private void Construct(PlayerData data)
         {
             _playerData = data;
-            _platformInitialize = platform;
+          
         }
     }
 }
