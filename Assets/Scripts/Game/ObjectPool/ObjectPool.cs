@@ -26,6 +26,7 @@ namespace Game.ObjectPool
         public GameObject Create()
         {
             GameObject newObject = _diContainer.InstantiatePrefab(_prefab);
+            _diContainer.Inject(newObject);
             SetActive(newObject,false);
             _objectPool.Add(newObject);
             return newObject;

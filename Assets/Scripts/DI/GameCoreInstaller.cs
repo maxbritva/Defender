@@ -1,3 +1,4 @@
+using Game.FX;
 using Player;
 using Player.Input;
 using UnityEngine;
@@ -7,13 +8,15 @@ namespace DI
 {
     public class GameCoreInstaller: MonoInstaller
     {
-        [SerializeField] private Joystick _joystick; 
         [SerializeField] private FireButton _fireButton;
+        [SerializeField] private Joystick _joystick;
         [SerializeField] private Canvas _mobileUI;
+        [SerializeField] private ShakeCamera _shakeCamera;
         public override void InstallBindings()
         {
             Inputs();
             Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
         }
         private void Inputs()
         {

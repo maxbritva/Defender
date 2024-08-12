@@ -22,5 +22,9 @@ namespace Player.Platform
 
         public bool IsMoving() => _turn != 0;
         [Inject] private void Construct(InputHandler inputHandler) => _inputHandler = inputHandler;
+        public void Collision()
+        {
+            
+        }
     }
 }
