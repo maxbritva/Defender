@@ -12,11 +12,13 @@ namespace DI
         [SerializeField] private Joystick _joystick;
         [SerializeField] private Canvas _mobileUI;
         [SerializeField] private ShakeCamera _shakeCamera;
+        [SerializeField] private DamageTextSpawner _damageTextSpawner;
         public override void InstallBindings()
         {
             Inputs();
             Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
+            Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
         }
         private void Inputs()
         {
