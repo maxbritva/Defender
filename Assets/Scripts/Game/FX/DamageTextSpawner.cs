@@ -18,7 +18,7 @@ namespace Game.FX
             if (!damageText.TryGetComponent(out TextMeshPro damageMeshText)) return;
             damageMeshText.text = damage.ToString();
             float damageSize = damage;
-            damageMeshText.fontSize = Mathf.Clamp(damageSize, 4f, 15f);
+            damageMeshText.fontSize = Mathf.Clamp(damageSize, 7f, 20f);
             StartCoroutine(TextAnimation(damageMeshText, damageText));
         }
 

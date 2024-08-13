@@ -1,4 +1,5 @@
 using Game.FX;
+using Game.Score;
 using Player;
 using Player.Input;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace DI
         {
             Inputs();
             Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ScoreCollector>().FromNew().AsSingle().NonLazy();
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
             Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
         }
