@@ -18,8 +18,7 @@ namespace Game.Enemy
                 planet.TakeDamage(_damage);
                 GetComponent<EnemyHealth>().DestroyEnemy();
             }
-            else if (other.gameObject.TryGetComponent(out PlatformSizeChanger platform)) 
-                GetComponent<EnemyHealth>().DestroyEnemy();
+            GetComponent<EnemyHealth>().DestroyEnemy();
         }
         protected void Rotation() {
             transform.LookAt(Vector3.zero,Vector3.forward * -1);

@@ -1,5 +1,6 @@
 using Game.FX;
 using Game.Score;
+using Game.Weapons.Bonus;
 using Player;
 using Player.Input;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace DI
         [SerializeField] private ShakeCamera _shakeCamera;
         [SerializeField] private DamageTextSpawner _damageTextSpawner;
         [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
+        [SerializeField] private Shield _shield;
         public override void InstallBindings()
         {
             Inputs();
@@ -23,6 +25,7 @@ namespace DI
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
             Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
             Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
+            Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
         }
         private void Inputs()
         {
