@@ -1,5 +1,4 @@
-﻿using System;
-using Game.FX;
+﻿using Game.FX;
 using Game.Score;
 using UnityEngine;
 using Zenject;
@@ -9,9 +8,9 @@ namespace Game.Health
     public class EnemyHealth : ObjectHealth
     {
         [SerializeField] private int _scoreForDestroy;
-        public Action OnEnemyDead;
         private ScoreCollector _scoreCollector;
         private DamageTextSpawner _damageTextSpawner;
+        private DestroyEffectSpawner _destroyEffectSpawner;
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
@@ -23,14 +22,15 @@ namespace Game.Health
         public void DestroyEnemy()
         {
             _scoreCollector.AddScore(_scoreForDestroy);
-            OnEnemyDead?.Invoke();
+            _destroyEffectSpawner.Spawn(gameObject.transform);
             gameObject.SetActive(false);
         }
         [Inject] private void Construct(DamageTextSpawner damageTextSpawner, 
-            ScoreCollector scoreCollector)
+            ScoreCollector scoreCollector, DestroyEffectSpawner destroyEffectSpawner)
         {
             _damageTextSpawner = damageTextSpawner;
             _scoreCollector = scoreCollector;
+            _destroyEffectSpawner = destroyEffectSpawner;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DI
         [SerializeField] private Canvas _mobileUI;
         [SerializeField] private ShakeCamera _shakeCamera;
         [SerializeField] private DamageTextSpawner _damageTextSpawner;
+        [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
         public override void InstallBindings()
         {
             Inputs();
@@ -21,6 +22,7 @@ namespace DI
             Container.Bind<ScoreCollector>().FromNew().AsSingle().NonLazy();
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
             Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
+            Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
         }
         private void Inputs()
         {

@@ -7,7 +7,6 @@ namespace Game.FX
     public class DamageTextSpawner : MonoBehaviour
     {
         [SerializeField] private ObjectPool.ObjectPool _damageTextPool;
-       // [SerializeField] private Canvas _targetCanvas;
         private readonly WaitForSeconds _animationTick = new WaitForSeconds(0.05f);
 
         public void SpawnDamageText(Transform target, int damage)
