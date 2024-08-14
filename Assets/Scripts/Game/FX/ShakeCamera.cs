@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Game.Health;
+using Game.Weapons.Bonus;
 using Player;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -14,16 +15,19 @@ namespace Game.FX
         private readonly float _shakeIntensity = 4f;
         private Coroutine _shakeCoroutine;
         private PlayerHealth _playerHealth;
+        private Bomb _bomb;
         
         private void OnEnable()
         {
             _channelPerlin = _camera.GetComponent<CinemachineBasicMultiChannelPerlin>();
             _playerHealth.OnPlayerHit += CameraShake;
+            _bomb.OnBombActivated += CameraShake;
         }
 
         private void OnDisable()
         {
             _playerHealth.OnPlayerHit -= CameraShake;
+            _bomb.OnBombActivated -= CameraShake;
             if(_shakeCoroutine != null)
                 StopCoroutine(_shakeCoroutine);
         }
@@ -37,6 +41,10 @@ namespace Game.FX
         }
 
         private void SetAmplitude(float value) => _channelPerlin.AmplitudeGain = value;
-        [Inject] private void Construct(PlayerHealth playerHealth) => _playerHealth = playerHealth;
+        [Inject] private void Construct(PlayerHealth playerHealth, Bomb bomb)
+        {
+            _playerHealth = playerHealth;
+            _bomb = bomb;
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace DI
         [SerializeField] private DamageTextSpawner _damageTextSpawner;
         [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
         [SerializeField] private Shield _shield;
+        [SerializeField] private Bomb _bomb;
         public override void InstallBindings()
         {
             Inputs();
@@ -26,6 +27,7 @@ namespace DI
             Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
             Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
+            Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
         }
         private void Inputs()
         {
