@@ -15,8 +15,8 @@ namespace Game.Health
         {
             base.TakeDamage(damage);
             _damageTextSpawner.SpawnDamageText(transform, damage);
-            if (_currentHealth > 0) return;
-            DestroyEnemy();
+            if (_currentHealth < 0)
+                DestroyEnemy();
         }
 
         public void DestroyEnemy()

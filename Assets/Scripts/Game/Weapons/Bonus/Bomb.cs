@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using Game.Interfaces;
 using UnityEngine;
 
 namespace Game.Weapons.Bonus
 {
-    public class Bomb : MonoBehaviour
+    public class Bomb : MonoBehaviour, IEnemyDestroyable
     {
         public event Action OnBombActivated;
         private Coroutine _bombCoroutine;

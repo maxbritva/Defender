@@ -1,11 +1,12 @@
 ﻿using System.Collections;
+using Game.Interfaces;
 using Player;
 using UnityEngine;
 using Zenject;
 
 namespace Game.Weapons.Bonus
 {
-    public class Shield : MonoBehaviour
+    public class Shield : MonoBehaviour, IEnemyDestroyable
     {
         [SerializeField] private SphereCollider _shieldCollider;
         [SerializeField] private Renderer _renderer;

@@ -1,5 +1,7 @@
 ﻿using Game.Health;
+using Game.Interfaces;
 using Game.Score;
+using Game.Weapons;
 using Player.Platform;
 using UnityEngine;
 using Zenject;
@@ -18,11 +20,9 @@ namespace Game.Enemy
                 planet.TakeDamage(_damage);
                 GetComponent<EnemyHealth>().DestroyEnemy();
             }
-            GetComponent<EnemyHealth>().DestroyEnemy();
+            else if (other.gameObject.TryGetComponent(out IEnemyDestroyable destroy))
+                GetComponent<EnemyHealth>().DestroyEnemy();
         }
-        protected void Rotation() {
-            transform.LookAt(Vector3.zero,Vector3.forward * -1);
-        }
-        
+
     }
 }

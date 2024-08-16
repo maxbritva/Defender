@@ -13,7 +13,7 @@ namespace Game.Bonus
         [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
         private List<GameObject> _bonuses = new List<GameObject>();
         private readonly WaitForSeconds _waitBetweenSpawn = new WaitForSeconds(10f);
-        private readonly WaitForSeconds _moveTick = new WaitForSeconds(2f);
+        private readonly WaitForSeconds _moveTick = new WaitForSeconds(3f);
         private Coroutine _bonusCoroutine;
         private DiContainer _diContainer;
 
