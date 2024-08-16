@@ -1,4 +1,5 @@
 using Game.FX;
+using Game.ObjectPool;
 using Game.Score;
 using Game.Weapons.Bonus;
 using Player;
@@ -18,6 +19,7 @@ namespace DI
         [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
         [SerializeField] private Shield _shield;
         [SerializeField] private Bomb _bomb;
+        [SerializeField] private ObjectPool _shipProjectilePool;
         public override void InstallBindings()
         {
             Inputs();
@@ -28,6 +30,8 @@ namespace DI
             Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
+            Container.Bind<ObjectPool>().FromInstance(_shipProjectilePool).AsSingle()
+                .NonLazy();
         }
         private void Inputs()
         {

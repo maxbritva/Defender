@@ -27,7 +27,10 @@ namespace Game.Enemy.Ship.States
         
       
 
-        protected void MoveShip(Vector3 target, float speed) =>
+        protected void MoveShip(Vector3 target, float speed)
+        {
+            Debug.Log(222);
             _ship.transform.position = Vector3.MoveTowards(_ship.transform.position, target, speed * Time.deltaTime);
+        }
     }
 }

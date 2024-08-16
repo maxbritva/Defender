@@ -12,7 +12,7 @@ namespace Player.Platform
         private InputHandler _inputHandler;
         private IWeapon _weapon;
         private float _fireRate = 0.5f; // playerData
-        private float _timer;
+        private float _timeBetweenAttack;
 
         [Inject] private void Construct(InputHandler inputHandler, IWeapon weapon) 
         {
@@ -22,14 +22,14 @@ namespace Player.Platform
         private void Update()
         {
             if (_inputHandler.IsFire() == false) return;
-            _timer += Time.deltaTime;
-            if (_timer > _fireRate)
+            _timeBetweenAttack += Time.deltaTime;
+            if (_timeBetweenAttack > _fireRate)
                 Shot();
         }
         
         private void Shot() {
             _weapon.Shot(_projectilePool);
-            _timer = 0;
+            _timeBetweenAttack = 0;
         }
     }
 }

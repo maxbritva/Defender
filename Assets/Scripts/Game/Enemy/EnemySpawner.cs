@@ -18,10 +18,9 @@ namespace Game.Enemy
                 var newEnemy = _objectPool.Create();
                 newEnemy.transform.SetParent(transform);
             }
+            _interval = new WaitForSeconds(_spawnInterval);
             Activate();
         }
-
-        private void Start() => _interval = new WaitForSeconds(_spawnInterval);
         
         public void Activate() => _spawnCoroutine = StartCoroutine(Spawn());
 

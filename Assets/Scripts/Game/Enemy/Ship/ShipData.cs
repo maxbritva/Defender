@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Enemy.Ship
 {
     public class ShipData
     {
+        public List<Vector3> WayPoints = new List<Vector3>();
         private float _speed;
+        
 
         public float Speed
         {

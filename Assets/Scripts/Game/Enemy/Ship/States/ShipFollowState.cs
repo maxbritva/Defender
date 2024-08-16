@@ -6,7 +6,7 @@ namespace Game.Enemy.Ship.States
     public class ShipFollowState : ShipState
     {
         public ShipFollowState(IStateSwitcher stateSwitcher, ShipData data, Ship ship) : base(stateSwitcher, data, ship) { }
-        private const float DistanceToAttack = 15f;
+        private const float DistanceToAttack = 13f;
 
         public override void Enter()
         {

@@ -6,11 +6,11 @@ namespace Game.ObjectPool
 {
     public class ObjectPool : MonoBehaviour, IFactory<GameObject>
     {
-        [SerializeField] private GameObject _prefab;
+        [SerializeField] protected GameObject _prefab;
         private List<GameObject> _objectPool = new List<GameObject>();
         [Inject] private DiContainer _diContainer;
 
-        public GameObject GetFromPool()
+        public virtual GameObject GetFromPool()
         {
             for (int i = 0; i < _objectPool.Count; i++)
             {
