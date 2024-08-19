@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameCore.Pause;
 using Game.Interfaces;
 using UnityEngine;
 using Zenject;
@@ -7,27 +8,34 @@ using Random = UnityEngine.Random;
 
 namespace Game.Bonus
 {
-    public class BonusSpawner : MonoBehaviour, IActivatable
+    public class BonusSpawner : MonoBehaviour, IActivatable, IPause
     {
         [SerializeField] private List<BonusBase> _bonusPrefabs = new List<BonusBase>();
-        [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
         private List<GameObject> _bonuses = new List<GameObject>();
-        private readonly WaitForSeconds _waitBetweenSpawn = new WaitForSeconds(10f);
-        private readonly WaitForSeconds _moveTick = new WaitForSeconds(3f);
         private Coroutine _bonusCoroutine;
         private DiContainer _diContainer;
+        private PauseHandler _pauseHandler;
+        private bool _isPaused;
+        private float _timeBetweenSpawn = 12f;
+        private float _timer;
 
-        private void Start()
+        private void OnEnable() => _pauseHandler.Add(this);
+
+        private void OnDisable() => _pauseHandler.Remove(this);
+
+        private void Start() => Activate();
+
+        public void Activate()
         {
-           InitializeBonuses();
-           Activate();
+            InitializeBonuses();
+            _bonusCoroutine = StartCoroutine(BonusSpawn());
         }
-        public void Activate() => _bonusCoroutine = StartCoroutine(BonusSpawn());
 
         public void Deactivate() {
           if(_bonusCoroutine != null)
             StopCoroutine(BonusSpawn());
         }
+        public void SetPause(bool isPaused) => _isPaused = isPaused;
         
         private void InitializeBonuses()
         {
@@ -42,26 +50,26 @@ namespace Game.Bonus
         }
 
         private IEnumerator BonusSpawn() {
+            _timer = 0;
             while (true) {
-                GameObject bonus = GetRandomBonus();
-                bonus.transform.position = RandomSpawn().position;
-                bonus.SetActive(true);
-                for ( int x = 0; x < 3; x++) {
-                    bonus.gameObject.transform.position = RandomSpawn().position;
-                    yield return _moveTick;	
+                while (_timer < _timeBetweenSpawn)
+                {
+                    if(_isPaused == false)
+                        _timer += Time.deltaTime;
+                    yield return null;
                 }
-                bonus.SetActive(false);
-                yield return _waitBetweenSpawn;
+                GameObject bonus = GetRandomBonus();
+                bonus.SetActive(true);
+                _timer = 0;
+                yield return null;
             }
         }
-		
-        private GameObject GetRandomBonus() {
-            GameObject bonus = _bonuses[Random.Range(0,_bonuses.Count)].gameObject;
-            bonus.SetActive(false);
-            return bonus;
-        }
-        private Transform RandomSpawn() => _spawnPoints[Random.Range(0, _spawnPoints.Count)];
-       [Inject] private void Construct(DiContainer diContainer) => _diContainer = diContainer;
-       
+        private GameObject GetRandomBonus() => _bonuses[Random.Range(0,_bonuses.Count)].gameObject;
+        
+       [Inject] private void Construct(DiContainer diContainer, PauseHandler pauseHandler)
+       {
+           _pauseHandler = pauseHandler;
+           _diContainer = diContainer;
+       }
     }
 }

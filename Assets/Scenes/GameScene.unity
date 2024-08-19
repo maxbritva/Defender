@@ -1119,17 +1119,6 @@ MonoBehaviour:
   - {fileID: 643891470741096598, guid: 1ebbd0937f78a42d2ad9e67552f03b56, type: 3}
   - {fileID: 4386794616624806350, guid: 710fc9b41411048e6893b652ad7f49b2, type: 3}
   - {fileID: 437958468338943695, guid: 2230603f3143e458d9a1078cbd2ba130, type: 3}
-  _spawnPoints:
-  - {fileID: 212387121}
-  - {fileID: 1680516711}
-  - {fileID: 43497132}
-  - {fileID: 1304074929}
-  - {fileID: 1304737239}
-  - {fileID: 1837198165}
-  - {fileID: 127471484}
-  - {fileID: 1471871127}
-  - {fileID: 139793925}
-  - {fileID: 1212434123}
 --- !u!1 &381431722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,10 +1912,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 659941656}
   - {fileID: 659941653}
   - {fileID: 659941655}
   - {fileID: 2015092445}
-  - {fileID: 659941656}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:

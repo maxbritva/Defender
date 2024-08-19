@@ -11,7 +11,6 @@ namespace Game.Enemy
         [SerializeField] private ObjectPool.ObjectPool _objectPool;
         [SerializeField] private float _spawnInterval;
         private PauseHandler _pauseHandler;
-       // private WaitForSeconds _spawnCoolDown;
         private Coroutine _spawnCoroutine;
         private bool _isPaused = false;
 
@@ -22,7 +21,6 @@ namespace Game.Enemy
                 var newEnemy = _objectPool.Create();
                 newEnemy.transform.SetParent(transform);
             }
-           // _spawnCoolDown = new WaitForSeconds(_spawnInterval);
             Activate();
         }
         
