@@ -1,3 +1,4 @@
+
 namespace Player.Input
 {
     public class InputHandler
@@ -9,5 +10,6 @@ namespace Player.Input
         public float Rotate() => _input.ReadRotationInput();
         
         public bool IsFire() => _input.IsFireButtonActive();
+       
     }
 }
