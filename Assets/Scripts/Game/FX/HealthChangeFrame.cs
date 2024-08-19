@@ -41,8 +41,8 @@ namespace Game.FX
             var color = _frame.color;
             color.a = 0.5f;
             for (float f = 0.5f; f >= -0.05f; f-=0.05f) {
-                _frame.color = color;
                 color.a = f;
+                _frame.color = color;
                 yield return _wait;
             }
         }
