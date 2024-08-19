@@ -34,8 +34,8 @@ namespace Game.FX
             target.SetActive(false);
         }
         
-        private Vector3 GetRandomPosition() => new Vector3(Random.Range(-0.5f,0.5f),
-            Random.Range(-0.5f,0.5f),0);
+        private Vector3 GetRandomPosition() => new Vector3(Random.Range(-1,1f),
+            Random.Range(-1f,1),5f);
         
     }
 }

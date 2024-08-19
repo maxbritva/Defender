@@ -1,4 +1,5 @@
-﻿using SceneLoader;
+﻿using Game.GameCore.Pause;
+using SceneLoader;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -12,6 +13,7 @@ namespace Game.UI
         [SerializeField] private Button _resumeGameButton;
         [SerializeField] private GameObject _UIPanel;
         private ISceneLoadMediator _sceneLoader;
+        private PauseHandler _pauseHandler;
 
         private void OnEnable()
         {
@@ -27,11 +29,24 @@ namespace Game.UI
             _showMenuButton.onClick.RemoveListener(ShowMenuClick);
         }
 
-        private void ResumeGameClick() => _UIPanel.SetActive(false);
-        private void ShowMenuClick() => _UIPanel.SetActive(true);
+        private void ResumeGameClick()
+        {
+            _UIPanel.SetActive(false);
+            _pauseHandler.SetPause(false);
+        }
+
+        private void ShowMenuClick()
+        {
+            _UIPanel.SetActive(true);
+            _pauseHandler.SetPause(true);
+        }
 
         private void EndGameClick() => _sceneLoader.GoToMainMenu();
 
-        [Inject] private void Construct(ISceneLoadMediator loadMediator) => _sceneLoader = loadMediator;
+        [Inject] private void Construct(ISceneLoadMediator loadMediator, PauseHandler pauseHandler)
+        {
+            _sceneLoader = loadMediator;
+            _pauseHandler = pauseHandler;
+        }
     }
 }

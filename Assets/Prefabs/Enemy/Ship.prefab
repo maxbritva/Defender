@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8745249655586354547}
   - component: {fileID: 4767001250871049220}
   - component: {fileID: 8207161808263230981}
+  - component: {fileID: 1223195283684061867}
   m_Layer: 8
   m_Name: Ship
   m_TagString: Untagged
@@ -82,7 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08b58ad0fd24fa5828bef539d5de230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
   _waypoints:
   - {fileID: 6114499381194896959}
   - {fileID: 204597892674670018}
@@ -136,6 +136,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.69
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1223195283684061867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5238532829897167943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1a12b8db794346ad43ce7f28430613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5953886400195192214
 GameObject:
   m_ObjectHideFlags: 0

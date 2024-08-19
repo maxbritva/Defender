@@ -1,4 +1,5 @@
-﻿using SceneLoader;
+﻿using MainMenu.Shop;
+using SceneLoader;
 using Zenject;
 
 namespace DI
@@ -8,6 +9,7 @@ namespace DI
         public override void InstallBindings()
         {
             BindLoader();
+            BindPlayerData();
         }
 
         private void BindLoader()
@@ -15,7 +17,11 @@ namespace DI
             Container.Bind<ZenjectSceneLoaderWrapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneLoader.SceneLoader>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneLoadMediator>().AsSingle();
-            
+        }
+
+        private void BindPlayerData()
+        {
+            Container.BindInstance(new Wallet(100));
         }
     }
 }
