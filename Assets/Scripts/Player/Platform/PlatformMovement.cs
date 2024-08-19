@@ -1,4 +1,3 @@
-using System;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using Player.Input;
@@ -12,13 +11,13 @@ namespace Player.Platform
     
         [SerializeField] private Rigidbody _platformRigidbody;
         private InputHandler _inputHandler; 
-     //   private PauseHandler _pauseHandler;
+        private PauseHandler _pauseHandler;
         private bool _isPaused;
         private float _turn;
 
-      //  private void OnEnable() => _pauseHandler.Add(this);
+        private void OnEnable() => _pauseHandler.Add(this);
 
-       // private void OnDisable() => _pauseHandler.Remove(this);
+        private void OnDisable() => _pauseHandler.Remove(this);
 
         private void FixedUpdate() => Move(_inputHandler.Rotate());
 
@@ -35,7 +34,7 @@ namespace Player.Platform
         [Inject] private void Construct(InputHandler inputHandler, PauseHandler pauseHandler)
         {
             _inputHandler = inputHandler;
-           // _pauseHandler = pauseHandler;
+            _pauseHandler = pauseHandler;
         }
     }
 }
