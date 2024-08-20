@@ -1,4 +1,5 @@
 using Game.FX;
+using Game.GameCore.GameProgression;
 using Game.ObjectPool;
 using Game.Score;
 using Game.Weapons.Bonus;
@@ -20,6 +21,8 @@ namespace DI
         [SerializeField] private Shield _shield;
         [SerializeField] private Bomb _bomb;
         [SerializeField] private ObjectPool _shipProjectilePool;
+        [SerializeField] private LevelSystem _levelSystem;
+        [SerializeField] private GameTimer _gameTimer;
         public override void InstallBindings()
         {
             Inputs();
@@ -30,8 +33,8 @@ namespace DI
             Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
-            Container.Bind<ObjectPool>().FromInstance(_shipProjectilePool).AsSingle()
-                .NonLazy();
+            Container.Bind<ObjectPool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
+            LevelSystem();
         }
         private void Inputs()
         {
@@ -46,6 +49,12 @@ namespace DI
             else
                 Container.Bind<IInput>().To<DesktopInput>().FromNew().AsSingle().NonLazy();
             Container.Bind<InputHandler>().FromNew().AsSingle().NonLazy();
+        }
+
+        private void LevelSystem()
+        {
+            Container.Bind<LevelSystem>().FromInstance(_levelSystem).AsSingle().NonLazy(); 
+            Container.Bind<GameTimer>().FromInstance(_gameTimer).AsSingle().NonLazy(); 
         }
     }
     

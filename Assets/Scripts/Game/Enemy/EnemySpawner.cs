@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Game.Enemy
 {
-    public class EnemySpawner : MonoBehaviour, IActivatable, IPause
+    public class EnemySpawner : MonoBehaviour, IPause
     {
         [SerializeField] private ObjectPool.ObjectPool _objectPool;
         [SerializeField] private float _spawnInterval;
@@ -21,10 +22,19 @@ namespace Game.Enemy
                 var newEnemy = _objectPool.Create();
                 newEnemy.transform.SetParent(transform);
             }
-            Activate();
         }
-        
-        public void Activate() => _spawnCoroutine = StartCoroutine(Spawn());
+
+        private void OnEnable() => _pauseHandler.Add(this);
+
+        private void OnDisable() => _pauseHandler.Remove(this);
+
+        public void Activate(float value)
+        {
+            if(value <=0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            _spawnInterval = value;
+            _spawnCoroutine = StartCoroutine(Spawn());
+        }
 
         public void Deactivate()
         {
