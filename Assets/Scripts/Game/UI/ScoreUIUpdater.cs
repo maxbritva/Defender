@@ -13,7 +13,7 @@ namespace Game.UI
         private void OnEnable() => _scoreCollector.OnScoreChanged += UpdateScoreText;
         private void OnDisable() => _scoreCollector.OnScoreChanged -= UpdateScoreText;
         private void Start() => UpdateScoreText();
-        private void UpdateScoreText() => _scoreText.text = _scoreCollector.CurrentScore.ToString();
+        private void UpdateScoreText() => _scoreText.text = $"ОЧКИ: {_scoreCollector.CurrentScore}";
 
         [Inject] private void Construct(ScoreCollector scoreCollector) => _scoreCollector = scoreCollector;
     }

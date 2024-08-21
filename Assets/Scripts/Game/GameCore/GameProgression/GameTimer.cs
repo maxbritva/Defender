@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using TMPro;
@@ -9,15 +10,17 @@ namespace Game.GameCore.GameProgression
 {
     public class GameTimer : MonoBehaviour, IActivatable, IPause
     {
+        public Action OnProgressionChanged;
         [SerializeField] private TMP_Text _timerText;
         private LevelSystem _levelSystem;
         private PauseHandler _pauseHandler;
         private WaitForSeconds _tick = new WaitForSeconds(1f);
         private Coroutine _timerCoroutine;
-        private int _seconds = 0;
+        private int _progression = 0;
         private int _level = 0;
         private bool _isPaused;
         public int Level => _level;
+        public int Progression => _progression;
 
         private void Start()
         {
@@ -43,29 +46,19 @@ namespace Game.GameCore.GameProgression
             {
                 if (_isPaused == false)
                 {
-                    _seconds++;
-                    if (_seconds >= 60)
+                    _progression++;
+                    OnProgressionChanged?.Invoke();
+                    if (_progression >= 30)
                     {
-                        _seconds = 0;
+                        _progression = 0;
                         _level++;
+                        OnProgressionChanged?.Invoke();
                         _levelSystem.OnLevelChanged?.Invoke();
-                       // TimeFormat();
                     }
                 }
                 yield return _tick;
             }
         }
-
-     //   private void TimeFormat()
-      //  {
-       //     _timerText.text = $"{_minutes}:{_seconds}";
-           // if(_seconds < 10 && _minutes <10)
-           //     _timerText.text = $"0{_minutes}:0{_seconds}";
-          //  else if(_seconds < 10) 
-          //      _timerText.text = $"{_minutes}:0{_seconds}";
-         //   else if(_minutes < 10) 
-          //      _timerText.text = $"0{_minutes}:{_seconds}";
-     //   }
 
         [Inject] private void Construct(LevelSystem levelSystem, PauseHandler pauseHandler)
         {

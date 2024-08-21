@@ -1,27 +1,26 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Game.Health;
-using Game.ObjectPool;
+using Game.GameCore.GameStates.States;
 using Game.StateMachine;
 using Game.StateMachine.States;
-using Game.Weapons;
+using Player;
+using Zenject;
 
-namespace Game.Enemy.Ship.States
+namespace Game.GameCore.GameStates
 {
-    public class ShipStateMachine: IStateSwitcher
+    public class GameStateMachine: IStateSwitcher
     {
         private List<IState> _states;
         private IState _currentState;
+        private PlayerData _playerData;
 
-        public ShipStateMachine(Ship ship, ObjectPool.Pool pool, EnemyHealth health, GunSingle gun)
+        public GameStateMachine()
         {
-            ShipData data = new ShipData();
             _states = new List<IState>()
             {
-                new ShipFollowState(this, data, ship),
-                new ShipAttackState(this, data, ship, pool, gun, health),
-                new ShipKamikazeState(this, data, ship)
-                
+                new GamePrepareState(),
+                new GameplayState(),
+                new EndGameState()
             };
             _currentState = _states[0];
             _currentState.Enter();
@@ -42,5 +41,7 @@ namespace Game.Enemy.Ship.States
             _currentState = _states[0];
             _currentState.OnEnable();
         }
+
+        [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
     }
 }

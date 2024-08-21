@@ -8,9 +8,7 @@ namespace Game.GameCore.GameProgression
     public class LevelSystem : MonoBehaviour, IActivatable
     {
         public Action OnLevelChanged;
-        
         private LevelsHandler _levelsHandler;
-        
         private GameTimer _gameTimer;
 
         private void OnEnable() => OnLevelChanged += LevelChange;

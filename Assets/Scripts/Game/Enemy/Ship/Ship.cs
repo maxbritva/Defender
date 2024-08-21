@@ -13,7 +13,7 @@ namespace Game.Enemy.Ship
     {
         [SerializeField] private List<Transform> _waypoints;
         [SerializeField] private GameObject _shipProjectile;
-        private States.StateMachine _stateMachine;
+        private States.ShipStateMachine _shipStateMachine;
         private Pool _pool;
         private PauseHandler _pauseHandler;
         private EnemyHealth _enemyHealth;
@@ -26,19 +26,19 @@ namespace Game.Enemy.Ship
         {
             _enemyHealth = GetComponent<EnemyHealth>();
             _gunSingle = GetComponent<GunSingle>();
-            _stateMachine = new States.StateMachine(this, _pool, _enemyHealth, _gunSingle);
+            _shipStateMachine = new States.ShipStateMachine(this, _pool, _enemyHealth, _gunSingle);
         }
 
         private void Update()
         {
             if(_isPaused)
                 return;
-            _stateMachine.Update();
+            _shipStateMachine.Update();
         }
 
         private void OnEnable()
         {
-            _stateMachine.OnEnable();
+            _shipStateMachine.OnEnable();
             _pauseHandler.Add(this);
         }
         private void OnDisable() => _pauseHandler.Remove(this);
