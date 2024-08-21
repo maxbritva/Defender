@@ -6,6 +6,6 @@ namespace Game.Weapons
 {
     public abstract class GunBase : MonoBehaviour
     {
-        protected GameObject GetBulletFromPool(ObjectPool.ObjectPool targetPool) => targetPool.GetFromPool();
+        protected GameObject GetBulletFromPool(ObjectPool.Pool targetPool) => targetPool.GetFromPool();
     }
 }

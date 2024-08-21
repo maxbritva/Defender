@@ -3,6 +3,6 @@ namespace Game.Interfaces
 {
     public interface IWeapon
     {
-        public void Shot(ObjectPool.ObjectPool targetPool);
+        public void Shot(ObjectPool.Pool targetPool);
     }
 }

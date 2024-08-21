@@ -86,6 +86,7 @@ MonoBehaviour:
   _waypoints:
   - {fileID: 6114499381194896959}
   - {fileID: 204597892674670018}
+  _shipProjectile: {fileID: 7980782171304061121, guid: c70ac2e91837144638088af6ba39e4d4, type: 3}
 --- !u!114 &8745249655586354547
 MonoBehaviour:
   m_ObjectHideFlags: 0

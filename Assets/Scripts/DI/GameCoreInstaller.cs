@@ -20,9 +20,10 @@ namespace DI
         [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
         [SerializeField] private Shield _shield;
         [SerializeField] private Bomb _bomb;
-        [SerializeField] private ObjectPool _shipProjectilePool;
+        [SerializeField] private Pool _shipProjectilePool;
         [SerializeField] private LevelSystem _levelSystem;
         [SerializeField] private GameTimer _gameTimer;
+        [SerializeField] private LevelsHandler _levelsHandler;
         public override void InstallBindings()
         {
             Inputs();
@@ -33,7 +34,7 @@ namespace DI
             Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
-            Container.Bind<ObjectPool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
+            Container.Bind<Pool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
             LevelSystem();
         }
         private void Inputs()
@@ -53,8 +54,9 @@ namespace DI
 
         private void LevelSystem()
         {
-            Container.Bind<LevelSystem>().FromInstance(_levelSystem).AsSingle().NonLazy(); 
             Container.Bind<GameTimer>().FromInstance(_gameTimer).AsSingle().NonLazy(); 
+            Container.Bind<LevelSystem>().FromInstance(_levelSystem).AsSingle().NonLazy();
+            Container.Bind<LevelsHandler>().FromInstance(_levelsHandler).AsSingle().NonLazy(); 
         }
     }
     

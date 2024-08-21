@@ -10,7 +10,7 @@ namespace Game.Weapons
 		[SerializeField] private List<GameObject> _muzzles = new List<GameObject>();
 		private List<ParticleSystem> _muzzlesParticles = new List<ParticleSystem>();
 		
-		public void Shot(ObjectPool.ObjectPool targetPool)
+		public void Shot(ObjectPool.Pool targetPool)
 		{
 			for (int i = 0; i < _shootPoints.Count; i++) {
 				GameObject bulletFromPool = GetBulletFromPool(targetPool);

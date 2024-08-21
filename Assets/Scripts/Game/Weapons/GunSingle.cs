@@ -8,7 +8,7 @@ namespace Game.Weapons
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private ParticleSystem _muzzleParticles;
         
-        public void Shot(ObjectPool.ObjectPool targetPool)
+        public void Shot(ObjectPool.Pool targetPool)
         {
             GameObject bulletFromPool = GetBulletFromPool(targetPool);
             bulletFromPool.transform.SetParent(transform);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using TMPro;
@@ -15,9 +14,10 @@ namespace Game.GameCore.GameProgression
         private PauseHandler _pauseHandler;
         private WaitForSeconds _tick = new WaitForSeconds(1f);
         private Coroutine _timerCoroutine;
-        private int _seconds, _minutes;
+        private int _seconds = 0;
+        private int _level = 0;
         private bool _isPaused;
-        public int Minutes => _minutes;
+        public int Level => _level;
 
         private void Start()
         {
@@ -47,25 +47,25 @@ namespace Game.GameCore.GameProgression
                     if (_seconds >= 60)
                     {
                         _seconds = 0;
-                        _minutes++;
+                        _level++;
                         _levelSystem.OnLevelChanged?.Invoke();
-                        TimeFormat();
+                       // TimeFormat();
                     }
                 }
                 yield return _tick;
             }
         }
 
-        private void TimeFormat()
-        {
-            _timerText.text = $"{_minutes}:{_seconds}";
-            if(_seconds < 10 && _minutes <10)
-                _timerText.text = $"0{_minutes}:0{_seconds}";
-            else if(_seconds < 10) 
-                _timerText.text = $"{_minutes}:0{_seconds}";
-            else if(_minutes < 10) 
-                _timerText.text = $"0{_minutes}:{_seconds}";
-        }
+     //   private void TimeFormat()
+      //  {
+       //     _timerText.text = $"{_minutes}:{_seconds}";
+           // if(_seconds < 10 && _minutes <10)
+           //     _timerText.text = $"0{_minutes}:0{_seconds}";
+          //  else if(_seconds < 10) 
+          //      _timerText.text = $"{_minutes}:0{_seconds}";
+         //   else if(_minutes < 10) 
+          //      _timerText.text = $"0{_minutes}:{_seconds}";
+     //   }
 
         [Inject] private void Construct(LevelSystem levelSystem, PauseHandler pauseHandler)
         {

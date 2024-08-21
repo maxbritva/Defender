@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.Interfaces;
 using UnityEngine;
 using Zenject;
@@ -10,7 +9,8 @@ namespace Game.GameCore.GameProgression
     {
         public Action OnLevelChanged;
         
-        [SerializeField] private List<GameLevel> _levels = new List<GameLevel>();
+        private LevelsHandler _levelsHandler;
+        
         private GameTimer _gameTimer;
 
         private void OnEnable() => OnLevelChanged += LevelChange;
@@ -18,16 +18,20 @@ namespace Game.GameCore.GameProgression
 
         private void Start() => Activate();
 
-        public void Activate() => _levels[_gameTimer.Minutes].Activate();
+        public void Activate() => _levelsHandler.Activate(_gameTimer.Level);
 
-        public void Deactivate() => _levels[_gameTimer.Minutes].Deactivate();
+        public void Deactivate() => _levelsHandler.Deactivate();
 
         private void LevelChange()
         {
-            _levels[_gameTimer.Minutes-1].Deactivate();
+            Deactivate();
             Activate();
         }
 
-       [Inject] private void Construct(GameTimer gameTimer) => _gameTimer = gameTimer;
+       [Inject] private void Construct(GameTimer gameTimer, LevelsHandler levelsHandler)
+       {
+           _levelsHandler = levelsHandler;
+           _gameTimer = gameTimer;
+       }
     }
 }

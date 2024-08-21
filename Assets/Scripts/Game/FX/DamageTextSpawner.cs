@@ -1,12 +1,15 @@
 ﻿using System.Collections;
+using Game.ObjectPool;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.FX
 {
     public class DamageTextSpawner : MonoBehaviour
     {
-        [SerializeField] private ObjectPool.ObjectPool _damageTextPool;
+        [SerializeField] private GameObject prefab;
+        [SerializeField] private Pool _damageTextPool;
         private readonly WaitForSeconds _animationTick = new WaitForSeconds(0.05f);
 
         public void SpawnDamageText(Transform target, int damage)
