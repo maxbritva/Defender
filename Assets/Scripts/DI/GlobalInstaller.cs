@@ -1,4 +1,5 @@
 ﻿using MainMenu.Shop;
+using Player;
 using SceneLoader;
 using Zenject;
 
@@ -21,7 +22,9 @@ namespace DI
 
         private void BindPlayerData()
         {
-            Container.BindInstance(new Wallet(100));
+            Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
+            Container.Bind<UpgradesHandler>().FromNew().AsSingle().NonLazy();
         }
+        
     }
 }

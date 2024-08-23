@@ -19,7 +19,7 @@ namespace MainMenu.Shop
         }
         private void OnDisable() => _wallet.Changed -= UpdateValue;
 
-        private void UpdateValue(int coins) => 
-            _coinsFromWallet.text = coins.ToString();
+        private void UpdateValue(int coins) =>
+            _coinsFromWallet.text = $"АСТРОБАКСОВ: {coins}";
     }
 }

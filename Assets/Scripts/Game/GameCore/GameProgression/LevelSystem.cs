@@ -14,8 +14,6 @@ namespace Game.GameCore.GameProgression
         private void OnEnable() => OnLevelChanged += LevelChange;
         private void OnDisable() => OnLevelChanged -= LevelChange;
 
-        private void Start() => Activate();
-
         public void Activate() => _levelsHandler.Activate(_gameTimer.Level);
 
         public void Deactivate() => _levelsHandler.Deactivate();

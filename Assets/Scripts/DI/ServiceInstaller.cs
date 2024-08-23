@@ -7,7 +7,6 @@ namespace DI
 {
     public class ServiceInstaller : MonoInstaller
     {
-        [SerializeField] private GameObject _Asteroid;
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<PauseHandler>().AsSingle();

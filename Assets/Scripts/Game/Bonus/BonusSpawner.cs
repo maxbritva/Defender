@@ -23,8 +23,6 @@ namespace Game.Bonus
 
         private void OnDisable() => _pauseHandler.Remove(this);
 
-        private void Start() => Activate();
-
         public void Activate()
         {
             InitializeBonuses();

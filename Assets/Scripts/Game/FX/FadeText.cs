@@ -1,4 +1,3 @@
-using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -13,10 +12,7 @@ namespace Game.FX
         private bool _isFullAlpha = true;
         private Coroutine _fullAlpha;
         private Coroutine _zeroAlpha;
-        private void OnEnable()
-        {
-            _text.DOFade(0, _timeToFade).Play().SetLoops(-1);
-        }
+        private void OnEnable() => _text.DOFade(0, _timeToFade).Play().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
 
        
     }

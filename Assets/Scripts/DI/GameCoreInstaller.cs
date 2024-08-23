@@ -1,5 +1,7 @@
+using Game.Bonus;
 using Game.FX;
 using Game.GameCore.GameProgression;
+using Game.GameCore.GameStates;
 using Game.ObjectPool;
 using Game.Score;
 using Game.Weapons.Bonus;
@@ -24,10 +26,13 @@ namespace DI
         [SerializeField] private LevelSystem _levelSystem;
         [SerializeField] private GameTimer _gameTimer;
         [SerializeField] private LevelsHandler _levelsHandler;
+        [SerializeField] private BonusSpawner _bonusSpawner;
+        [SerializeField] private GameManager _gameManager;
+        [SerializeField] private GameStartAnimation _gameStartAnimation;
         public override void InstallBindings()
         {
             Inputs();
-            Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
+                // Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
             Container.Bind<ScoreCollector>().FromNew().AsSingle().NonLazy();
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
             Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
@@ -35,6 +40,9 @@ namespace DI
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
             Container.Bind<Pool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
+            Container.Bind<GameManager>().FromInstance(_gameManager).AsSingle().NonLazy();
+            Container.Bind<BonusSpawner>().FromInstance(_bonusSpawner).AsSingle().NonLazy();
+            Container.Bind<GameStartAnimation>().FromInstance(_gameStartAnimation).AsSingle().NonLazy();
             LevelSystem();
         }
         private void Inputs()

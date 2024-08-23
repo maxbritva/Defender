@@ -13,7 +13,7 @@ namespace Game.Weapons.Bonus
         private WaitForSeconds _shieldTimer;
         private PlayerData _playerData;
 
-        private void Start() => _shieldTimer = new WaitForSeconds(_playerData.ShieldTimer);
+        private void Start() => _shieldTimer = new WaitForSeconds(_playerData.ShieldTimerLevel);
 
         public void ActivateShield() {
             StartCoroutine(DisolveShield(0));

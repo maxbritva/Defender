@@ -22,11 +22,6 @@ namespace Game.GameCore.GameProgression
         public int Level => _level;
         public int Progression => _progression;
 
-        private void Start()
-        {
-            Activate();
-        }
-
         private void OnEnable() => _pauseHandler.Add(this);
 
         private void OnDisable() => _pauseHandler.Remove(this);
