@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +18,9 @@ namespace MainMenu.UI
 
         private bool _isLock;
 
-        private void OnEnable() => _button.onClick.AddListener(OnButtonClick);
-
-        private void OnDisable() => _button.onClick.RemoveListener(OnButtonClick);
+        // private void OnEnable() => _button.onClick.AddListener(OnButtonClick);
+        //
+        // private void OnDisable() => _button.onClick.RemoveListener(OnButtonClick);
 
         public void UpdatePrice(int value)
         {
@@ -35,24 +34,26 @@ namespace MainMenu.UI
                 _isLock = true;
                 _text.color = _lockColor;
                 _button.GetComponent<Image>().color = _lockColor;
+                _button.interactable = false;
             }
             else
             {
                _isLock = false;
                 _text.color = _unlockColor;
                 _button.GetComponent<Image>().color = _unlockColor;
+                _button.interactable = true;
             }
         }
 
-        private void OnButtonClick()
-        {
-            if (_isLock)
-            {
-                transform.DOShakePosition(_lockAnimationDuration, _lockAnimationStrength);
-                return;
-            }
-            Click?.Invoke();
-        }
+        // private void OnButtonClick()
+        // {
+        //     if (_isLock)
+        //     {
+        //         transform.DOShakePosition(_lockAnimationDuration, _lockAnimationStrength);
+        //         return;
+        //     }
+        //     Click?.Invoke();
+        // }
     }
 
 }

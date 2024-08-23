@@ -18,7 +18,7 @@ namespace Player
         
         public PlayerData()
         {
-            Balance = 100;
+            Balance = 10000;
             PlatformGunLevel = 1;
             LivesCountLevel = 1;
             ShieldTimerLevel = 1;

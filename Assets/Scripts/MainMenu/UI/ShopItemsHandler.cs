@@ -16,11 +16,20 @@ namespace MainMenu.UI
         
         private UpgradesHandler _upgradeHandler;
         private PlayerData _playerData;
+        private Shop.Shop _shop;
 
         private void OnEnable()
         {
             CheckAvailableButtons();
             UpdatePrice();
+            _shop.OnBuyUpgrade += UpdatePrice;
+            _shop.OnBuyUpgrade += CheckAvailableButtons;
+        }
+
+        private void OnDisable()
+        {
+            _shop.OnBuyUpgrade -= UpdatePrice;
+            _shop.OnBuyUpgrade -= CheckAvailableButtons;
         }
 
         private void UpdatePrice()
@@ -43,10 +52,11 @@ namespace MainMenu.UI
             _critView.IsLockCheck(_playerData.Balance >= _upgradeHandler.CritCurrentLevel.Cost && _playerData.CritLevel < 5);
         }
 
-        [Inject] private void Construct(PlayerData playerData, UpgradesHandler upgradesHandler)
+        [Inject] private void Construct(PlayerData playerData, UpgradesHandler upgradesHandler, Shop.Shop shop)
         {
             _playerData = playerData;
             _upgradeHandler = upgradesHandler;
+            _shop = shop;
         }
     }
 }
