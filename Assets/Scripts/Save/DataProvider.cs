@@ -27,7 +27,6 @@ namespace Save
         public void Initialize() => TryLoad();
         public bool TryLoad()
         {
-         
             if (IsDataAlreadyExist() == false)
             {
                 SetDefaultPlayerData();
@@ -36,6 +35,7 @@ namespace Save
             var loadedData = JsonConvert.DeserializeObject<PlayerData>(File.ReadAllText(FullPath));
                 if (loadedData != null)
                 {
+                    Debug.Log(loadedData.Balance);
                     _playerData.SetPlatformGunLevel(loadedData.PlatformGunLevel); 
                     _playerData.SetLivesCountLevel(loadedData.LivesCountLevel); 
                     _playerData.SetShieldTimerLevel(loadedData.ShieldTimerLevel); 
@@ -43,12 +43,12 @@ namespace Save
                     _playerData.SetDamageLevelLevel(loadedData.DamageLevel); 
                     _playerData.SetCritLevel(loadedData.CritLevel); 
                     _playerData.SetBalance(loadedData.Balance);
+                    Debug.Log(_playerData.Balance);
                     _playerData.SetShowTips(loadedData.ShowTips);
                     _playerData.SetTopScore(loadedData.TopScore);
                 }
                 else
                     SetDefaultPlayerData();
-                Debug.Log(_playerData.PlatformGunLevel);
                 return true;
         }
 

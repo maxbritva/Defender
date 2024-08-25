@@ -4,8 +4,9 @@ using Newtonsoft.Json;
 namespace Player
 {
     [Serializable]
-    public class PlayerData
+    public class PlayerData: IPlayerData
     {
+        public event Action<int> BalanceChanged;
         public int Balance { get; private set; }
         
         public int TopScore { get; private set; }
@@ -47,6 +48,7 @@ namespace Player
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
             Balance = value;
+            BalanceChanged?.Invoke(Balance);
         }
         
         public void SetTopScore(int value)
@@ -61,6 +63,7 @@ namespace Player
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
             Balance += value;
+            BalanceChanged?.Invoke(Balance);
         }
 
         public void SpendBalance(int value)
@@ -68,6 +71,18 @@ namespace Player
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
             Balance -= value;
+            BalanceChanged?.Invoke(Balance);
+        }
+        public bool IsEnough(int coins)
+        {
+            if (coins < 0)
+                throw new ArgumentOutOfRangeException(nameof(coins)); 
+            return  Balance >= coins;
+        }
+
+        public int GetBalance()
+        {
+            return Balance;
         }
 
         public void SetPlatformGunLevel(int value)

@@ -4,6 +4,7 @@ using MainMenu.UI;
 using Player;
 using Save;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace DI
@@ -12,13 +13,11 @@ namespace DI
     {
         [SerializeField] private ShopItemsHandler _shopItemsHandler;
         [SerializeField] private Shop _shop;
+        [SerializeField] private BalanceView balanceView;
         public override void InstallBindings()
         {
-            
-            Container.BindInterfacesAndSelfTo<MainMenuManager>().FromNew().AsSingle().NonLazy();
-          
             Container.Bind<Shop>().FromInstance(_shop);
-            Container.Bind<Wallet>().FromNew().AsSingle().NonLazy();
+            Container.Bind<BalanceView>().FromInstance(balanceView).AsSingle().NonLazy();
             Container.Bind<ShopItemsHandler>().FromInstance(_shopItemsHandler);
         }
         

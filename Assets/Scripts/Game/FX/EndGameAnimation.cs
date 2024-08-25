@@ -33,7 +33,8 @@ namespace Game.FX
            _animateRate = Mathf.Abs(targetValue - currentValue) / _durationAnimation;
             while (currentValue < targetValue) {
                 currentValue = Mathf.MoveTowards(currentValue, targetValue, _animateRate * Time.deltaTime);
-             _textCounter.text = currentValue.ToString();
+                
+             _textCounter.text = ((int)currentValue).ToString();
                 yield return null;
             }
             OnAnimationEnd?.Invoke();

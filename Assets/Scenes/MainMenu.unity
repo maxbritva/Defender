@@ -5651,6 +5651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shopItemsHandler: {fileID: 783881322}
   _shop: {fileID: 484944001}
+  balanceView: {fileID: 1854404609}
 --- !u!1 &1782269225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6232,7 +6233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac12ed2bb684e7884681dd21351ac70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinsFromWallet: {fileID: 1825726948}
+  _balancePlayerData: {fileID: 1825726948}
 --- !u!1 &1862637655
 GameObject:
   m_ObjectHideFlags: 0

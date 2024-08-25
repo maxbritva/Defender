@@ -1,4 +1,6 @@
-﻿using Player;
+﻿using System;
+using MainMenu.Shop;
+using Player;
 using SceneLoader;
 using TMPro;
 using UnityEngine;
@@ -15,12 +17,20 @@ namespace MainMenu.UI
         [SerializeField] private TMP_Text _topScoreText;
         private ISceneLoadMediator _sceneLoader;
         private PlayerData _playerData;
+        private BalanceView _balanceView;
 
         private void OnEnable()
         {
             _startGameButton.onClick.AddListener(StartGameClick);
             _showShopButton.onClick.AddListener(ShowShopClick);
-           UpdateTopScoreText();
+           
+        }
+
+        private void Start()
+        {
+            UpdateTopScoreText();
+            _balanceView.UpdateValue(_playerData.Balance);
+           // Debug.Log(_playerData.Balance);
         }
 
         private void OnDisable()
@@ -35,10 +45,11 @@ namespace MainMenu.UI
         private void UpdateTopScoreText() => _topScoreText.text = $"ТОП ОЧКОВ: { _playerData.TopScore}";
 
 
-        [Inject] private void Construct(ISceneLoadMediator loadMediator, PlayerData playerData)
+        [Inject] private void Construct(BalanceView balanceView, ISceneLoadMediator loadMediator, PlayerData playerData)
         {
             _sceneLoader = loadMediator;
             _playerData = playerData;
+            _balanceView = balanceView;
         }
     }
 }
