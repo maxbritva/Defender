@@ -6,7 +6,7 @@ namespace Player.Platform
 {
     public class PlatformCreator: IFactory<GunMultiply>
     {
-        private PlayerData _playerData;
+        private UpgradesHandler _upgradesHandler;
         private DiContainer _container;
         public GunMultiply _platform;
 
@@ -16,9 +16,9 @@ namespace Player.Platform
         private PlatformConfiguration _platformConfiguration;
         
         
-        [Inject] private void Construct(PlayerData playerData, DiContainer container, PlatformConfiguration platformConfiguration)
+        [Inject] private void Construct(UpgradesHandler upgradesHandler, DiContainer container, PlatformConfiguration platformConfiguration)
         {
-            _playerData = playerData;
+            _upgradesHandler = upgradesHandler;
             _container = container;
             _platformConfiguration = platformConfiguration;
         }
@@ -26,7 +26,7 @@ namespace Player.Platform
 
         private GunMultiply Initialize()
         {
-            return _platform = _container.InstantiatePrefabForComponent<GunMultiply>(_platformConfiguration.PrefabPlatforms[_playerData.PlatformGunLevel - 1], 
+            return _platform = _container.InstantiatePrefabForComponent<GunMultiply>(_platformConfiguration.PrefabPlatforms[(int)_upgradesHandler.PlatformCurrentLevel.Value - 1], 
                 _platformConfiguration.PlacerPlatform.position,
                 _platformConfiguration.PlacerPlatform.rotation,
                 _platformConfiguration.PlacerPlatform);
@@ -35,7 +35,7 @@ namespace Player.Platform
         public GunMultiply Create()
         {
             return _container.InstantiatePrefabForComponent<GunMultiply>(_platformConfiguration.PrefabPlatforms
-                    [_playerData.PlatformGunLevel - 1],
+                    [(int)_upgradesHandler.PlatformCurrentLevel.Value - 1],
                 _platformConfiguration.PlacerPlatform.position,
                 _platformConfiguration.PlacerPlatform.rotation,
                 _platformConfiguration.PlacerPlatform);

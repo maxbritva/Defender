@@ -1,4 +1,5 @@
-﻿using MainMenu.Shop;
+﻿using MainMenu;
+using MainMenu.Shop;
 using MainMenu.UI;
 using Player;
 using Save;
@@ -11,19 +12,15 @@ namespace DI
     {
         [SerializeField] private ShopItemsHandler _shopItemsHandler;
         [SerializeField] private Shop _shop;
-        private PlayerData _playerData;
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<DataProvider>().FromNew().AsSingle().NonLazy();
-            Container.Bind<UpgradesHandler>().FromNew().AsSingle().NonLazy();
-            Container.BindInstance(new Wallet(_playerData.Balance));
+            
+            Container.BindInterfacesAndSelfTo<MainMenuManager>().FromNew().AsSingle().NonLazy();
+          
             Container.Bind<Shop>().FromInstance(_shop);
+            Container.Bind<Wallet>().FromNew().AsSingle().NonLazy();
             Container.Bind<ShopItemsHandler>().FromInstance(_shopItemsHandler);
         }
-
-        [Inject] private void Construct(PlayerData playerData)
-        {
-            _playerData = playerData;
-        }
+        
     }
 }

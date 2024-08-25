@@ -1,5 +1,4 @@
 ﻿using System;
-using MainMenu.UI;
 using Player;
 using Save;
 using UnityEngine;
@@ -12,22 +11,24 @@ namespace MainMenu.Shop
         public event Action OnBuyUpgrade;
         private PlayerData _playerData;
         private IDataProvider _dataProvider;
-        private ShopItemsHandler _shopItemsHandler;
         private Wallet _wallet;
         private UpgradesHandler _upgradesHandler;
 
         private void Start()
         {
+            Debug.Log(_playerData.PlatformGunLevel);
             _upgradesHandler.LoadUpgrades();
             _upgradesHandler.UpdateCurrentUpgrades();
         }
 
         public void BuyPlatformUpgrade()
         {
-            if(_wallet.IsEnough(_upgradesHandler.PlatformCurrentLevel.Cost))
+            if (_wallet.IsEnough(_upgradesHandler.PlatformCurrentLevel.Cost))
+            {
                 _wallet.Spend(_upgradesHandler.PlatformCurrentLevel.Cost);
-            _playerData.SetPlatformGunLevel(_upgradesHandler.PlatformCurrentLevel.Level + 1);
-            SuccessBuy();
+                _playerData.SetPlatformGunLevel(_upgradesHandler.PlatformCurrentLevel.Level + 1);
+                SuccessBuy(); 
+            }
         }
         public void BuyLivesUpgrade()
         {
@@ -68,20 +69,19 @@ namespace MainMenu.Shop
         
         private void SuccessBuy()
         {
+            Debug.Log(_playerData.Balance);
+            _upgradesHandler.UpdateCurrentUpgrades();
+            OnBuyUpgrade?.Invoke();
             _dataProvider.Save();
-            OnBuyUpgrade?.Invoke(); 
         }
 
         [Inject] private void Construct(PlayerData playerData, Wallet wallet, 
-            IDataProvider dataProvider, ShopItemsHandler shopItemsHandler, UpgradesHandler upgradesHandler)
+            IDataProvider dataProvider, UpgradesHandler upgradesHandler)
         {
             _playerData = playerData;
             _wallet = wallet;
             _dataProvider = dataProvider;
-            _shopItemsHandler = shopItemsHandler;
             _upgradesHandler = upgradesHandler;
         }
-        
-       
     }
 }

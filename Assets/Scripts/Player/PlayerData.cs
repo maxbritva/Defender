@@ -3,10 +3,12 @@ using Newtonsoft.Json;
 
 namespace Player
 {
-    
+    [Serializable]
     public class PlayerData
     {
         public int Balance { get; private set; }
+        
+        public int TopScore { get; private set; }
         public int PlatformGunLevel { get; private set; }
         public int LivesCountLevel { get; private set; }
         public int ShieldTimerLevel { get; private set; }
@@ -18,18 +20,17 @@ namespace Player
         
         public PlayerData()
         {
-            Balance = 10000;
-            PlatformGunLevel = 1;
-            LivesCountLevel = 1;
-            ShieldTimerLevel = 1;
-            ShootRateLevel = 1;
-            DamageLevel = 1;
-            CritLevel = 1;
-            ShowTips = true;
+            // Balance = 0;
+            // PlatformGunLevel = 1;
+            // LivesCountLevel = 1;
+            // ShieldTimerLevel = 1;
+            // ShootRateLevel = 1;
+            // DamageLevel = 1;
+            // CritLevel = 1;
+            // ShowTips = true;
         }
         
-        [JsonConstructor] 
-        public PlayerData(int balance, int platformGunLevel, int livesCountLevel, int shieldTimerLevel, int shootRateLevel, int damageLevel, int critLevel, bool showTips)
+        [JsonConstructor] public PlayerData(int balance, int platformGunLevel, int livesCountLevel, int shieldTimerLevel, int shootRateLevel, int damageLevel, int critLevel, bool showTips)
         {
             Balance = balance;
             PlatformGunLevel = platformGunLevel;
@@ -43,17 +44,77 @@ namespace Player
 
         public void SetBalance(int value)
         {
-            if(value >= 0)
-                Balance = value;
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            Balance = value;
+        }
+        
+        public void SetTopScore(int value)
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            Balance = value;
+        }
+
+        public void AddBalance(int value)
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            Balance += value;
+        }
+
+        public void SpendBalance(int value)
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            Balance -= value;
+        }
+
+        public void SetPlatformGunLevel(int value)
+        {
+            if (CheckValidValue(value))
+                PlatformGunLevel = value;
             else
                 throw new ArgumentOutOfRangeException(nameof(value));
         }
-        public void SetPlatformGunLevel(int value) => CheckInvalidValue(value, PlatformGunLevel);
-        public void SetLivesCountLevel(int value) => CheckInvalidValue(value, LivesCountLevel);
-        public void SetShieldTimerLevel(int value) => CheckInvalidValue(value, ShieldTimerLevel);
-        public void SetShootRateLevel(int value) => CheckInvalidValue(value, ShootRateLevel);
-        public void SetDamageLevelLevel(int value) => CheckInvalidValue(value, DamageLevel);
-        public void SetCritLevel(int value) => CheckInvalidValue(value, CritLevel);
+
+        public void SetLivesCountLevel(int value)
+        {
+            if (CheckValidValue(value))
+                LivesCountLevel = value;
+            else
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
+        public void SetShieldTimerLevel(int value)
+        {
+            if (CheckValidValue(value))
+                ShieldTimerLevel = value;
+            else
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
+
+        public void SetShootRateLevel(int value)
+        {
+            if (CheckValidValue(value))
+                ShootRateLevel = value;
+            else
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
+        public void SetDamageLevelLevel(int value)
+        {
+            if (CheckValidValue(value))
+                DamageLevel = value;
+            else
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
+
+        public void SetCritLevel(int value)
+        {
+            if (CheckValidValue(value))
+                CritLevel = value;
+            else
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
 
         public void ResetData()
         {
@@ -67,13 +128,7 @@ namespace Player
             ShowTips = true;
         }
         
-        private void CheckInvalidValue(int value, int targetToUpgrade)
-        {
-            if(value >= 1 && value <= 5)
-                targetToUpgrade = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
+        private bool CheckValidValue(int value) => value >= 1 && value <= 5;
 
         public bool SetShowTips(bool value) => ShowTips = value;
     }

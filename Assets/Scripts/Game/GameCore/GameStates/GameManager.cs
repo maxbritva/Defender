@@ -45,7 +45,12 @@ namespace Game.GameCore.GameStates
             _bonusSpawner.Activate();
         }
 
-        private void EndGame() => _pauseHandler.SetPause(true);
-        
+        private void EndGame()
+        {
+            _gameTimer.Deactivate();
+            _levelSystem.Deactivate();
+            _bonusSpawner.Deactivate();
+            _pauseHandler.SetPause(true);
+        }
     }
 }

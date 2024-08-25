@@ -11,9 +11,9 @@ namespace Game.Weapons.Bonus
         [SerializeField] private SphereCollider _shieldCollider;
         [SerializeField] private Renderer _renderer;
         private WaitForSeconds _shieldTimer;
-        private PlayerData _playerData;
+        private UpgradesHandler _upgradesHandler;
 
-        private void Start() => _shieldTimer = new WaitForSeconds(_playerData.ShieldTimerLevel);
+        private void Start() => _shieldTimer = new WaitForSeconds(_upgradesHandler.ShieldCurrentLevel.Value);
 
         public void ActivateShield() {
             StartCoroutine(DisolveShield(0));
@@ -38,6 +38,6 @@ namespace Game.Weapons.Bonus
             }
         }
 
-        [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
+        [Inject] private void Construct(UpgradesHandler upgradesHandler) => _upgradesHandler = upgradesHandler;
     }
 }

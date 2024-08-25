@@ -11,7 +11,7 @@ namespace Game.Health
         public float CurrentHealth => _currentHealth;
         public float MAXHealth => _maxHealth;
 
-        private void OnEnable() => _currentHealth = _maxHealth;
+        protected  virtual void OnEnable() => _currentHealth = _maxHealth;
 
         public virtual void TakeDamage(int damage)
         {

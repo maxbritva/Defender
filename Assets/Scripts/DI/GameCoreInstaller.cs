@@ -4,6 +4,7 @@ using Game.GameCore.GameProgression;
 using Game.GameCore.GameStates;
 using Game.ObjectPool;
 using Game.Score;
+using Game.UI;
 using Game.Weapons.Bonus;
 using Player;
 using Player.Input;
@@ -29,6 +30,9 @@ namespace DI
         [SerializeField] private BonusSpawner _bonusSpawner;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private GameStartAnimation _gameStartAnimation;
+        [SerializeField] private EndGame _endGame;
+        [SerializeField] private EndGameUI _endGameUI;
+        [SerializeField] private EndGameAnimation _endGameAnimation;
         public override void InstallBindings()
         {
             Inputs();
@@ -44,6 +48,7 @@ namespace DI
             Container.Bind<BonusSpawner>().FromInstance(_bonusSpawner).AsSingle().NonLazy();
             Container.Bind<GameStartAnimation>().FromInstance(_gameStartAnimation).AsSingle().NonLazy();
             LevelSystem();
+            EndGame();
         }
         private void Inputs()
         {
@@ -65,6 +70,13 @@ namespace DI
             Container.Bind<GameTimer>().FromInstance(_gameTimer).AsSingle().NonLazy(); 
             Container.Bind<LevelSystem>().FromInstance(_levelSystem).AsSingle().NonLazy();
             Container.Bind<LevelsHandler>().FromInstance(_levelsHandler).AsSingle().NonLazy(); 
+        }
+
+        private void EndGame()
+        {
+            Container.Bind<EndGame>().FromNew().AsSingle().NonLazy();
+            Container.Bind<EndGameUI>().FromInstance(_endGameUI).AsSingle().NonLazy(); 
+            Container.Bind<EndGameAnimation>().FromInstance(_endGameAnimation).AsSingle().NonLazy(); 
         }
     }
     

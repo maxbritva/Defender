@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   _value: 3
-  _cost: 1000
+  _cost: 3000
   _level: 3

@@ -7,31 +7,22 @@ namespace Player
 {
     public class UpgradesHandler
     {
-        private List<ShopItem> _platformGunUpgrades;
-        private List<ShopItem> _livesCountLevelUpgrades;
-        private List<ShopItem> _shieldTimerLevelUpgrades;
-        private List<ShopItem> _shootRateLevelUpgrades;
-        private List<ShopItem> _damageLevelUpgrades;
-        private List<ShopItem> _critLevelUpgrades;
+        private List<ShopItem> _platformGunUpgrades = new List<ShopItem>();
+        private List<ShopItem> _livesCountLevelUpgrades = new List<ShopItem>();
+        private List<ShopItem> _shieldTimerLevelUpgrades = new List<ShopItem>();
+        private List<ShopItem> _shootRateLevelUpgrades = new List<ShopItem>();
+        private List<ShopItem> _damageLevelUpgrades = new List<ShopItem>();
+        private List<ShopItem> _critLevelUpgrades = new List<ShopItem>();
        
-       private PlayerData _playerData;
+       [Inject] private PlayerData _playerData;
        
-       public UpgradesHandler()
-       {
-           _platformGunUpgrades = new List<ShopItem>();
-           _livesCountLevelUpgrades = new List<ShopItem>();
-            _shieldTimerLevelUpgrades = new List<ShopItem>();
-             _shootRateLevelUpgrades = new List<ShopItem>();
-              _damageLevelUpgrades = new List<ShopItem>();
-             _critLevelUpgrades = new List<ShopItem>();
-       }
-
        public ShopItem PlatformCurrentLevel { get; private set; }
        public ShopItem LivesCurrentLevel { get; private set; }
        public ShopItem ShieldCurrentLevel { get; private set; }
        public ShopItem ShootRateCurrentLevel { get; private set; }
        public ShopItem DamageCurrentLevel { get; private set; }
        public ShopItem CritCurrentLevel { get; private set; }
+       
 
        public void UpdateCurrentUpgrades()
        {
@@ -55,7 +46,6 @@ namespace Player
                _critLevelUpgrades.Add(Resources.Load<ShopItem>($"Shop/Crit/{i}"));
            }
        }
-
        [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
     }
 }
