@@ -10,7 +10,6 @@ namespace Game.UI
     {
         [SerializeField] private Button _startGameButton;
         [SerializeField] private GameObject _prepareUIPanel;
-        [SerializeField] private GameObject _GameUIPanel;
         [SerializeField] private GameObject _DesktopTips;
         [SerializeField] private GameObject _mobileTips;
         private PlayerData _playerData;
@@ -34,7 +33,6 @@ namespace Game.UI
         private void StartGameClick()
         {
             _prepareUIPanel.SetActive(false);
-            _GameUIPanel.SetActive(true);
             _gameStartAnimation.StartAnimation();
         }
 

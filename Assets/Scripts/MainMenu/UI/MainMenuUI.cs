@@ -30,7 +30,7 @@ namespace MainMenu.UI
         {
             UpdateTopScoreText();
             _balanceView.UpdateValue(_playerData.Balance);
-           // Debug.Log(_playerData.Balance);
+          
         }
 
         private void OnDisable()
@@ -40,7 +40,11 @@ namespace MainMenu.UI
         }
         
         private void StartGameClick() => _sceneLoader.StartGame();
-        private void ShowShopClick() => _shop.gameObject.SetActive(true);
+        private void ShowShopClick()
+        {
+            _shop.gameObject.SetActive(true);
+             Debug.Log(_playerData.Balance);
+        }
 
         private void UpdateTopScoreText() => _topScoreText.text = $"ТОП ОЧКОВ: { _playerData.TopScore}";
 

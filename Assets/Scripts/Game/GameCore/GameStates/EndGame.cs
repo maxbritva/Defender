@@ -14,7 +14,7 @@ namespace Game.GameCore.GameStates
         private PlayerData _playerData;
         private DataProvider _dataProvider;
         private EndGameUI _endGameUI;
-        private int _balanceToAdd;
+        private int _balanceToAdd = 0;
         public int BalanceToAdd => _balanceToAdd;
 
         public void Initialize()
@@ -27,6 +27,7 @@ namespace Game.GameCore.GameStates
 
         private void CalculateBalanceToAdd()
         {
+            if (_scoreCollector.CurrentScore <= 0) return;
             _balanceToAdd = _scoreCollector.CurrentScore / 8;
             if (_balanceToAdd < 1)
                 _balanceToAdd = 1;

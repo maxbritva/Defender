@@ -9,6 +9,7 @@ namespace Game.FX
 {
     public class GameStartAnimation : MonoBehaviour
     {
+        [SerializeField] private GameObject _GameUIPanel;
         [SerializeField] private Image _targetImage;
         [SerializeField] private Sprite[] _allSprites;
         [SerializeField] private Vector3 _scaleTo;
@@ -30,6 +31,7 @@ namespace Game.FX
                 ApplyAnimation();
                 yield return _interval;
             }
+            _GameUIPanel.SetActive(true);
             _gameManager.OnGameStarted?.Invoke();
             _targetImage.gameObject.SetActive(false);
         }

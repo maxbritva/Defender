@@ -24,7 +24,8 @@ namespace DI
 
         private void BindPlayerData()
         {
-            Container.BindInterfacesAndSelfTo<PlayerData>().FromNew().AsSingle().NonLazy();
+
+            Container.Bind<PlayerData>().FromNew().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<DataProvider>().FromNew().AsSingle().NonLazy();
             Container.Bind<UpgradesHandler>().FromNew().AsSingle().NonLazy();
         }

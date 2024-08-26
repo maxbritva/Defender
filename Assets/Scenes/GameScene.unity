@@ -500,7 +500,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startGameButton: {fileID: 1625749180}
   _prepareUIPanel: {fileID: 1536240081}
-  _GameUIPanel: {fileID: 344118950}
   _DesktopTips: {fileID: 452982598}
   _mobileTips: {fileID: 112708392}
 --- !u!114 &160063238
@@ -515,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be36988600784a1aae9a72f59c4810fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _GameUIPanel: {fileID: 344118950}
   _targetImage: {fileID: 1689816541}
   _allSprites:
   - {fileID: 794233009, guid: 435e10c860eb4e94c84766037bd4dbfa, type: 3}
@@ -1427,7 +1427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 344118951}
   m_Layer: 5
-  m_Name: GameUI
+  m_Name: GameUIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

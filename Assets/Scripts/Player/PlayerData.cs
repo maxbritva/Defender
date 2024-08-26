@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Player
 {
     [Serializable]
-    public class PlayerData: IPlayerData
+    public class PlayerData
     {
         public event Action<int> BalanceChanged;
         public int Balance { get; private set; }
@@ -19,21 +19,12 @@ namespace Player
         
         public bool ShowTips { get; private set; }
         
-        public PlayerData()
-        {
-            // Balance = 0;
-            // PlatformGunLevel = 1;
-            // LivesCountLevel = 1;
-            // ShieldTimerLevel = 1;
-            // ShootRateLevel = 1;
-            // DamageLevel = 1;
-            // CritLevel = 1;
-            // ShowTips = true;
-        }
+        public PlayerData() { }
         
-        [JsonConstructor] public PlayerData(int balance, int platformGunLevel, int livesCountLevel, int shieldTimerLevel, int shootRateLevel, int damageLevel, int critLevel, bool showTips)
+        [JsonConstructor] public PlayerData(int balance, int platformGunLevel, int livesCountLevel, int shieldTimerLevel, int shootRateLevel, int damageLevel, int critLevel, bool showTips, int topScore)
         {
             Balance = balance;
+            TopScore = topScore;
             PlatformGunLevel = platformGunLevel;
             LivesCountLevel = livesCountLevel;
             ShieldTimerLevel = shieldTimerLevel;
@@ -55,7 +46,7 @@ namespace Player
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            Balance = value;
+            TopScore = value;
         }
 
         public void AddBalance(int value)
@@ -78,11 +69,6 @@ namespace Player
             if (coins < 0)
                 throw new ArgumentOutOfRangeException(nameof(coins)); 
             return  Balance >= coins;
-        }
-
-        public int GetBalance()
-        {
-            return Balance;
         }
 
         public void SetPlatformGunLevel(int value)

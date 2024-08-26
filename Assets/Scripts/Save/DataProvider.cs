@@ -15,12 +15,6 @@ namespace Save
         private string FullPath => Path.Combine(SavePath, $"{FileName}{SaveFileExtension}");
 
         private PlayerData _playerData;
-        
-        public DataProvider(PlayerData playerData)
-        {
-            //_playerData = playerData;
-           // TryLoad();
-        }
 
         public void Save() => File.WriteAllText(FullPath, JsonConvert.SerializeObject(_playerData, Formatting.Indented));
 
@@ -32,24 +26,28 @@ namespace Save
                 SetDefaultPlayerData();
                 return false;
             }
-            var loadedData = JsonConvert.DeserializeObject<PlayerData>(File.ReadAllText(FullPath));
+            else
+            {
+                var loadedData = JsonConvert.DeserializeObject<PlayerData>(File.ReadAllText(FullPath));
                 if (loadedData != null)
                 {
+                    _playerData.SetBalance(loadedData.Balance);
+                    _playerData.SetTopScore(loadedData.TopScore);
                     Debug.Log(loadedData.Balance);
+                    Debug.Log(_playerData.Balance);
                     _playerData.SetPlatformGunLevel(loadedData.PlatformGunLevel); 
                     _playerData.SetLivesCountLevel(loadedData.LivesCountLevel); 
                     _playerData.SetShieldTimerLevel(loadedData.ShieldTimerLevel); 
                     _playerData.SetShootRateLevel(loadedData.ShootRateLevel); 
                     _playerData.SetDamageLevelLevel(loadedData.DamageLevel); 
-                    _playerData.SetCritLevel(loadedData.CritLevel); 
-                    _playerData.SetBalance(loadedData.Balance);
-                    Debug.Log(_playerData.Balance);
+                    _playerData.SetCritLevel(loadedData.CritLevel);
                     _playerData.SetShowTips(loadedData.ShowTips);
-                    _playerData.SetTopScore(loadedData.TopScore);
                 }
                 else
                     SetDefaultPlayerData();
                 return true;
+            }
+             
         }
 
         private void SetDefaultPlayerData()

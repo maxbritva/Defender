@@ -1,4 +1,5 @@
-﻿using Game.GameCore.Pause;
+﻿using Game.GameCore.GameStates;
+using Game.GameCore.Pause;
 using SceneLoader;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ namespace Game.UI
         [SerializeField] private GameObject _UIPanel;
         private ISceneLoadMediator _sceneLoader;
         private PauseHandler _pauseHandler;
+        private GameManager _gameManager;
 
         private void OnEnable()
         {
@@ -41,12 +43,17 @@ namespace Game.UI
             _pauseHandler.SetPause(true);
         }
 
-        private void EndGameClick() => _sceneLoader.GoToMainMenu();
+        private void EndGameClick()
+        {
+            _UIPanel.SetActive(false);
+            _gameManager.OnGameEnded?.Invoke();
+        }
 
-        [Inject] private void Construct(ISceneLoadMediator loadMediator, PauseHandler pauseHandler)
+        [Inject] private void Construct(ISceneLoadMediator loadMediator, PauseHandler pauseHandler, GameManager gameManager)
         {
             _sceneLoader = loadMediator;
             _pauseHandler = pauseHandler;
+            _gameManager = gameManager;
         }
     }
 }
