@@ -1,4 +1,5 @@
 ﻿using MainMenu;
+using MainMenu.Settings;
 using MainMenu.Shop;
 using MainMenu.UI;
 using Player;
@@ -16,10 +17,10 @@ namespace DI
         [SerializeField] private BalanceView balanceView;
         public override void InstallBindings()
         {
-          
             Container.Bind<Shop>().FromInstance(_shop);
             Container.Bind<BalanceView>().FromInstance(balanceView).AsSingle().NonLazy();
             Container.Bind<ShopItemsHandler>().FromInstance(_shopItemsHandler);
+            Container.Bind<SettingsHandler>().FromNew().AsSingle().NonLazy();
         }
         
     }

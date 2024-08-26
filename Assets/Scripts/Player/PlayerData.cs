@@ -8,7 +8,6 @@ namespace Player
     {
         public event Action<int> BalanceChanged;
         public int Balance { get; private set; }
-        
         public int TopScore { get; private set; }
         public int PlatformGunLevel { get; private set; }
         public int LivesCountLevel { get; private set; }
@@ -18,10 +17,13 @@ namespace Player
         public int CritLevel { get; private set; }
         
         public bool ShowTips { get; private set; }
+        public bool EnabledSound { get; private set; }
         
         public PlayerData() { }
         
-        [JsonConstructor] public PlayerData(int balance, int platformGunLevel, int livesCountLevel, int shieldTimerLevel, int shootRateLevel, int damageLevel, int critLevel, bool showTips, int topScore)
+        [JsonConstructor] public PlayerData(int balance, int platformGunLevel, 
+            int livesCountLevel, int shieldTimerLevel, int shootRateLevel, 
+            int damageLevel, int critLevel, bool showTips, int topScore, bool enabledSound)
         {
             Balance = balance;
             TopScore = topScore;
@@ -32,6 +34,7 @@ namespace Player
             DamageLevel = damageLevel;
             CritLevel = critLevel;
             ShowTips = showTips;
+            EnabledSound = enabledSound;
         }
 
         public void SetBalance(int value)
@@ -127,10 +130,13 @@ namespace Player
             DamageLevel = 1;
             CritLevel = 1;
             ShowTips = true;
+            EnabledSound = true;
         }
         
         private bool CheckValidValue(int value) => value >= 1 && value <= 5;
 
         public bool SetShowTips(bool value) => ShowTips = value;
+
+        public bool SetSound(bool value) => EnabledSound = value;
     }
 }

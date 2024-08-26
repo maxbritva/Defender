@@ -15,7 +15,6 @@ namespace MainMenu.Shop
 
         private void Start()
         {
-            Debug.Log(_playerData.Balance);
             _upgradesHandler.LoadUpgrades();
             _upgradesHandler.UpdateCurrentUpgrades();
         }

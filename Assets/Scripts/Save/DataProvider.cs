@@ -33,8 +33,6 @@ namespace Save
                 {
                     _playerData.SetBalance(loadedData.Balance);
                     _playerData.SetTopScore(loadedData.TopScore);
-                    Debug.Log(loadedData.Balance);
-                    Debug.Log(_playerData.Balance);
                     _playerData.SetPlatformGunLevel(loadedData.PlatformGunLevel); 
                     _playerData.SetLivesCountLevel(loadedData.LivesCountLevel); 
                     _playerData.SetShieldTimerLevel(loadedData.ShieldTimerLevel); 
@@ -42,12 +40,12 @@ namespace Save
                     _playerData.SetDamageLevelLevel(loadedData.DamageLevel); 
                     _playerData.SetCritLevel(loadedData.CritLevel);
                     _playerData.SetShowTips(loadedData.ShowTips);
+                    _playerData.SetSound(loadedData.EnabledSound);
                 }
                 else
                     SetDefaultPlayerData();
                 return true;
             }
-             
         }
 
         private void SetDefaultPlayerData()
@@ -61,6 +59,7 @@ namespace Save
             _playerData.SetDamageLevelLevel(1);
             _playerData.SetCritLevel(1);
             _playerData.SetShowTips(true);
+            _playerData.SetSound(true);
         }
 
         private bool IsDataAlreadyExist() => File.Exists(FullPath);

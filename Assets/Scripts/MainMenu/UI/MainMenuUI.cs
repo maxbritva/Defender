@@ -13,7 +13,9 @@ namespace MainMenu.UI
     {
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _showShopButton;
-        [SerializeField] private GameObject _shop;
+        [SerializeField] private Button _showSettingsButton;
+        [SerializeField] private GameObject _shopPanel;
+        [SerializeField] private GameObject _settingsPanel;
         [SerializeField] private TMP_Text _topScoreText;
         private ISceneLoadMediator _sceneLoader;
         private PlayerData _playerData;
@@ -23,28 +25,26 @@ namespace MainMenu.UI
         {
             _startGameButton.onClick.AddListener(StartGameClick);
             _showShopButton.onClick.AddListener(ShowShopClick);
-           
+            _showSettingsButton.onClick.AddListener(ShowSettingsClick);
         }
 
         private void Start()
         {
             UpdateTopScoreText();
             _balanceView.UpdateValue(_playerData.Balance);
-          
         }
 
         private void OnDisable()
         {
             _startGameButton.onClick.RemoveListener(StartGameClick);
             _showShopButton.onClick.RemoveListener(ShowShopClick);
+            _showSettingsButton.onClick.RemoveListener(ShowSettingsClick);
         }
         
         private void StartGameClick() => _sceneLoader.StartGame();
-        private void ShowShopClick()
-        {
-            _shop.gameObject.SetActive(true);
-             Debug.Log(_playerData.Balance);
-        }
+        private void ShowShopClick() => _shopPanel.gameObject.SetActive(true);
+
+        private void ShowSettingsClick() => _settingsPanel.SetActive(true);
 
         private void UpdateTopScoreText() => _topScoreText.text = $"ТОП ОЧКОВ: { _playerData.TopScore}";
 
