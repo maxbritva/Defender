@@ -22,10 +22,6 @@ namespace Game.Weapons
         }
         private void OnDisable() => _pauseHandler.Remove(this);
         
-        protected virtual void OnTriggerEnter(Collider other) {
-            if (other.gameObject.TryGetComponent(out IDamageable damageable)) 
-                damageable.TakeDamage(_damage);
-        }
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
         private IEnumerator MoveAndSelfDestroy()

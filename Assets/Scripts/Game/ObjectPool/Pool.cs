@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Game.ObjectPool
 {
-    public class Pool : MonoBehaviour, IFactory<GameObject>
+    public class Pool : MonoBehaviour, IFactory<GameObject>, IEnemyProjectilePool
     {
         [SerializeField] private GameObject _prefab;
         private List<GameObject> _objectPool = new List<GameObject>();
@@ -18,8 +18,6 @@ namespace Game.ObjectPool
         public GameObject Create()
         {
             var newObject = _diContainer.InstantiatePrefab(_prefab);
-         //  var newObject = Instantiate(_prefab);
-          // _diContainer.Inject(newObject);
             newObject.SetActive(false);
             newObject.transform.SetParent(transform);
             _objectPool.Add(newObject);

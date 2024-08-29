@@ -1,4 +1,5 @@
-﻿using Game.FX;
+﻿using Audio;
+using Game.FX;
 using Game.GameCore.GameStates;
 using Game.Score;
 using SceneLoader;
@@ -22,6 +23,7 @@ namespace Game.UI
         private GameManager _gameManager;
         private EndGame _endGame;
         private SceneLoadMediator _sceneLoadMediator;
+        private AudioManager _audioManager;
         
         private void OnEnable()
         {
@@ -55,14 +57,19 @@ namespace Game.UI
             _playAgainButton.interactable = true;
         }
 
-        private void ExitButtonClick() => _sceneLoadMediator.GoToMainMenu();
+        private void ExitButtonClick()
+        {
+            _sceneLoadMediator.GoToMainMenu();
+            _audioManager.PlayMenuMusic();
+        }
 
         private void PlayAgainButtonClick() => _sceneLoadMediator.StartGame();
         private void UpdateScoreText() => _scoreText.text = $"ОЧКИ ЗА ИГРУ: {_scoreCollector.CurrentScore}";
 
         [Inject] private void Construct(GameManager gameManager, EndGame endGame, EndGameAnimation endGameAnimation, 
-            ScoreCollector scoreCollector, SceneLoadMediator sceneLoadMediator)
+            ScoreCollector scoreCollector, SceneLoadMediator sceneLoadMediator, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _endGameAnimation = endGameAnimation;
             _gameManager = gameManager;
             _scoreCollector = scoreCollector;

@@ -1,8 +1,11 @@
 ﻿
+using Game.ObjectPool;
+using UnityEngine;
+
 namespace Game.Interfaces
 {
     public interface IWeapon
     {
-        public void Shot(ObjectPool.Pool targetPool);
+        public void Shot(Pool pool);
     }
 }

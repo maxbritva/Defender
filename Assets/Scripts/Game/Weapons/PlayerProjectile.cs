@@ -17,7 +17,7 @@ namespace Game.Weapons
             _critChance = _upgradesHandler.CritCurrentLevel.Value;
         }
 
-        protected override void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable)) 
                 damageable.TakeDamage(CalculateDamage());
@@ -26,7 +26,7 @@ namespace Game.Weapons
 
         private int CalculateDamage() {
             _damage = (int)Random.Range(_initialDamage / 2f, _initialDamage * 1.5f);
-            if (Random.value < 0.1f) 
+            if (Random.value < _critChance) 
                 _damage *= 3;
             return _damage;
         }

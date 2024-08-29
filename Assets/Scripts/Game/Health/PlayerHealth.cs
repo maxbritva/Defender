@@ -1,11 +1,12 @@
 ﻿using System;
 using Game.GameCore.GameStates;
+using Game.Interfaces;
 using Player;
 using Zenject;
 
 namespace Game.Health
 {
-    public class PlayerHealth : ObjectHealth
+    public class PlayerHealth : ObjectHealth, IHealable
     {
         public Action OnPlayerHit;
         public Action OnPlayerHeal;
@@ -27,15 +28,12 @@ namespace Game.Health
                 _gameManager.OnGameEnded?.Invoke();
         }
 
-        public void TakeHeal(int value)
+        public override void TakeHeal(int value)
         {
-            if(value <=0) 
-                throw new ArgumentOutOfRangeException(nameof(value));
-            _currentHealth += value;
-            if (_currentHealth > _maxHealth)
-                _currentHealth = _maxHealth;
+            base.TakeHeal(value);
             OnPlayerHeal?.Invoke();
         }
+
         [Inject] private void Construct(UpgradesHandler upgradesHandler, GameManager gameManager)
         {
             _upgradesHandler = upgradesHandler;

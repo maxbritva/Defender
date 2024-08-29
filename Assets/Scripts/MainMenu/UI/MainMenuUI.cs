@@ -1,5 +1,4 @@
-﻿using System;
-using MainMenu.Shop;
+﻿using MainMenu.Shop;
 using Player;
 using SceneLoader;
 using TMPro;
@@ -13,6 +12,7 @@ namespace MainMenu.UI
     {
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _showShopButton;
+      
         [SerializeField] private Button _showSettingsButton;
         [SerializeField] private GameObject _shopPanel;
         [SerializeField] private GameObject _settingsPanel;
@@ -26,6 +26,7 @@ namespace MainMenu.UI
             _startGameButton.onClick.AddListener(StartGameClick);
             _showShopButton.onClick.AddListener(ShowShopClick);
             _showSettingsButton.onClick.AddListener(ShowSettingsClick);
+            
         }
 
         private void Start()

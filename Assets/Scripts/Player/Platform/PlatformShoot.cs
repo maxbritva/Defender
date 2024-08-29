@@ -1,5 +1,4 @@
-﻿using System;
-using Game.GameCore.Pause;
+﻿using Game.GameCore.Pause;
 using Game.Interfaces;
 using Game.ObjectPool;
 using Player.Input;
@@ -11,7 +10,7 @@ namespace Player.Platform
     public class PlatformShoot : MonoBehaviour, IPause
     {
         [SerializeField] private GameObject _prefab;
-        [SerializeField]private Pool _projectilePool;
+        [SerializeField] private Pool _projectilePool;
         private UpgradesHandler _upgradesHandler; 
         private InputHandler _inputHandler;
         private PauseHandler _pauseHandler;

@@ -24,7 +24,7 @@ namespace Audio
         {
             if (_playerData.EnabledSound)
             {
-                _audioMixer.SetFloat("Volume", 0f);
+                _audioMixer.SetFloat("Volume", -6f);
                 _audioSource.Play();
             }
             else
@@ -45,7 +45,6 @@ namespace Audio
             SetSoundVolume();
         }
 
-        [Inject]
-        private void Construct(PlayerData playerData) => _playerData = playerData;
+        [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
     }
 }

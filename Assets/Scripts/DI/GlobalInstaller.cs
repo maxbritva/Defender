@@ -1,18 +1,19 @@
-﻿using MainMenu.Shop;
+﻿using Audio;
 using Player;
 using Save;
 using SceneLoader;
+using UnityEngine;
 using Zenject;
 
 namespace DI
 {
     public class GlobalInstaller : MonoInstaller
     {
-        
         public override void InstallBindings()
         {
             BindLoader();
             BindPlayerData();
+            Container.Bind<AudioManager>().FromComponentInNewPrefab(Resources.Load<AudioManager>($"AudioManager")).AsSingle().NonLazy();
         }
 
         private void BindLoader()

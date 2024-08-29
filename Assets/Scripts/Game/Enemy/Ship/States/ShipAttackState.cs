@@ -1,4 +1,5 @@
 ﻿using Game.Health;
+using Game.ObjectPool;
 using Game.StateMachine;
 using Game.Weapons;
 using UnityEngine;
@@ -8,14 +9,14 @@ namespace Game.Enemy.Ship.States
     public class ShipAttackState: ShipState
     {
         public ShipAttackState(IStateSwitcher stateSwitcher, ShipData data, Ship ship, 
-            ObjectPool.Pool pool, GunSingle gun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
+            IEnemyProjectilePool pool, ShipGun shipGun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
         {
             _pool = pool;
-            _gun = gun;
+            _shipGun = shipGun;
             _enemyHealth = enemyHealth;
         }
-        private ObjectPool.Pool _pool;
-        private GunSingle _gun;
+        private IEnemyProjectilePool _pool;
+        private ShipGun _shipGun;
         private EnemyHealth _enemyHealth;
         private float _timeBetweenAttack;
         private float _timeBetweenMove;
@@ -44,7 +45,7 @@ namespace Game.Enemy.Ship.States
             _timeBetweenAttack += Time.deltaTime;
             if (_timeBetweenAttack > 3f)
             {
-                _gun.Shot(_pool);
+                _shipGun.Shot(_pool);
                 _position = NewPosition();
                 _timeBetweenAttack = 0;
             }

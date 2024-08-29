@@ -28,6 +28,8 @@ namespace Game.GameCore.GameProgression
 
         public void Activate() => _timerCoroutine = StartCoroutine(TimerInGame());
 
+        public void LevelUp() => _level++;
+
         public void Deactivate()
         {
           if(_timerCoroutine != null)

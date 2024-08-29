@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Health
 {
-    public abstract class ObjectHealth: MonoBehaviour, IDamageable
+    public abstract class ObjectHealth: MonoBehaviour, IDamageable, IHealable
     {
         [SerializeField] protected int _currentHealth;
         [SerializeField] protected int _maxHealth;
@@ -18,6 +18,16 @@ namespace Game.Health
             if(damage <=0) 
                 throw new ArgumentOutOfRangeException(nameof(damage));
             _currentHealth -= damage;
+        }
+
+        public virtual void TakeHeal(int value)
+        {
+            if(value <=0) 
+                throw new ArgumentOutOfRangeException(nameof(value));
+            _currentHealth += value;
+            if (_currentHealth > _maxHealth)
+                _currentHealth = _maxHealth;
+          
         }
     }
 }

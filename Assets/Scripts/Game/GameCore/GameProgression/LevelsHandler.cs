@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using Game.Enemy;
+using Game.Enemy.Boss;
+using Game.GameCore.GameStates;
 using UnityEngine;
+using Zenject;
 
 namespace Game.GameCore.GameProgression
 {
     public class LevelsHandler: MonoBehaviour
     {
-
         [SerializeField] private List<Level> _levels = new List<Level>();
 
         [SerializeField]private EnemySpawner _asteroidSpawner;
         [SerializeField]private EnemySpawner _shipSpawner;
-        [SerializeField]private EnemySpawner _bossSpawner;
+        [SerializeField]private BossSpawner _bossSpawner;
+        private GameManager _gameManager;
 
         public void Activate(int level)
         {
@@ -29,8 +32,9 @@ namespace Game.GameCore.GameProgression
 
             if (_levels[level].BossIsActive)
             {
-                _bossSpawner.ChangeSpawnInterval(_levels[0].SpawnIntervalBoss);
+                _bossSpawner.ChangeBossHealth(_levels[0].SetBossHealth);
                 _bossSpawner.Activate();
+                _gameManager.OnBossLevelStarted?.Invoke();
             }
         }
 
@@ -40,5 +44,7 @@ namespace Game.GameCore.GameProgression
             _shipSpawner.Deactivate();
             _bossSpawner.Deactivate();
         }
+
+        [Inject] private void Construct(GameManager gameManager) => _gameManager = gameManager;
     }
 }

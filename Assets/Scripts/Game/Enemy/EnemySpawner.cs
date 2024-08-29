@@ -10,7 +10,6 @@ namespace Game.Enemy
     public class EnemySpawner : MonoBehaviour, IPause, IActivatable
     {
         [SerializeField] private Pool _enemyPool;
-        [Inject] private DiContainer _diContainer;
         [SerializeField] private float _spawnInterval;
         private PauseHandler _pauseHandler;
         private Coroutine _spawnCoroutine;
@@ -51,7 +50,6 @@ namespace Game.Enemy
             }
         }
         
-
       [Inject]  private void Construct(PauseHandler pauseHandler) => _pauseHandler = pauseHandler;
 
     }

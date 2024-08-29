@@ -15,10 +15,10 @@ namespace Game.Enemy.Ship
         [SerializeField] private List<Transform> _waypoints;
         [SerializeField] private GameObject _shipProjectile;
         private ShipStateMachine _shipStateMachine;
-        private Pool _pool;
+        private IEnemyProjectilePool _pool;
         private PauseHandler _pauseHandler;
         private EnemyHealth _enemyHealth;
-        private GunSingle _gunSingle;
+        private ShipGun _shipGun;
         private bool _isPaused;
         
         public List<Transform> Waypoints => _waypoints;
@@ -26,8 +26,8 @@ namespace Game.Enemy.Ship
         private void Awake()
         {
             _enemyHealth = GetComponent<EnemyHealth>();
-            _gunSingle = GetComponent<GunSingle>();
-            _shipStateMachine = new ShipStateMachine(this, _pool, _enemyHealth, _gunSingle);
+            _shipGun = GetComponent<ShipGun>();
+            _shipStateMachine = new ShipStateMachine(this, _pool, _enemyHealth, _shipGun);
         }
 
         private void Update()
@@ -46,7 +46,7 @@ namespace Game.Enemy.Ship
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        [Inject] private void Construct(ObjectPool.Pool pool,PauseHandler pauseHandler)
+        [Inject] private void Construct(IEnemyProjectilePool pool,PauseHandler pauseHandler)
         {
             _pool = pool;
             _pauseHandler = pauseHandler;
