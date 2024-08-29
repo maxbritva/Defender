@@ -32,7 +32,7 @@ namespace Game.GameCore.GameProgression
 
             if (_levels[level].BossIsActive)
             {
-                _bossSpawner.ChangeBossHealth(_levels[0].SetBossHealth);
+                _bossSpawner.ChangeBossHealth(_levels[level].SetBossHealth);
                 _bossSpawner.Activate();
                 _gameManager.OnBossLevelStarted?.Invoke();
             }

@@ -10,7 +10,7 @@ namespace Game.Enemy.Boss
     {
         private PauseHandler _pauseHandler;
         private Coroutine _minionCoroutine;
-        private const float Speed = 1.5f;
+        private const float Speed = 4f;
         private bool _isPaused;
         
         private void OnEnable() 

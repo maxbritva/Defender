@@ -9,7 +9,7 @@ namespace Game.Enemy.Boss.States
         private BossBigGun _bossBigGun;
         private BossBigProjectile _bigProjectile;
         private float _currentTime;
-        private const float PhaseTimer = 2f; 
+        private const float PhaseTimer = 1.5f; 
         
         public BossThirdPhaseState(IStateSwitcher stateSwitcher, Boss boss, BossBigGun bossBigGun, BossBigProjectile bossBigProjectile) : base(stateSwitcher, boss)
         {

@@ -15,8 +15,6 @@ namespace Game.GameCore.GameStates
 
         public Action OnBossLevelStarted;
         public Action OnBossLevelEnded;
-        
-        
         private PauseHandler _pauseHandler;
         private GameTimer _gameTimer;
         private LevelSystem _levelSystem;
@@ -41,15 +39,6 @@ namespace Game.GameCore.GameStates
             OnBossLevelEnded -= BossLevelEnd;
         }
 
-        [Inject] private void Construct(PauseHandler pauseHandler, GameTimer gameTimer, LevelSystem levelSystem, BonusSpawner bonusSpawner, AudioManager audioManager)
-        {
-            _audioManager = audioManager;
-            _bonusSpawner = bonusSpawner;
-            _levelSystem = levelSystem;
-            _gameTimer = gameTimer;
-            _pauseHandler = pauseHandler;
-        }
-
         private void StartGameplay()
         {
             _pauseHandler.SetPause(false);
@@ -60,16 +49,15 @@ namespace Game.GameCore.GameStates
 
         private void BossLevelStart()
         {
-            Debug.Log(3333);
-            _gameTimer.SetPause(true);
-            _bonusSpawner.Deactivate();
+            _gameTimer.Deactivate();
+            _bonusSpawner.SetPause(true);
         }
         
         private void BossLevelEnd()
         {
-           // _gameTimer.LevelUp();
-            _gameTimer.Activate();
-            _bonusSpawner.Activate();
+           _gameTimer.SetPause(false);
+           _bonusSpawner.SetPause(false);
+           //_gameTimer.LevelUp();
         }
 
         private void EndGame()
@@ -78,6 +66,15 @@ namespace Game.GameCore.GameStates
             _levelSystem.Deactivate();
             _bonusSpawner.Deactivate();
             _pauseHandler.SetPause(true);
+        }
+        
+        [Inject] private void Construct(PauseHandler pauseHandler, GameTimer gameTimer, LevelSystem levelSystem, BonusSpawner bonusSpawner, AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+            _bonusSpawner = bonusSpawner;
+            _levelSystem = levelSystem;
+            _gameTimer = gameTimer;
+            _pauseHandler = pauseHandler;
         }
     }
 }

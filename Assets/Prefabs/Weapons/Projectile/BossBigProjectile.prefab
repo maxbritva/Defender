@@ -351,5 +351,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 0
-  _maxHealth: 30
+  _maxHealth: 20
   _scoreForDestroy: 10

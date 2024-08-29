@@ -23,14 +23,14 @@ namespace Game.Enemy.Boss.States
             base.Enter();
             _bossLevelStartFX.StartBossLevelFX(_boss.transform);
             _currentTime = 0f;
-            _bossShield.SetShield(true);
+            _bossShield.SetCollider(true);
         }
 
         public override void Exit()
         {
             base.Exit();
             _bossLevelStartFX.EndBossLevelFX();
-            _bossShield.SetShield(false);
+            _bossShield.SetCollider(false);
         }
 
         public override void Update()

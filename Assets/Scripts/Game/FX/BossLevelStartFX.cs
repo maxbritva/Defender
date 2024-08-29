@@ -23,7 +23,7 @@ namespace Game.FX
         {
             _portalPrefab.SetActive(true);
             _portalPrefab.gameObject.transform.position = targetTransform.position;
-            _portalPrefab.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+           // _portalPrefab.gameObject.transform.Rotate(new Vector3(90, 180, 0));
         }
         private void ActivateBossAnimation(Transform targetTransform) => targetTransform.DOScale(1f, 2.5f).SetEase(Ease.InOutSine);
 

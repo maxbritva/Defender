@@ -33,7 +33,7 @@ namespace Game.Enemy.Boss.States
             if(_attackCounter < 3)
             {
                 _currentTime += Time.deltaTime;
-                if (_currentTime >= 1.3f)
+                if (_currentTime >= 5f)
                 {
                     _boss.transform.position = _bossSpawner.SpawnPoints[Random.Range(0, _bossSpawner.SpawnPoints.Count)].position;
                     _gunMultiply.Shot(_enemyProjectilePool);

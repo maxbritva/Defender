@@ -28,12 +28,18 @@ namespace Game.GameCore.GameProgression
 
         public void Activate() => _timerCoroutine = StartCoroutine(TimerInGame());
 
-        public void LevelUp() => _level++;
+        public void LevelUp()
+        {
+            _progression = 0;
+            _level++;
+            OnProgressionChanged?.Invoke();
+            _levelSystem.OnLevelChanged?.Invoke();
+        }
 
         public void Deactivate()
         {
           if(_timerCoroutine != null)
-              StopCoroutine(TimerInGame());
+              StopCoroutine(_timerCoroutine);
         }
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
@@ -45,13 +51,8 @@ namespace Game.GameCore.GameProgression
                 {
                     _progression++;
                     OnProgressionChanged?.Invoke();
-                    if (_progression >= 30)
-                    {
-                        _progression = 0;
-                        _level++;
-                        OnProgressionChanged?.Invoke();
-                        _levelSystem.OnLevelChanged?.Invoke();
-                    }
+                    if (_progression >= 30) 
+                        LevelUp();
                 }
                 yield return _tick;
             }

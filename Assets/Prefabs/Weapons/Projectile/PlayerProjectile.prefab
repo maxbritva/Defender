@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 3
-  _speed: 8
+  _speed: 12
   _selfDestroyTimer: 4
 --- !u!82 &267156114112419374
 AudioSource:

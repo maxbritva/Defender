@@ -6,21 +6,24 @@ namespace Game.Enemy.Boss
     public class BossShield : MonoBehaviour
     {
         [SerializeField] private SphereCollider _bossShieldCollider;
-        [SerializeField] private ParticleSystem _particleSystemShield;
+        [SerializeField] private GameObject _particleSystemGameObject;
 
-        private void Start() => SetShield(false);
+        public void SetCollider(bool enable)
+        {
+            _bossShieldCollider.enabled = enable;
+        }
 
         public void SetShield(bool enable)
         {
             if (enable)
             {
-                _bossShieldCollider.enabled = false;
-                _particleSystemShield.Play();
+                _bossShieldCollider.enabled = true;
+                _particleSystemGameObject.SetActive(true);
             }
             else
             {
-                _bossShieldCollider.enabled = true;
-                _particleSystemShield.Stop();
+                _bossShieldCollider.enabled = false;
+                _particleSystemGameObject.SetActive(false);
             }
         }
     }

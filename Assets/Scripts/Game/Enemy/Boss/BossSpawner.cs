@@ -16,7 +16,6 @@ namespace Game.Enemy.Boss
         [SerializeField] private GameObject _bossPrefab;
         [SerializeField] private Pool _minionPool;
         private PauseHandler _pauseHandler;
-        private DiContainer _diContainer;
         private Coroutine _minionsCoroutine;
         private Boss _boss;
         private GameManager _gameManager;
@@ -26,8 +25,6 @@ namespace Game.Enemy.Boss
         private void OnEnable() => _pauseHandler.Add(this);
 
         private void OnDisable() => _pauseHandler.Remove(this);
-
-       // private void Start() => CreateBossPrefab();
 
         public List<Transform> SpawnPoints => _spawnPoints;
 
@@ -62,7 +59,7 @@ namespace Game.Enemy.Boss
             _time = 0;
             while (true)
             {
-                while (_time < 2.5f)
+                while (_time < 1f)
                 {
                     if (_isPaused == false) 
                         _time += Time.deltaTime;
@@ -74,14 +71,8 @@ namespace Game.Enemy.Boss
                 yield return null;
             }
         }
-        private void CreateBossPrefab()
+        [Inject] private void Construct(PauseHandler pauseHandler, GameManager gameManager, Boss boss)
         {
-            _boss = _diContainer.InstantiatePrefab(_bossPrefab).GetComponent<Boss>();
-           Deactivate();
-        }
-        [Inject] private void Construct(DiContainer diContainer, PauseHandler pauseHandler, GameManager gameManager, Boss boss)
-        {
-            _diContainer = diContainer;
             _pauseHandler = pauseHandler;
             _gameManager = gameManager;
             _boss = boss;

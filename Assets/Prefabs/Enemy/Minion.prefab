@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 0
-  _maxHealth: 30
+  _maxHealth: 25
   _scoreForDestroy: 10
 --- !u!1 &4429190949627566293
 GameObject:
