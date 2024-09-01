@@ -8,6 +8,7 @@ namespace Game.Enemy.Boss
 {
     public class Minion: MonoBehaviour, IPause
     {
+        private BossSpawner _bossSpawner;
         private PauseHandler _pauseHandler;
         private Coroutine _minionCoroutine;
         private const float Speed = 4f;
@@ -21,6 +22,7 @@ namespace Game.Enemy.Boss
         private void OnDisable() 
         {
             _pauseHandler.Remove(this);
+            _bossSpawner.RemoveMinionFromList(gameObject);
             if(_minionCoroutine != null)
                 StopCoroutine(Attack());
         }
@@ -42,8 +44,9 @@ namespace Game.Enemy.Boss
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
         [Inject]
-        private void Construct(PauseHandler pauseHandler)
+        private void Construct(PauseHandler pauseHandler, BossSpawner bossSpawner)
         {
+            _bossSpawner = bossSpawner;
             _pauseHandler = pauseHandler;
         }
     }

@@ -9,7 +9,6 @@ namespace Player.Platform
 {
     public class PlatformShoot : MonoBehaviour, IPause
     {
-        [SerializeField] private GameObject _prefab;
         [SerializeField] private Pool _projectilePool;
         private UpgradesHandler _upgradesHandler; 
         private InputHandler _inputHandler;

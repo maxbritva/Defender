@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Game.GameCore.Pause;
+using Game.Health;
 using Game.Interfaces;
 using Game.ObjectPool;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace Game.Enemy
     {
         [SerializeField] private Pool _enemyPool;
         [SerializeField] private float _spawnInterval;
+        private List<GameObject> _enemyList = new List<GameObject>();
         private PauseHandler _pauseHandler;
         private Coroutine _spawnCoroutine;
         private bool _isPaused;
@@ -33,6 +36,17 @@ namespace Game.Enemy
         public void ChangeSpawnInterval(float value) => _spawnInterval = value;
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
+        public void HideAllEnemy()
+        {
+            if (_enemyList.Count <= 0) return;
+            for (int i = 0; i < _enemyList.Count; i++)
+            {
+                if(_enemyList[i].activeInHierarchy)
+                    _enemyList[i].GetComponent<EnemyHealth>().DestroyEnemy();
+            }
+            _enemyList.Clear();
+        }
+
         private IEnumerator Spawn()
         {
             _time = 0;
@@ -44,7 +58,9 @@ namespace Game.Enemy
                         _time += Time.deltaTime;
                     yield return null;
                 }
-                _enemyPool.GetFromPool();
+
+                var enemy = _enemyPool.GetFromPool();
+                _enemyList.Add(enemy);
                 _time = 0;
                 yield return null;
             }

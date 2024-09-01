@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.Health;
 using Game.Weapons.Bonus;
-using Player;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -12,14 +13,15 @@ namespace Game.FX
     {
         [SerializeField] private CinemachineCamera _camera;
         private CinemachineBasicMultiChannelPerlin _channelPerlin;
+        private CancellationTokenSource _cancellationToken;
         private readonly float _shakeIntensity = 4f;
-        private Coroutine _shakeCoroutine;
         private PlayerHealth _playerHealth;
         private Bomb _bomb;
-        
+
         private void OnEnable()
         {
             _channelPerlin = _camera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+            _cancellationToken = new CancellationTokenSource();
             _playerHealth.OnPlayerHit += CameraShake;
             _bomb.OnBombActivated += CameraShake;
         }
@@ -28,16 +30,16 @@ namespace Game.FX
         {
             _playerHealth.OnPlayerHit -= CameraShake;
             _bomb.OnBombActivated -= CameraShake;
-            if(_shakeCoroutine != null)
-                StopCoroutine(_shakeCoroutine);
         }
 
-        public void CameraShake() => _shakeCoroutine = StartCoroutine(Shaking());
+        private async void CameraShake() => await Shake();
 
-        private IEnumerator Shaking() {
-           SetAmplitude(_shakeIntensity);
-           yield return new WaitForSeconds(0.3f);
-           SetAmplitude(0f);
+        private async UniTask Shake()
+        {
+            SetAmplitude(_shakeIntensity);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), _cancellationToken.IsCancellationRequested);
+            SetAmplitude(0f);
+            _cancellationToken.Cancel();
         }
 
         private void SetAmplitude(float value) => _channelPerlin.AmplitudeGain = value;

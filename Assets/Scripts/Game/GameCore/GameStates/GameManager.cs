@@ -50,14 +50,15 @@ namespace Game.GameCore.GameStates
         private void BossLevelStart()
         {
             _gameTimer.Deactivate();
-            _bonusSpawner.SetPause(true);
+            _bonusSpawner.Deactivate();
+            _bonusSpawner.HideAllBonuses();
         }
         
         private void BossLevelEnd()
         {
-           _gameTimer.SetPause(false);
-           _bonusSpawner.SetPause(false);
-           //_gameTimer.LevelUp();
+            _gameTimer.Activate();
+            _bonusSpawner.Activate();
+            _gameTimer.LevelUp();
         }
 
         private void EndGame()

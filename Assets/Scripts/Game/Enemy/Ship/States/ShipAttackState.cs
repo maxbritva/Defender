@@ -9,13 +9,13 @@ namespace Game.Enemy.Ship.States
     public class ShipAttackState: ShipState
     {
         public ShipAttackState(IStateSwitcher stateSwitcher, ShipData data, Ship ship, 
-            IEnemyProjectilePool pool, ShipGun shipGun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
+            Pool pool, ShipGun shipGun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
         {
             _pool = pool;
             _shipGun = shipGun;
             _enemyHealth = enemyHealth;
         }
-        private IEnemyProjectilePool _pool;
+        private Pool _pool;
         private ShipGun _shipGun;
         private EnemyHealth _enemyHealth;
         private float _timeBetweenAttack;

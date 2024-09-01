@@ -32,6 +32,8 @@ namespace Game.GameCore.GameProgression
 
             if (_levels[level].BossIsActive)
             {
+                _shipSpawner.HideAllEnemy();
+                _asteroidSpawner.HideAllEnemy();
                 _bossSpawner.ChangeBossHealth(_levels[level].SetBossHealth);
                 _bossSpawner.Activate();
                 _gameManager.OnBossLevelStarted?.Invoke();

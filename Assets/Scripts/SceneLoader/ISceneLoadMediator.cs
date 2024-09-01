@@ -4,6 +4,5 @@
     {
         void GoToMainMenu();
         void StartGame();
-        void EndGame(GameScoreData data);
     }
 }

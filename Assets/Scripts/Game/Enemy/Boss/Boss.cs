@@ -23,6 +23,7 @@ namespace Game.Enemy.Boss
         private bool _isPaused;
 
         private void OnEnable() => _pauseHandler.Add(this);
+
         private void OnDisable() => _pauseHandler.Remove(this);
 
         private void Awake()

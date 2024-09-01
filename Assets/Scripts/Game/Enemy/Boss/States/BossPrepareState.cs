@@ -6,7 +6,7 @@ namespace Game.Enemy.Boss.States
 {
     public class BossPrepareState : BossState
     {
-        private const float PrepareWaitTimer = 4f;
+        private const float PrepareWaitTimer = 2f;
         private float _currentTime;
         private BossLevelStartFX _bossLevelStartFX;
         private BossShield _bossShield;

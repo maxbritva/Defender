@@ -31,9 +31,15 @@ namespace Game.Bonus
 
         public void Deactivate() {
           if(_bonusCoroutine != null)
-            StopCoroutine(BonusSpawn());
+            StopCoroutine(_bonusCoroutine);
         }
         public void SetPause(bool isPaused) => _isPaused = isPaused;
+
+        public void HideAllBonuses()
+        {
+            for (int i = 0; i < _bonuses.Count; i++) 
+                _bonuses[i].SetActive(false);
+        }
         
         private void InitializeBonuses()
         {

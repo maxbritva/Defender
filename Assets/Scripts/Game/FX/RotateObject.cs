@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Game.FX
@@ -7,12 +8,22 @@ namespace Game.FX
     {
         [SerializeField] private Vector3 _rotation;
 
-        private void OnEnable() => StartCoroutine(StartRotation());
+        private async void OnEnable()
+        {
+            try
+            {
+                await Rotate();
+            }
+            catch (OperationCanceledException) { }
+        }
 
-        private IEnumerator StartRotation() {
-            while (true) {
+        private async UniTask Rotate()
+        {
+            while (gameObject.activeInHierarchy)
+            {
                 transform.Rotate(_rotation * Time.deltaTime);
-                yield return null;
-            }}
+                await UniTask.Yield(PlayerLoopTiming.Update, destroyCancellationToken);
+            }
+        }
     }
 }

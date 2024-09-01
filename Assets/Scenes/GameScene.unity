@@ -615,8 +615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f512136bc9d44cdf821e8739e985e93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageColor: {r: 0.87169814, g: 0.024993507, b: 0, a: 0}
-  _healColor: {r: 0.023175366, g: 0.81886786, b: 0.66441303, a: 0}
+  _damageColor: {r: 0.87169814, g: 0.024993507, b: 0, a: 1}
+  _healColor: {r: 0.023175366, g: 0.81886786, b: 0.66441303, a: 1}
   _frame: {fileID: 1102235252}
 --- !u!114 &165186793
 MonoBehaviour:
@@ -2125,8 +2125,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: ef35502bb78cd4d4fabfb410166d24d8, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 81ab279bd85484d57b6af7ae105c5b13, type: 3}
-  m_Resource: {fileID: 8300000, guid: 81ab279bd85484d57b6af7ae105c5b13, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 539ba62a6cb2f4a4c8400c44c876c761, type: 3}
+  m_Resource: {fileID: 8300000, guid: 539ba62a6cb2f4a4c8400c44c876c761, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.324
   m_Pitch: 1
@@ -2853,7 +2853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3890176df427420ca78d1f2d8045baf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 941658818399263537, guid: 153153213db0b0a4dacf073453a30d95, type: 3}
   _damageTextPool: {fileID: 621673560}
 --- !u!114 &621673560
 MonoBehaviour:
@@ -2879,8 +2878,6 @@ GameObject:
   - component: {fileID: 659941652}
   - component: {fileID: 659941654}
   - component: {fileID: 659941653}
-  - component: {fileID: 659941655}
-  - component: {fileID: 659941656}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -2916,6 +2913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e3394587c744d3a5921f061d40f0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHealth: {fileID: 1007923044}
   _fireButton: {fileID: 889779204}
   _joystick: {fileID: 2929252283268049043}
   _mobileUI: {fileID: 1961344445}
@@ -2952,9 +2950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 659941656}
   - {fileID: 659941653}
-  - {fileID: 659941655}
   - {fileID: 2015092445}
   _installerPrefabs: []
   _autoRun: 1
@@ -2973,31 +2969,6 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
---- !u!114 &659941655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659941651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978b0424a9d943488695fa165c4a8a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 1007923044}
---- !u!114 &659941656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659941651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 082ee59816234c43b63ef3af2a1105c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &664184134
 GameObject:
   m_ObjectHideFlags: 0
@@ -3862,7 +3833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5cad92101648ba97d5605f9d4024eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 7980782171304061121, guid: fc80c949197ccb2438561c2b93dc6fd0, type: 3}
   _projectilePool: {fileID: 609029407}
 --- !u!1 &987070435
 GameObject:
@@ -5493,10 +5463,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levels:
   - _spawnIntervalAsteroids: 5
-    _spawnIntervalShips: 20
+    _spawnIntervalShips: 3
     _setBossHealth: 100
     _asteroidIsActive: 1
-    _shipIsActive: 0
+    _shipIsActive: 1
     _bossIsActive: 0
   - _spawnIntervalAsteroids: 1
     _spawnIntervalShips: 1
@@ -7647,7 +7617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0853ca4220284f749fe4a7d0d2310aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 725748389856807714, guid: 863fbfedd11a445f28cb75d1d7b59dc7, type: 3}
   _destroyEffectPool: {fileID: 1904626374}
 --- !u!114 &1904626374
 MonoBehaviour:
@@ -8121,7 +8090,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2015092443}
   - component: {fileID: 2015092445}
-  - component: {fileID: 2015092446}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -8164,26 +8132,6 @@ MonoBehaviour:
   - {fileID: 8542302728684049404, guid: 6986bbace2e8132489123ac4b9f391a2, type: 3}
   - {fileID: 5410025554922555902, guid: a998e5ee916ea1449a1cb61543e534cd, type: 3}
   _placerPlatforms: {fileID: 966299504}
-  _platformConfiguration: {fileID: 2015092446}
---- !u!114 &2015092446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015092442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a435a00c674fd782f9257b935d29aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefabPlatforms:
-  - {fileID: 5639062163340668415, guid: 433dca183fe6cbf469deb805e8546e6d, type: 3}
-  - {fileID: 6957102610187226048, guid: a1e47b3b655606547981b1de3c719686, type: 3}
-  - {fileID: 7641452902998443571, guid: d12dbd565feeb524ca531da622d7201a, type: 3}
-  - {fileID: 8542302728684049404, guid: 6986bbace2e8132489123ac4b9f391a2, type: 3}
-  - {fileID: 5410025554922555902, guid: a998e5ee916ea1449a1cb61543e534cd, type: 3}
-  _placerPlatform: {fileID: 966299504}
 --- !u!1001 &2038489771
 PrefabInstance:
   m_ObjectHideFlags: 0

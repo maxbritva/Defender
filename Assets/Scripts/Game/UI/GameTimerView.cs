@@ -1,4 +1,5 @@
-﻿using Game.GameCore.GameProgression;
+﻿using DG.Tweening;
+using Game.GameCore.GameProgression;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ namespace Game.UI
         {
             _levelSystem.OnLevelChanged += UpdateLevelText;
             _gameTimer.OnProgressionChanged += UpdateProgression;
+            _progressBar.transform.DOScaleX(_gameTimer.Progression / 30f, 0.5f);
         }
 
         private void OnDisable()
@@ -38,8 +40,8 @@ namespace Game.UI
             _levelText.text = _level.ToString();
         }
 
-        private void UpdateProgression() => _progressBar.transform.localScale = 
-            new Vector3(_gameTimer.Progression / 30f,1,1);
+        private void UpdateProgression() => 
+            _progressBar.transform.DOScaleX(_gameTimer.Progression / 30f, 0.1f).SetEase(Ease.InOutSine);
 
         [Inject] private void Construct(LevelSystem levelSystem, GameTimer gameTimer)
         {

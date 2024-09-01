@@ -15,6 +15,7 @@ namespace Game.Enemy.Boss
         [SerializeField] private List<Transform> _spawnPoints;
         [SerializeField] private GameObject _bossPrefab;
         [SerializeField] private Pool _minionPool;
+        private List<GameObject> _minions = new List<GameObject>();
         private PauseHandler _pauseHandler;
         private Coroutine _minionsCoroutine;
         private Boss _boss;
@@ -28,7 +29,7 @@ namespace Game.Enemy.Boss
 
         public List<Transform> SpawnPoints => _spawnPoints;
 
-        public void ChangeBossHealth(int value) => _boss.GetComponent<EnemyHealth>().SetMaxHealth(value);
+        public void ChangeBossHealth(int value) => _boss.GetComponent<BossEnemyHealth>().SetMaxHealth(value);
 
         public void StartSpawnMinions() => _minionsCoroutine = StartCoroutine(SpawnMinions());
 
@@ -47,13 +48,21 @@ namespace Game.Enemy.Boss
             _boss.gameObject.SetActive(true);
         }
 
-        public void Deactivate()
-        {
-            _gameManager.OnBossLevelEnded?.Invoke();
-            _boss.gameObject.SetActive(false);
-            StopSpawnMinions();
-        }
+        public void Deactivate() => HideAllMinions();
 
+        public void RemoveMinionFromList(GameObject targetMinion) => _minions.Remove(targetMinion);
+
+        private void HideAllMinions()
+        {
+            if (_minions.Count <= 0) return;
+            for (int i = 0; i < _minions.Count; i++)
+            {
+                if(_minions[i].activeInHierarchy)
+                    _minions[i].GetComponent<EnemyHealth>().DestroyEnemy();
+            }
+            _minions.Clear();
+        }
+        
         private IEnumerator SpawnMinions()
         {
             _time = 0;
@@ -66,6 +75,7 @@ namespace Game.Enemy.Boss
                     yield return null;
                 }
                 var minion = _minionPool.GetFromPool();
+                _minions.Add(minion);
                 minion.transform.SetParent(transform);
                 _time = 0;
                 yield return null;

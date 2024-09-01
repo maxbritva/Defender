@@ -8,9 +8,7 @@ namespace SceneLoader
         public SceneLoadMediator(ISceneLoader sceneLoader) => _sceneLoader = sceneLoader;
 
         public void GoToMainMenu() => _sceneLoader.Load(SceneID.MainMenu);
-        
-        public void EndGame(GameScoreData data) => _sceneLoader.Load(data);
-        
+
         public void StartGame() => _sceneLoader.Load(SceneID.Game);
         
     }

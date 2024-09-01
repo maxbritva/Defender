@@ -15,8 +15,7 @@ namespace MainMenu.Shop
         private void OnEnable() => _playerData.BalanceChanged += UpdateValue;
         private void OnDisable() => _playerData.BalanceChanged -= UpdateValue;
 
-        public void UpdateValue(int coins) =>
-            _balancePlayerData.text = $"АСТРОБАКСОВ: {coins}";
+        private void UpdateValue(int coins) => _balancePlayerData.text = $"АСТРОБАКСОВ: {coins}";
         [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
     }
 }

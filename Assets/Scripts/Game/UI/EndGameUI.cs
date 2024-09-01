@@ -1,6 +1,7 @@
 ﻿using Audio;
 using Game.FX;
 using Game.GameCore.GameStates;
+using Game.GameCore.GameStates.EndGame;
 using Game.Score;
 using SceneLoader;
 using TMPro;
@@ -21,7 +22,7 @@ namespace Game.UI
         private EndGameAnimation _endGameAnimation;
         private ScoreCollector _scoreCollector;
         private GameManager _gameManager;
-        private EndGame _endGame;
+        private EndGameManager _endGameManager;
         private SceneLoadMediator _sceneLoadMediator;
         private AudioManager _audioManager;
         
@@ -46,7 +47,7 @@ namespace Game.UI
         {
             _gameplayPanel.SetActive(false);
             _endGamePanel.SetActive(true);
-            _endGame.Initialize();
+            _endGameManager.Initialize();
             UpdateScoreText();
             _endGameAnimation.StartAnimation();
         }
@@ -66,14 +67,14 @@ namespace Game.UI
         private void PlayAgainButtonClick() => _sceneLoadMediator.StartGame();
         private void UpdateScoreText() => _scoreText.text = $"ОЧКИ ЗА ИГРУ: {_scoreCollector.CurrentScore}";
 
-        [Inject] private void Construct(GameManager gameManager, EndGame endGame, EndGameAnimation endGameAnimation, 
+        [Inject] private void Construct(GameManager gameManager, EndGameManager endGameManager, EndGameAnimation endGameAnimation, 
             ScoreCollector scoreCollector, SceneLoadMediator sceneLoadMediator, AudioManager audioManager)
         {
             _audioManager = audioManager;
             _endGameAnimation = endGameAnimation;
             _gameManager = gameManager;
             _scoreCollector = scoreCollector;
-            _endGame = endGame;
+            _endGameManager = endGameManager;
             _sceneLoadMediator = sceneLoadMediator;
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections;
-using Game.GameCore.GameStates;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Game.GameCore.GameStates.EndGame;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -10,47 +12,40 @@ namespace Game.FX
     [RequireComponent(typeof(AudioSource))]
     public class EndGameAnimation : MonoBehaviour
     {
-        public Action OnAnimationEnd;
+        public event Action OnAnimationEnd;
+        
         [SerializeField] private TMP_Text _textCounter;
         [SerializeField] private AudioSource _audioSource;
-        private EndGame _endGame;
-        private WaitForSeconds _tick = new WaitForSeconds(0.1f);
+        private EndGameManager _endGameManager;
+        private CancellationTokenSource _cancellationToken;
         private int _currentValue;
         private int _targetValue;
         private float _durationAnimation;
         private float _soundFXTimerTick;
         private float _animateRate;
 
-        public void StartAnimation()
+        public async UniTask StartAnimation()
         {
-            _durationAnimation = _endGame.BalanceToAdd < 10 ? 1f : 3f;
-            StartCoroutine(Animate(_endGame.BalanceToAdd, 0, _textCounter));
+            _cancellationToken = new CancellationTokenSource();
+            _durationAnimation = _endGameManager.BalanceToAdd < 10 ? 1f : 2.5f;
+            await Animate(_endGameManager.BalanceToAdd,0);
         }
 
-        private IEnumerator Animate(float targetValue, float currentValue, TMP_Text targetText)
+        private async UniTask Animate(float targetValue, float currentValue)
         {
-            StartCoroutine(SoundFX());
-           _animateRate = Mathf.Abs(targetValue - currentValue) / _durationAnimation;
+            _animateRate = Mathf.Abs(targetValue - currentValue) / _durationAnimation;
+            _audioSource.Play();
+            _audioSource.pitch = 1f;
+            _audioSource.DOPitch(1.5f, _durationAnimation);
             while (currentValue < targetValue) {
                 currentValue = Mathf.MoveTowards(currentValue, targetValue, _animateRate * Time.deltaTime);
-                
-             _textCounter.text = ((int)currentValue).ToString();
-                yield return null;
+                _textCounter.text = Mathf.FloorToInt(currentValue).ToString();
+                await UniTask.Yield(PlayerLoopTiming.Update, _cancellationToken.Token);
             }
+            _cancellationToken.Cancel();
+            _audioSource.Stop();
             OnAnimationEnd?.Invoke();
         }
-        
-        private IEnumerator SoundFX() {
-            _soundFXTimerTick = 0f;
-            _audioSource.pitch = 1f;
-            while (_soundFXTimerTick <=_durationAnimation) {
-                _audioSource.Play();
-                _audioSource.pitch += 0.1f;
-                _soundFXTimerTick += 0.1f;
-                yield return _tick;
-            }
-        }
-
-        [Inject] private void Construct(EndGame endGame) => _endGame = endGame;
+        [Inject] private void Construct(EndGameManager endGameManager) => _endGameManager = endGameManager;
     }
 }

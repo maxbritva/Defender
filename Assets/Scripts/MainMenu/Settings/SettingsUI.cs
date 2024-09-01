@@ -1,21 +1,22 @@
-using System;
-using MainMenu.Settings;
 using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace MainMenu.UI
+namespace MainMenu.Settings
 {
     public class SettingsUI : MonoBehaviour
     {
+        [Header("Buttons")]
         [SerializeField] private Button _showTipsButton;
         [SerializeField] private Button _EnableSoundButton;
         [SerializeField] private Button _resetButton;
+        [Header("texts")]
         [SerializeField] private TMP_Text _tipsText;
         [SerializeField] private TMP_Text _soundText;
-        private SettingsHandler _settingsHandler;
+
+        private SettingsMediator _settingsMediator;
         private PlayerData _playerData;
 
         private void Start()
@@ -41,28 +42,28 @@ namespace MainMenu.UI
 
         private void ShowTipsButtonClick()
         {
-            _settingsHandler.ChangeShowTipsValue();
+            _settingsMediator.ChangeShowTipsValue();
             SetTipsText(_playerData.ShowTips);
         }
 
         private void EnableSoundButtonClick()
         {
-            _settingsHandler.ChangeSoundEnableValue();
+            _settingsMediator.ChangeSoundEnableValue();
             SetSoundText(_playerData.EnabledSound);
         }
 
-        private void ResetDataButtonClick() => _settingsHandler.ResetData();
+        private void ResetDataButtonClick() => _settingsMediator.ResetData();
 
         private void SetTipsText(bool enable) => _tipsText.text = 
-            enable ? "Отключить подсказки" : "Включить подсказки";
+            enable ? "Disable tips" : "Enable tips";
         
         private void SetSoundText(bool enable) => _soundText.text = 
-            enable ? "Отключить звуки" : "Включить звуки";
+            enable ? "Turn off sounds" : "Turn on sounds";
 
         [Inject]
-        private void Construct(SettingsHandler settingsHandler, PlayerData playerData)
+        private void Construct(SettingsMediator settingsMediator, PlayerData playerData)
         {
-            _settingsHandler = settingsHandler;
+            _settingsMediator = settingsMediator;
             _playerData = playerData;
         }
     }

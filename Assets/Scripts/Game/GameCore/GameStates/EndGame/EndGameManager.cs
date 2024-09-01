@@ -1,14 +1,13 @@
 ﻿using DG.Tweening;
 using Game.Score;
 using Game.UI;
-using MainMenu.Shop;
 using Player;
 using Save;
 using Zenject;
 
-namespace Game.GameCore.GameStates
+namespace Game.GameCore.GameStates.EndGame
 {
-    public class EndGame
+    public class EndGameManager
     {
         private ScoreCollector _scoreCollector;
         private PlayerData _playerData;
@@ -24,7 +23,6 @@ namespace Game.GameCore.GameStates
             DOTween.KillAll();
             _dataProvider.Save();
         }
-
         private void CalculateBalanceToAdd()
         {
             if (_scoreCollector.CurrentScore <= 0) return;
@@ -33,6 +31,7 @@ namespace Game.GameCore.GameStates
                 _balanceToAdd = 1;
             _playerData.AddBalance(_balanceToAdd);
         }
+       
 
         private void CheckTopScores()
         {

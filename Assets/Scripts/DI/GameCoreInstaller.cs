@@ -3,6 +3,9 @@ using Game.Enemy.Boss;
 using Game.FX;
 using Game.GameCore.GameProgression;
 using Game.GameCore.GameStates;
+using Game.GameCore.GameStates.EndGame;
+using Game.GameCore.Pause;
+using Game.Health;
 using Game.ObjectPool;
 using Game.Score;
 using Game.UI;
@@ -16,6 +19,7 @@ namespace DI
 {
     public class GameCoreInstaller: MonoInstaller
     {
+        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private FireButton _fireButton;
         [SerializeField] private Joystick _joystick;
         [SerializeField] private Canvas _mobileUI;
@@ -38,19 +42,15 @@ namespace DI
         [SerializeField] private Boss _boss;
         [SerializeField] private BossSpawner _bossSpawner;
         [SerializeField] private BossBigProjectile _bossBigProjectile;
+        
         public override void InstallBindings()
         {
             Inputs();
-            Container.Bind<ScoreCollector>().FromNew().AsSingle().NonLazy();
-            Container.Bind<GameManager>().FromInstance(_gameManager).AsSingle().NonLazy();
-            Bonus();
-            LevelSystem();
+            GameSystem();
+            Player();
             EndGame();
             FX();
-            Container.Bind<Pool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
-            Container.Bind<Boss>().FromInstance(_boss).AsSingle().NonLazy();
-            Container.Bind<BossSpawner>().FromInstance(_bossSpawner).AsSingle().NonLazy();
-            Container.Bind<BossBigProjectile>().FromInstance(_bossBigProjectile).AsSingle().NonLazy();
+            Enemy();
         }
         private void Inputs()
         {
@@ -67,8 +67,11 @@ namespace DI
             Container.Bind<InputHandler>().FromNew().AsSingle().NonLazy();
         }
 
-        private void LevelSystem()
+        private void GameSystem()
         {
+            Container.Bind<ScoreCollector>().FromNew().AsSingle().NonLazy();
+            Container.Bind<GameManager>().FromInstance(_gameManager).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PauseHandler>().AsSingle();
             Container.Bind<GameTimer>().FromInstance(_gameTimer).AsSingle().NonLazy(); 
             Container.Bind<LevelSystem>().FromInstance(_levelSystem).AsSingle().NonLazy();
             Container.Bind<LevelsHandler>().FromInstance(_levelsHandler).AsSingle().NonLazy(); 
@@ -76,7 +79,7 @@ namespace DI
 
         private void EndGame()
         {
-            Container.Bind<EndGame>().FromNew().AsSingle().NonLazy();
+            Container.Bind<EndGameManager>().FromNew().AsSingle().NonLazy();
             Container.Bind<EndGameUI>().FromInstance(_endGameUI).AsSingle().NonLazy(); 
             Container.Bind<EndGameAnimation>().FromInstance(_endGameAnimation).AsSingle().NonLazy(); 
         }
@@ -91,11 +94,20 @@ namespace DI
             Container.Bind<BossLevelStartFX>().FromInstance(_bossLevelStartFX).AsSingle().NonLazy();
         }
 
-        private void Bonus()
+        private void Player()
         {
+            Container.Bind<PlayerHealth>().FromInstance(_playerHealth);
             Container.Bind<BonusSpawner>().FromInstance(_bonusSpawner).AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
+        }
+
+        private void Enemy()
+        {
+            Container.Bind<Pool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
+            Container.Bind<Boss>().FromInstance(_boss).AsSingle().NonLazy();
+            Container.Bind<BossSpawner>().FromInstance(_bossSpawner).AsSingle().NonLazy();
+            Container.Bind<BossBigProjectile>().FromInstance(_bossBigProjectile).AsSingle().NonLazy();
         }
     }
     

@@ -1,6 +1,4 @@
-﻿using System;
-using Game.FX;
-using Game.GameCore.GameProgression;
+﻿using Game.FX;
 using Game.Interfaces;
 using Game.Score;
 using UnityEngine;
@@ -19,23 +17,24 @@ namespace Game.Health
         {
             base.TakeDamage(damage);
             _damageTextSpawner.SpawnDamageText(transform, damage);
-            if (_currentHealth < 0)
+            if (_currentHealth <= 0)
+            {
+                AddScoreForDestroy();
                 DestroyEnemy();
+            }
         }
 
-        public void SetMaxHealth(int value)
+        public virtual async void DestroyEnemy()
         {
-            if(value <=0)
-                throw new ArgumentOutOfRangeException();
-            _maxHealth = value;
-            _currentHealth = _maxHealth;
+            gameObject.SetActive(false);
+           await _destroyEffectSpawner.Spawn(gameObject.transform);
+           // if (gameObject.TryGetComponent(out ICancellation enemy)) 
+            //     enemy.Cancel();
         }
 
-        public virtual void DestroyEnemy()
+        public void AddScoreForDestroy()
         {
             _scoreCollector.AddScore(_scoreForDestroy);
-            _destroyEffectSpawner.Spawn(gameObject.transform);
-            gameObject.SetActive(false);
         }
         [Inject] private void Construct(DamageTextSpawner damageTextSpawner, 
             ScoreCollector scoreCollector, DestroyEffectSpawner destroyEffectSpawner)

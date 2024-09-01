@@ -1,9 +1,8 @@
-﻿using System;
-using Player;
+﻿using Player;
 using UnityEngine;
 using Zenject;
 
-namespace MainMenu.UI
+namespace MainMenu.Shop
 {
     public class ShopItemsHandler : MonoBehaviour
     {
@@ -17,7 +16,7 @@ namespace MainMenu.UI
         
         private UpgradesHandler _upgradeHandler;
         private PlayerData _playerData;
-        private Shop.Shop _shop;
+        private MainMenu.Shop.Shop _shop;
 
         private void OnEnable()
         {
@@ -27,7 +26,6 @@ namespace MainMenu.UI
             _shop.OnBuyUpgrade += UpdatePrice;
             _shop.OnBuyUpgrade += UpdateLevelText;
             _shop.OnBuyUpgrade += CheckAvailableButtons;
-            
         }
 
         private void OnDisable()
@@ -67,7 +65,7 @@ namespace MainMenu.UI
             _critView.IsLockCheck(_playerData.Balance >= _upgradeHandler.CritCurrentLevel.Cost && _playerData.CritLevel < 5);
         }
 
-        [Inject] private void Construct(PlayerData playerData, UpgradesHandler upgradesHandler, Shop.Shop shop)
+        [Inject] private void Construct(PlayerData playerData, UpgradesHandler upgradesHandler, MainMenu.Shop.Shop shop)
         {
             _playerData = playerData;
             _upgradeHandler = upgradesHandler;

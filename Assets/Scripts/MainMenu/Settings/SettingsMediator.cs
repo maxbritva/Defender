@@ -4,12 +4,11 @@ using Zenject;
 
 namespace MainMenu.Settings
 {
-    public class SettingsHandler
+    public class SettingsMediator
     {
         private PlayerData _playerData;
         private DataProvider _dataProvider;
         
-
         public void ChangeSoundEnableValue()
         {
             _playerData.SetSound(!_playerData.EnabledSound);
@@ -27,8 +26,6 @@ namespace MainMenu.Settings
             _playerData.ResetData();
             _dataProvider.Save();
         }
-        
-
 
         [Inject] private void Construct(PlayerData playerData, DataProvider dataProvider)
         {

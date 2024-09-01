@@ -12,22 +12,20 @@ namespace Game.FX
 
         public void StartBossLevelFX(Transform targetTransform)
         {
-            _backgroundColorsChanger.BossStateChangeColor(true);
+            _backgroundColorsChanger.BossStageBackgroundColor(true);
             ActivatePortal(targetTransform);
             ActivateBossAnimation(targetTransform);
         }
 
-        public void EndBossLevelFX() => _backgroundColorsChanger.BossStateChangeColor(false);
+        public void EndBossLevelFX() => _backgroundColorsChanger.BossStageBackgroundColor(false);
 
         private void ActivatePortal(Transform targetTransform) 
         {
             _portalPrefab.SetActive(true);
             _portalPrefab.gameObject.transform.position = targetTransform.position;
-           // _portalPrefab.gameObject.transform.Rotate(new Vector3(90, 180, 0));
         }
         private void ActivateBossAnimation(Transform targetTransform) => targetTransform.DOScale(1f, 2.5f).SetEase(Ease.InOutSine);
 
-        [Inject]
-        private void Construct(BackgroundColorsChanger backgroundColorsChanger) => _backgroundColorsChanger = backgroundColorsChanger;
+        [Inject] private void Construct(BackgroundColorsChanger backgroundColorsChanger) => _backgroundColorsChanger = backgroundColorsChanger;
     }
 }

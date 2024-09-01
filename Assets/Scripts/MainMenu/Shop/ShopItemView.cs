@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MainMenu.UI
+namespace MainMenu.Shop
 {
     public class ShopItemView : MonoBehaviour
     {
