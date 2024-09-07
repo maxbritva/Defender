@@ -20,7 +20,7 @@ namespace Game.Enemy.Ship.States
 
         public virtual void Exit() { }
         
-        public virtual void OnEnable() => _ship.transform.position = Random.insideUnitCircle.normalized * 30f;
+        public virtual void OnEnable() => _ship.transform.position = Random.insideUnitCircle.normalized * 39f;
 
         public virtual void Update() => _ship.transform.LookAt(Vector3.zero, Vector3.forward * -1);
 

@@ -8,6 +8,9 @@ namespace MainMenu.Shop
         [SerializeField, Range(0.1f,1000)] private float _value;
         [SerializeField, Range(0,10000)] private int _cost;
         [SerializeField, Range(1,5)] private int _level;
+        [SerializeField] private string _tag;
+
+        public string Tag => _tag;
 
         public float Value => _value;
         public int Cost => _cost;

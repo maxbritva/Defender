@@ -24,12 +24,10 @@ namespace Game.Health
             }
         }
 
-        public virtual async void DestroyEnemy()
+        public virtual void DestroyEnemy()
         {
             gameObject.SetActive(false);
-           await _destroyEffectSpawner.Spawn(gameObject.transform);
-           // if (gameObject.TryGetComponent(out ICancellation enemy)) 
-            //     enemy.Cancel();
+          _destroyEffectSpawner.Spawn(gameObject.transform);
         }
 
         public void AddScoreForDestroy()

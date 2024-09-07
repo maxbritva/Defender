@@ -18,6 +18,7 @@ namespace MainMenu.Settings
 
         private SettingsMediator _settingsMediator;
         private PlayerData _playerData;
+     
 
         private void Start()
         {
@@ -60,8 +61,7 @@ namespace MainMenu.Settings
         private void SetSoundText(bool enable) => _soundText.text = 
             enable ? "Turn off sounds" : "Turn on sounds";
 
-        [Inject]
-        private void Construct(SettingsMediator settingsMediator, PlayerData playerData)
+        [Inject] private void Construct(SettingsMediator settingsMediator, PlayerData playerData)
         {
             _settingsMediator = settingsMediator;
             _playerData = playerData;

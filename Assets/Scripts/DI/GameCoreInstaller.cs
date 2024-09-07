@@ -42,6 +42,7 @@ namespace DI
         [SerializeField] private Boss _boss;
         [SerializeField] private BossSpawner _bossSpawner;
         [SerializeField] private BossBigProjectile _bossBigProjectile;
+        [SerializeField] private PlatformFreezeFX _platformFreezeFX;
         
         public override void InstallBindings()
         {
@@ -56,7 +57,7 @@ namespace DI
         {
             Container.Bind<Joystick>().FromInstance(_joystick).AsSingle().NonLazy();
             Container.Bind<FireButton>().FromInstance(_fireButton).AsSingle().NonLazy();
-            if (SystemInfo.deviceType == DeviceType.Handheld)
+            if (Application.isMobilePlatform)
             {
                 _mobileUI.gameObject.SetActive(true);
                 Container.Bind<IInput>().To<MobileInput>().FromNew().AsSingle().NonLazy();
@@ -92,6 +93,7 @@ namespace DI
             Container.Bind<GameStartAnimation>().FromInstance(_gameStartAnimation).AsSingle().NonLazy();
             Container.Bind<BackgroundColorsChanger>().FromInstance(_backgroundColorsChanger).AsSingle().NonLazy();
             Container.Bind<BossLevelStartFX>().FromInstance(_bossLevelStartFX).AsSingle().NonLazy();
+            Container.Bind<PlatformFreezeFX>().FromInstance(_platformFreezeFX).AsSingle().NonLazy();
         }
 
         private void Player()

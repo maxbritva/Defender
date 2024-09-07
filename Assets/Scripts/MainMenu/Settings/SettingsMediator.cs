@@ -1,3 +1,4 @@
+using Audio;
 using Player;
 using Save;
 using Zenject;
@@ -8,10 +9,12 @@ namespace MainMenu.Settings
     {
         private PlayerData _playerData;
         private DataProvider _dataProvider;
+        private AudioManager _audioManager;
         
         public void ChangeSoundEnableValue()
         {
             _playerData.SetSound(!_playerData.EnabledSound);
+            _audioManager.SetSoundVolume();
             _dataProvider.Save();
         }
 
@@ -27,8 +30,9 @@ namespace MainMenu.Settings
             _dataProvider.Save();
         }
 
-        [Inject] private void Construct(PlayerData playerData, DataProvider dataProvider)
+        [Inject] private void Construct(PlayerData playerData, DataProvider dataProvider, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _playerData = playerData;
             _dataProvider = dataProvider;
         }

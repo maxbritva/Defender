@@ -48,6 +48,7 @@ namespace Player.Platform
 
         private IEnumerator Stun()
         {
+            
             _isStunned = true;
             _stunTimer = 0;
             while (true)

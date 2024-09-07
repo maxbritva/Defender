@@ -15,3 +15,4 @@ MonoBehaviour:
   _value: 1
   _cost: 500
   _level: 1
+  _tag: Platform

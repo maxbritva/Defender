@@ -31,7 +31,8 @@ namespace Game.GameCore.GameProgression
         public void LevelUp()
         {
             _progression = 0;
-            _level++;
+            if(_level<=22)
+                _level++;
             OnProgressionChanged?.Invoke();
             _levelSystem.OnLevelChanged?.Invoke();
         }

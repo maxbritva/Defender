@@ -1,4 +1,5 @@
-﻿using Game.Interfaces;
+﻿using Game.FX;
+using Game.Interfaces;
 using Player.Platform;
 using UnityEngine;
 using Zenject;
@@ -8,6 +9,7 @@ namespace Game.Weapons
     public class BossBigProjectile : EnemyProjectile
     {
         private PlatformMovement _platformMovement;
+        private PlatformFreezeFX _platformFreezeFX;
         protected override void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
@@ -18,12 +20,16 @@ namespace Game.Weapons
             }
             if (other.gameObject.TryGetComponent(out Platform platform))
             {
-                Debug.Log(333);
                 _platformMovement.StunPlatform();
+                _platformFreezeFX.ShowFreezeFX();
                 gameObject.SetActive(false);
             }
         }
 
-        [Inject] private void Construct(PlatformMovement platformMovement) => _platformMovement = platformMovement;
+        [Inject] private void Construct(PlatformMovement platformMovement, PlatformFreezeFX platformFreezeFX)
+        {
+            _platformFreezeFX = platformFreezeFX;
+            _platformMovement = platformMovement;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Audio
             SetSoundVolume();
         }
 
-        private void SetSoundVolume()
+        public void SetSoundVolume()
         {
             if (_playerData.EnabledSound)
             {

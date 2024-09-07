@@ -15,3 +15,4 @@ MonoBehaviour:
   _value: 5
   _cost: 1000
   _level: 2
+  _tag: Damage

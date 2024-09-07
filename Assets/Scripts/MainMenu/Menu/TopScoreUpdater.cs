@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace MainMenu.UI
+namespace MainMenu.Menu
 {
     public class TopScoreUpdater : MonoBehaviour
     {

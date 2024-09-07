@@ -1,7 +1,6 @@
 ﻿using MainMenu.Menu;
 using MainMenu.Settings;
 using MainMenu.Shop;
-using MainMenu.UI;
 using UnityEngine;
 using Zenject;
 

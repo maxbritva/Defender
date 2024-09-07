@@ -8,11 +8,7 @@ namespace Game.Bonus
     {
         private Bomb _bomb;
        
-        protected override void ActivateBonus(GameObject playerProjectile)
-        {
-            _bomb.gameObject.SetActive(true);
-            //_bomb.ActivateBomb();
-        }
+        protected override void ActivateBonus(GameObject playerProjectile) => _bomb.gameObject.SetActive(true);
 
         [Inject] private void Construct(Bomb bomb) => _bomb = bomb;
     }

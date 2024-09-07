@@ -13,7 +13,6 @@ namespace Game.UI
         [SerializeField] private Button _endGameButton;
         [SerializeField] private Button _resumeGameButton;
         [SerializeField] private GameObject _UIPanel;
-        private ISceneLoadMediator _sceneLoader;
         private PauseHandler _pauseHandler;
         private GameManager _gameManager;
 
@@ -49,9 +48,8 @@ namespace Game.UI
             _gameManager.OnGameEnded?.Invoke();
         }
 
-        [Inject] private void Construct(ISceneLoadMediator loadMediator, PauseHandler pauseHandler, GameManager gameManager)
+        [Inject] private void Construct(PauseHandler pauseHandler, GameManager gameManager)
         {
-            _sceneLoader = loadMediator;
             _pauseHandler = pauseHandler;
             _gameManager = gameManager;
         }

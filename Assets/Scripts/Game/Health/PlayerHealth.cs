@@ -16,7 +16,7 @@ namespace Game.Health
 
         protected override void OnEnable()
         {
-            _maxHealth = (int)_upgradesHandler.LivesCurrentLevel.Value;
+            _maxHealth = (int) _upgradesHandler.GetCurrentUpgradeValue("Lives");
             base.OnEnable();
         }
 

@@ -15,3 +15,4 @@ MonoBehaviour:
   _value: 0.25
   _cost: 5000
   _level: 4
+  _tag: Crit

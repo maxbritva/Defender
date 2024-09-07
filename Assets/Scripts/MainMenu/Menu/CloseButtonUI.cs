@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace MainMenu.UI
+namespace MainMenu.Menu
 {
     public class CloseButtonUI : MonoBehaviour
     {

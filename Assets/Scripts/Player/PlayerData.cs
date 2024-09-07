@@ -73,52 +73,89 @@ namespace Player
                 throw new ArgumentOutOfRangeException(nameof(coins)); 
             return  Balance >= coins;
         }
-
-        public void SetPlatformGunLevel(int value)
+        
+        public void SetUpgradeLevel (string tag, int value)
         {
             if (CheckValidValue(value))
-                PlatformGunLevel = value;
+            {
+                if (tag == "Platform")
+                    PlatformGunLevel = value;
+                else if (tag == "Lives")
+                    LivesCountLevel = value;
+                else if (tag == "Shield")
+                    ShieldTimerLevel = value;
+                else if (tag == "ShootRate")
+                    ShootRateLevel = value;
+                else if (tag == "Damage")
+                    DamageLevel = value;
+                else if (tag == "Crit")
+                    CritLevel = value;
+                else
+                    throw new ArgumentException("Not valid tag");
+            }
             else
                 throw new ArgumentOutOfRangeException(nameof(value));
         }
 
-        public void SetLivesCountLevel(int value)
+        public int GetUpgradeLevel(string tag)
         {
-            if (CheckValidValue(value))
-                LivesCountLevel = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
-        public void SetShieldTimerLevel(int value)
-        {
-            if (CheckValidValue(value))
-                ShieldTimerLevel = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
-
-        public void SetShootRateLevel(int value)
-        {
-            if (CheckValidValue(value))
-                ShootRateLevel = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
-        public void SetDamageLevelLevel(int value)
-        {
-            if (CheckValidValue(value))
-                DamageLevel = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
+            return tag switch
+            {
+                "Platform" => PlatformGunLevel,
+                "Lives" => LivesCountLevel,
+                "Shield" => ShieldTimerLevel,
+                "ShootRate" => ShootRateLevel,
+                "Damage" => DamageLevel,
+                "Crit" => CritLevel,
+                _ => throw new ArgumentException("Not valid tag")
+            };
         }
 
-        public void SetCritLevel(int value)
-        {
-            if (CheckValidValue(value))
-                CritLevel = value;
-            else
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
+        // public void SetPlatformGunLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         PlatformGunLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
+
+        // public void SetLivesCountLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         LivesCountLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
+        // public void SetShieldTimerLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         ShieldTimerLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
+
+        // public void SetShootRateLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         ShootRateLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
+        // public void SetDamageLevelLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         DamageLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
+        //
+        // public void SetCritLevel(int value)
+        // {
+        //     if (CheckValidValue(value))
+        //         CritLevel = value;
+        //     else
+        //         throw new ArgumentOutOfRangeException(nameof(value));
+        // }
 
         public void ResetData()
         {

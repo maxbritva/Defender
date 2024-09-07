@@ -24,10 +24,8 @@ namespace Game.Enemy.Ship.States
         {
             base.Update();
             MoveShip(Vector3.zero, Data.Speed);
-            // if(IsReachDistanceToAttack())
-            //     StateSwitcher.SwitchState<ShipAttackState>();
+            if(Vector3.Distance(_ship.transform.position, Vector3.zero) <= DistanceToAttack)
+                StateSwitcher.SwitchState<ShipAttackState>();
         }
-        
-        private bool IsReachDistanceToAttack() => Vector3.Distance(_ship.transform.position, Vector3.zero) <= DistanceToAttack;
     }
 }

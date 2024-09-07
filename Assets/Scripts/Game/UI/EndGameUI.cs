@@ -65,7 +65,7 @@ namespace Game.UI
         }
 
         private void PlayAgainButtonClick() => _sceneLoadMediator.StartGame();
-        private void UpdateScoreText() => _scoreText.text = $"ОЧКИ ЗА ИГРУ: {_scoreCollector.CurrentScore}";
+        private void UpdateScoreText() => _scoreText.text = $"SCORE: {_scoreCollector.CurrentScore}";
 
         [Inject] private void Construct(GameManager gameManager, EndGameManager endGameManager, EndGameAnimation endGameAnimation, 
             ScoreCollector scoreCollector, SceneLoadMediator sceneLoadMediator, AudioManager audioManager)

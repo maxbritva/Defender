@@ -34,7 +34,7 @@ namespace Game.Enemy
             _model.mesh = _modelsList[Random.Range(0, _modelsList.Count)];
             transform.localScale = _startedSize * Random.Range(0.6f, 1.7f);
             _speed = Random.Range(_minSpeed, _maxSpeed);
-            transform.position = Random.insideUnitCircle.normalized * 30f;
+            transform.position = Random.insideUnitCircle.normalized * 39f;
             try
             {
                 await Move();

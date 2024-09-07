@@ -1,9 +1,8 @@
-﻿using MainMenu.Menu;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace MainMenu.UI
+namespace MainMenu.Menu
 {
     public class MainMenuUI : MonoBehaviour
     {

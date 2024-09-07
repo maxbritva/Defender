@@ -13,8 +13,8 @@ namespace Game.Weapons
         private UpgradesHandler _upgradesHandler;
         private void Start()
         {
-            _initialDamage = (int) _upgradesHandler.DamageCurrentLevel.Value;
-            _critChance = _upgradesHandler.CritCurrentLevel.Value;
+            _initialDamage = (int) _upgradesHandler.GetCurrentUpgradeValue("Damage");
+            _critChance = _upgradesHandler.GetCurrentUpgradeValue("Crit");
         }
 
         private void OnTriggerEnter(Collider other)

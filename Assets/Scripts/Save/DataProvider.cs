@@ -33,12 +33,12 @@ namespace Save
                 {
                     _playerData.SetBalance(loadedData.Balance);
                     _playerData.SetTopScore(loadedData.TopScore);
-                    _playerData.SetPlatformGunLevel(loadedData.PlatformGunLevel); 
-                    _playerData.SetLivesCountLevel(loadedData.LivesCountLevel); 
-                    _playerData.SetShieldTimerLevel(loadedData.ShieldTimerLevel); 
-                    _playerData.SetShootRateLevel(loadedData.ShootRateLevel); 
-                    _playerData.SetDamageLevelLevel(loadedData.DamageLevel); 
-                    _playerData.SetCritLevel(loadedData.CritLevel);
+                    _playerData.SetUpgradeLevel("Platform", loadedData.PlatformGunLevel);
+                    _playerData.SetUpgradeLevel("Lives",loadedData.LivesCountLevel); 
+                    _playerData.SetUpgradeLevel("Shield",loadedData.ShieldTimerLevel); 
+                    _playerData.SetUpgradeLevel("ShootRate",loadedData.ShootRateLevel); 
+                    _playerData.SetUpgradeLevel("Damage",loadedData.DamageLevel); 
+                    _playerData.SetUpgradeLevel("Crit",loadedData.CritLevel);
                     _playerData.SetShowTips(loadedData.ShowTips);
                     _playerData.SetSound(loadedData.EnabledSound);
                 }
@@ -52,12 +52,12 @@ namespace Save
         {
             _playerData.SetBalance(1000);
             _playerData.SetTopScore(0);
-            _playerData.SetPlatformGunLevel(1);
-            _playerData.SetLivesCountLevel(1);
-            _playerData.SetShieldTimerLevel(1);
-            _playerData.SetShootRateLevel(1);
-            _playerData.SetDamageLevelLevel(1);
-            _playerData.SetCritLevel(1);
+            _playerData.SetUpgradeLevel("Platform", 1);
+            _playerData.SetUpgradeLevel("Lives",1); 
+            _playerData.SetUpgradeLevel("Shield",1); 
+            _playerData.SetUpgradeLevel("ShootRate",1); 
+            _playerData.SetUpgradeLevel("Damage",1); 
+            _playerData.SetUpgradeLevel("Crit",1);
             _playerData.SetShowTips(true);
             _playerData.SetSound(true);
         }

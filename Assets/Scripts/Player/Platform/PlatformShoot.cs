@@ -18,7 +18,7 @@ namespace Player.Platform
         private float _timeBetweenAttack;
         private bool _isPaused;
 
-        private void Start() => _fireRate = _upgradesHandler.ShootRateCurrentLevel.Value;
+        private void Start() => _fireRate = _upgradesHandler.GetCurrentUpgradeValue("ShootRate");
 
         private void OnEnable() => _pauseHandler.Add(this);
         private void OnDisable() => _pauseHandler.Remove(this);
