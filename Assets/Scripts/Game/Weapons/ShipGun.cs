@@ -1,20 +1,23 @@
 ﻿using Game.ObjectPool;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Weapons
 {
-    public class ShipGun : MonoBehaviour, IEnemyWeapon
+    public class ShipGun : MonoBehaviour
     {
         [SerializeField] private Transform _shootPoint;
-
-        protected GameObject GetBulletFromPool(IEnemyProjectilePool targetPool) => targetPool.GetFromPool();
-        public void Shot(IEnemyProjectilePool targetPool)
+        [SerializeField] private GameObject _prefabProjectile;
+        private GameObjectPool _gameObjectPool;
+        
+        public void Shot()
         {
-            GameObject bulletFromPool = GetBulletFromPool(targetPool);
+            GameObject bulletFromPool = _gameObjectPool.GetFromPool(_prefabProjectile);
             bulletFromPool.transform.SetParent(transform);
             bulletFromPool.transform.position = _shootPoint.position;
             bulletFromPool.transform.rotation = _shootPoint.rotation;
         }
-        
+
+        [Inject] private void Construct(GameObjectPool gameObjectPool) => _gameObjectPool = gameObjectPool;
     }
 }

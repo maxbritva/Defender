@@ -14,7 +14,7 @@ namespace Game.Enemy.Boss
         private List<IState> _states;
         private IState _currentState;
         private BossLevelStartFX _bossLevelStartFX;
-        private Pool _enemyProjectilePool;
+        private GameObjectPool _enemyProjectilePool;
         private BossSpawner _bossSpawner;
         private GunMultiply _gunMultiply;
         private Boss _boss;
@@ -22,7 +22,7 @@ namespace Game.Enemy.Boss
         private BossBigGun _bossBigGun;
         private BossBigProjectile _bigProjectile;
 
-        public BossStateMachine(Boss boss, Pool pool, BossLevelStartFX bossLevelStartFX, BossSpawner bossSpawner, 
+        public BossStateMachine(Boss boss, GameObjectPool pool, BossLevelStartFX bossLevelStartFX, BossSpawner bossSpawner, 
             GunMultiply gunMultiply, BossBigGun bossBigGun, BossBigProjectile bigProjectile, BossShield bossShield)
         {
             _bossLevelStartFX = bossLevelStartFX;

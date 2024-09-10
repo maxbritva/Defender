@@ -14,7 +14,8 @@ namespace Game.Enemy.Boss
     {
         [SerializeField] private List<Transform> _spawnPoints;
         [SerializeField] private GameObject _bossPrefab;
-        [SerializeField] private Pool _minionPool;
+        [SerializeField] private GameObject _minionsPrefab;
+        private GameObjectPool _minionPool;
         private List<GameObject> _minions = new List<GameObject>();
         private PauseHandler _pauseHandler;
         private Coroutine _minionsCoroutine;
@@ -74,15 +75,16 @@ namespace Game.Enemy.Boss
                         _time += Time.deltaTime;
                     yield return null;
                 }
-                var minion = _minionPool.GetFromPool();
+                var minion = _minionPool.GetFromPool(_minionsPrefab);
                 _minions.Add(minion);
                 minion.transform.SetParent(transform);
                 _time = 0;
                 yield return null;
             }
         }
-        [Inject] private void Construct(PauseHandler pauseHandler, GameManager gameManager, Boss boss)
+        [Inject] private void Construct(PauseHandler pauseHandler, GameManager gameManager, Boss boss, GameObjectPool gameObjectPool)
         {
+            _minionPool = gameObjectPool;
             _pauseHandler = pauseHandler;
             _gameManager = gameManager;
             _boss = boss;

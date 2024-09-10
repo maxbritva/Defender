@@ -16,7 +16,7 @@ namespace Game.FX
 
         public void SpawnDamageText(Transform target, int damage)
         {
-            var damageText = _gameObjectPool.GetFromPool(_prefab, target);
+            var damageText = _gameObjectPool.GetFromPool(_prefab);
             damageText.transform.position = target.position + GetRandomPosition();
             if (!damageText.TryGetComponent(out TextMeshPro damageMeshText)) return;
             damageMeshText.color = new Color(damageMeshText.color.r,damageMeshText.color.g,damageMeshText.color.b,1f);

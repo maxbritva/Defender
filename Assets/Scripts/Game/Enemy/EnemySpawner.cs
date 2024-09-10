@@ -60,7 +60,7 @@ namespace Game.Enemy
                     yield return null;
                 }
 
-                var enemy = _gameObjectPool.GetFromPool(_prefab, transform);
+                var enemy = _gameObjectPool.GetFromPool(_prefab);
                 _enemyList.Add(enemy);
                 _time = 0;
                 yield return null;

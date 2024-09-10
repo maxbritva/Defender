@@ -497,7 +497,7 @@ MonoBehaviour:
   - {fileID: 3957456011061770596}
   - {fileID: 2191652001940184146}
   - {fileID: 6894552828463399279}
-  _muzzles: []
+  _prefabProjectile: {fileID: 7980782171304061121, guid: fc80c949197ccb2438561c2b93dc6fd0, type: 3}
 --- !u!1 &5485305569474025396
 GameObject:
   m_ObjectHideFlags: 0

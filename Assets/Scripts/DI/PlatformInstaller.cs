@@ -14,7 +14,6 @@ namespace DI
         [SerializeField] private List<GameObject> _prefabPlatforms;
         [SerializeField] private Transform _placerPlatforms;
         private PlayerData _playerData;
-        private GunMultiply _gunMultiply;
         public override void InstallBindings()
         {
             Container.Bind<PlatformMovement>().FromInstance(_platformMovement).AsSingle().NonLazy();
@@ -24,7 +23,7 @@ namespace DI
         {
             GunMultiply platform = Container.InstantiatePrefabForComponent<GunMultiply>(_prefabPlatforms[level - 1], 
                 _placerPlatforms.position, _placerPlatforms.rotation, _placerPlatforms);
-            Container.Bind<IWeapon>().FromInstance(platform).AsSingle();
+            Container.Bind<GunMultiply>().FromInstance(platform).AsSingle();
         }
         [Inject] private void Construct(PlayerData playerData) => _playerData = playerData;
     }

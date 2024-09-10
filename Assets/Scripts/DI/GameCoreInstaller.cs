@@ -26,7 +26,6 @@ namespace DI
         [SerializeField] private ShakeCamera _shakeCamera;
         [SerializeField] private Shield _shield;
         [SerializeField] private Bomb _bomb;
-        [SerializeField] private Pool _shipProjectilePool;
         [SerializeField] private LevelSystem _levelSystem;
         [SerializeField] private GameTimer _gameTimer;
         [SerializeField] private LevelsHandler _levelsHandler;
@@ -105,7 +104,6 @@ namespace DI
 
         private void Enemy()
         {
-            Container.Bind<Pool>().FromInstance(_shipProjectilePool).AsSingle().NonLazy();
             Container.Bind<Boss>().FromInstance(_boss).AsSingle().NonLazy();
             Container.Bind<BossSpawner>().FromInstance(_bossSpawner).AsSingle().NonLazy();
             Container.Bind<BossBigProjectile>().FromInstance(_bossBigProjectile).AsSingle().NonLazy();

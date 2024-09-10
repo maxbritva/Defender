@@ -1,6 +1,7 @@
 ﻿using Game.GameCore.Pause;
 using Game.Interfaces;
 using Game.ObjectPool;
+using Game.Weapons;
 using Player.Input;
 using UnityEngine;
 using Zenject;
@@ -9,12 +10,11 @@ namespace Player.Platform
 {
     public class PlatformShoot : MonoBehaviour, IPause
     {
-        [SerializeField] private Pool _projectilePool;
         private GameObjectPool _gameObjectPool;
         private UpgradesHandler _upgradesHandler; 
         private InputHandler _inputHandler;
         private PauseHandler _pauseHandler;
-        private IWeapon _weapon;
+        private GunMultiply _weapon;
         private float _fireRate = 2f;
         private float _timeBetweenAttack;
         private bool _isPaused;
@@ -33,17 +33,18 @@ namespace Player.Platform
             _timeBetweenAttack += Time.deltaTime;
             if (_timeBetweenAttack > _fireRate == false 
                 || _inputHandler.IsFire() == false) return;
-            _weapon.Shot(_projectilePool);
+            _weapon.Shot(_gameObjectPool);
             _timeBetweenAttack = 0;
         }
         
-        [Inject] private void Construct(InputHandler inputHandler, IWeapon weapon, PauseHandler pauseHandler, UpgradesHandler upgradesHandler, GameObjectPool gameObjectPool) 
+        [Inject] private void Construct(InputHandler inputHandler, GunMultiply weapon, PauseHandler pauseHandler, 
+            UpgradesHandler upgradesHandler, GameObjectPool gameObjectPool) 
         {
             _inputHandler = inputHandler;
             _weapon = weapon;
             _upgradesHandler = upgradesHandler;
             _pauseHandler = pauseHandler;
-            _gameObjectPool = new GameObjectPool();
+            _gameObjectPool = gameObjectPool;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameCore.GameStates;
 using UnityEngine;
 using Zenject;
 
@@ -8,16 +9,17 @@ namespace Game.ObjectPool
     {
         private Dictionary<string, List<GameObject>> _pool = new Dictionary<string, List<GameObject>>();
         private DiContainer _diContainer;
+        private GameManager _gameManager;
 
-        private GameObject Create(GameObject prefab, Transform parent)
+        private GameObject Create(GameObject prefab)
         {
             var newObject = _diContainer.InstantiatePrefab(prefab);
             newObject.SetActive(false);
-            newObject.transform.SetParent(parent);
+            newObject.transform.SetParent(_gameManager.transform);
             return newObject;
         }
         
-        public GameObject GetFromPool(GameObject prefab, Transform parent)
+        public GameObject GetFromPool(GameObject prefab)
         {
             if (_pool.ContainsKey(prefab.name) == false)
                 _pool[prefab.name] = new List<GameObject>();
@@ -29,11 +31,15 @@ namespace Game.ObjectPool
                 gameObject.SetActive(true);
                 return gameObject;
             }
-            var newObject = Create(prefab, parent);
+            var newObject = Create(prefab);
             newObject.SetActive(true);
             return newObject;
         }
 
-        [Inject] private void Construct(DiContainer diContainer) => _diContainer = diContainer;
+        [Inject] private void Construct(DiContainer diContainer, GameManager gameManager)
+        {
+            _diContainer = diContainer;
+            _gameManager = gameManager;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Game.Enemy.Ship
         [SerializeField] private List<Transform> _waypoints;
         [SerializeField] private GameObject _shipProjectile;
         private ShipStateMachine _shipStateMachine;
-        private Pool _pool;
+        private GameObjectPool _pool;
         private PauseHandler _pauseHandler;
         private EnemyHealth _enemyHealth;
         private ShipGun _shipGun;
@@ -46,7 +46,7 @@ namespace Game.Enemy.Ship
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        [Inject] private void Construct(Pool pool,PauseHandler pauseHandler)
+        [Inject] private void Construct(GameObjectPool pool,PauseHandler pauseHandler)
         {
             _pool = pool;
             _pauseHandler = pauseHandler;

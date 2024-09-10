@@ -10,7 +10,7 @@ namespace Game.Enemy.Boss
 {
     public class Boss : MonoBehaviour, IPause
     {
-        private Pool _enemyProjectilePool;
+        private GameObjectPool _enemyProjectilePool;
         private BossStateMachine _bossStateMachine;
         private BossLevelStartFX _bossLevelStartFX;
         private BossBigProjectile _bigProjectile;
@@ -44,7 +44,7 @@ namespace Game.Enemy.Boss
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        [Inject] private void Construct(BossLevelStartFX bossLevelStartFX, Pool enemyProjectilePool, 
+        [Inject] private void Construct(BossLevelStartFX bossLevelStartFX, GameObjectPool enemyProjectilePool, 
             BossSpawner bossSpawner, BossBigProjectile bossBigProjectile, PauseHandler pauseHandler)
         {
             _bossLevelStartFX = bossLevelStartFX;

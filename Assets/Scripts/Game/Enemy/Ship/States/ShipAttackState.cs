@@ -9,13 +9,13 @@ namespace Game.Enemy.Ship.States
     public class ShipAttackState: ShipState
     {
         public ShipAttackState(IStateSwitcher stateSwitcher, ShipData data, Ship ship, 
-            Pool pool, ShipGun shipGun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
+            GameObjectPool pool, ShipGun shipGun, EnemyHealth enemyHealth) : base(stateSwitcher, data, ship)
         {
             _pool = pool;
             _shipGun = shipGun;
             _enemyHealth = enemyHealth;
         }
-        private Pool _pool;
+        private GameObjectPool _pool;
         private ShipGun _shipGun;
         private EnemyHealth _enemyHealth;
         private float _timeBetweenAttack;
@@ -45,7 +45,7 @@ namespace Game.Enemy.Ship.States
             _timeBetweenAttack += Time.deltaTime;
             if (_timeBetweenAttack > 3f)
             {
-                _shipGun.Shot(_pool);
+                _shipGun.Shot();
                 _position = NewPosition();
                 _timeBetweenAttack = 0;
             }

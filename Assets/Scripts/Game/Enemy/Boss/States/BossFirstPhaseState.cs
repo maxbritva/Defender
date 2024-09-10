@@ -7,13 +7,13 @@ namespace Game.Enemy.Boss.States
 {
     public class BossFirstPhaseState: BossState
     {
-        private Pool _enemyProjectilePool;
+        private GameObjectPool _enemyProjectilePool;
         private BossSpawner _bossSpawner;
         private GunMultiply _gunMultiply;
         private int _attackCounter;
         private float _currentTime;
 
-        public BossFirstPhaseState(IStateSwitcher stateSwitcher, Boss boss, BossSpawner bossSpawner, GunMultiply gunMultiply, Pool pool) : base(stateSwitcher, boss)
+        public BossFirstPhaseState(IStateSwitcher stateSwitcher, Boss boss, BossSpawner bossSpawner, GunMultiply gunMultiply, GameObjectPool pool) : base(stateSwitcher, boss)
         {
             _bossSpawner = bossSpawner;
             _gunMultiply = gunMultiply;

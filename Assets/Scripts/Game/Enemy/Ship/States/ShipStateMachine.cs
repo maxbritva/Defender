@@ -13,7 +13,7 @@ namespace Game.Enemy.Ship.States
         private List<IState> _states;
         private IState _currentState;
 
-        public ShipStateMachine(Ship ship, Pool pool, EnemyHealth health, ShipGun shipGun)
+        public ShipStateMachine(Ship ship, GameObjectPool pool, EnemyHealth health, ShipGun shipGun)
         {
             ShipData data = new ShipData();
             _states = new List<IState>()
