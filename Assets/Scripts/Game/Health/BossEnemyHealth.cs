@@ -10,6 +10,7 @@ namespace Game.Health
     public class BossEnemyHealth : EnemyHealth
     {
         private GameManager _gameManager;
+        private Boss _boss;
         public void SetMaxHealth(int value)
         {
             if(value <=0)
@@ -22,9 +23,14 @@ namespace Game.Health
         public override void DestroyEnemy()
         {
             base.DestroyEnemy();
+            _boss.CTS.Cancel();
             _gameManager.OnBossLevelEnded?.Invoke();
         }
         
-        [Inject] private void Construct(GameManager gameManager) => _gameManager = gameManager;
+        [Inject] private void Construct(GameManager gameManager, Boss boss)
+        {
+            _gameManager = gameManager;
+            _boss = boss;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Game.FX;
+﻿using System.Threading;
+using Game.FX;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using Game.ObjectPool;
@@ -20,7 +21,9 @@ namespace Game.Enemy.Boss
         private BossShield _bossShield;
         private BossBigGun _bossBigGun;
         private Boss _boss;
-        private bool _isPaused;
+        public CancellationTokenSource CTS { get; private set; }
+        public bool IsPaused { get; private set; }
+        
 
         private void OnEnable() => _pauseHandler.Add(this);
 
@@ -31,18 +34,19 @@ namespace Game.Enemy.Boss
             _gunMultiply = GetComponent<GunMultiply>();
             _bossBigGun = GetComponent<BossBigGun>();
             _bossShield = GetComponent<BossShield>();
+            CTS = new CancellationTokenSource();
             _bossStateMachine = new BossStateMachine(this, _enemyProjectilePool, _bossLevelStartFX, 
-                _bossSpawner, _gunMultiply, _bossBigGun, _bigProjectile, _bossShield);
+                _bossSpawner, _gunMultiply, _bossBigGun, _bigProjectile, _bossShield, CTS);
             
         }
         private void Update()
         {
-            if(_isPaused)
+            if(IsPaused)
                 return;
             _bossStateMachine.Update();
         }
 
-        public void SetPause(bool isPaused) => _isPaused = isPaused;
+        public void SetPause(bool isPaused) => IsPaused = isPaused;
 
         [Inject] private void Construct(BossLevelStartFX bossLevelStartFX, GameObjectPool enemyProjectilePool, 
             BossSpawner bossSpawner, BossBigProjectile bossBigProjectile, PauseHandler pauseHandler)
