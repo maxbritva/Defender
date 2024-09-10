@@ -24,8 +24,6 @@ namespace DI
         [SerializeField] private Joystick _joystick;
         [SerializeField] private Canvas _mobileUI;
         [SerializeField] private ShakeCamera _shakeCamera;
-        [SerializeField] private DamageTextSpawner _damageTextSpawner;
-        [SerializeField] private DestroyEffectSpawner _destroyEffectSpawner;
         [SerializeField] private Shield _shield;
         [SerializeField] private Bomb _bomb;
         [SerializeField] private Pool _shipProjectilePool;
@@ -46,6 +44,7 @@ namespace DI
         
         public override void InstallBindings()
         {
+            Container.Bind<GameObjectPool>().FromNew().AsSingle().NonLazy();
             Inputs();
             GameSystem();
             Player();
@@ -88,8 +87,8 @@ namespace DI
         private void FX()
         {
             Container.Bind<ShakeCamera>().FromInstance(_shakeCamera).AsSingle().NonLazy();
-            Container.Bind<DamageTextSpawner>().FromInstance(_damageTextSpawner).AsSingle().NonLazy();
-            Container.Bind<DestroyEffectSpawner>().FromInstance(_destroyEffectSpawner).AsSingle().NonLazy();
+            Container.Bind<DamageTextSpawner>().FromNew().AsSingle().NonLazy();
+            Container.Bind<DestroyEffectSpawner>().FromNew().AsSingle().NonLazy();
             Container.Bind<GameStartAnimation>().FromInstance(_gameStartAnimation).AsSingle().NonLazy();
             Container.Bind<BackgroundColorsChanger>().FromInstance(_backgroundColorsChanger).AsSingle().NonLazy();
             Container.Bind<BossLevelStartFX>().FromInstance(_bossLevelStartFX).AsSingle().NonLazy();

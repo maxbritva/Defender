@@ -111,52 +111,6 @@ namespace Player
             };
         }
 
-        // public void SetPlatformGunLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         PlatformGunLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-
-        // public void SetLivesCountLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         LivesCountLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-        // public void SetShieldTimerLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         ShieldTimerLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-
-        // public void SetShootRateLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         ShootRateLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-        // public void SetDamageLevelLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         DamageLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-        //
-        // public void SetCritLevel(int value)
-        // {
-        //     if (CheckValidValue(value))
-        //         CritLevel = value;
-        //     else
-        //         throw new ArgumentOutOfRangeException(nameof(value));
-        // }
-
         public void ResetData()
         {
             Balance = 0;

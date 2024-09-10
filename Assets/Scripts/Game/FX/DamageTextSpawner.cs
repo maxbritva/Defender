@@ -2,18 +2,21 @@
 using Game.ObjectPool;
 using TMPro;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Game.FX
 {
-    public class DamageTextSpawner : MonoBehaviour
+    public class DamageTextSpawner
     {
-        [SerializeField] private Pool _damageTextPool;
+        private GameObject _prefab;
+        private GameObjectPool _gameObjectPool;
+
+        public DamageTextSpawner() => _prefab = Resources.Load<GameObject>("Prefabs/FX/DamageText");
 
         public void SpawnDamageText(Transform target, int damage)
         {
-            var damageText = _damageTextPool.GetFromPool();
-            damageText.transform.SetParent(transform);
+            var damageText = _gameObjectPool.GetFromPool(_prefab, target);
             damageText.transform.position = target.position + GetRandomPosition();
             if (!damageText.TryGetComponent(out TextMeshPro damageMeshText)) return;
             damageMeshText.color = new Color(damageMeshText.color.r,damageMeshText.color.g,damageMeshText.color.b,1f);
@@ -26,5 +29,6 @@ namespace Game.FX
         private Vector3 GetRandomPosition() => new Vector3(Random.Range(-1,1f),
             Random.Range(-1f,1),5f);
         
+        [Inject] private void Construct(GameObjectPool gameObjectPool) => _gameObjectPool = gameObjectPool;
     }
 }

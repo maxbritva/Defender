@@ -10,6 +10,7 @@ namespace Player.Platform
     public class PlatformShoot : MonoBehaviour, IPause
     {
         [SerializeField] private Pool _projectilePool;
+        private GameObjectPool _gameObjectPool;
         private UpgradesHandler _upgradesHandler; 
         private InputHandler _inputHandler;
         private PauseHandler _pauseHandler;
@@ -21,10 +22,12 @@ namespace Player.Platform
         private void Start() => _fireRate = _upgradesHandler.GetCurrentUpgradeValue("ShootRate");
 
         private void OnEnable() => _pauseHandler.Add(this);
+
         private void OnDisable() => _pauseHandler.Remove(this);
         private void Update() => Shot();
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
+
         private void Shot() {
             if(_isPaused) return;
             _timeBetweenAttack += Time.deltaTime;
@@ -34,12 +37,13 @@ namespace Player.Platform
             _timeBetweenAttack = 0;
         }
         
-        [Inject] private void Construct(InputHandler inputHandler, IWeapon weapon, PauseHandler pauseHandler, UpgradesHandler upgradesHandler) 
+        [Inject] private void Construct(InputHandler inputHandler, IWeapon weapon, PauseHandler pauseHandler, UpgradesHandler upgradesHandler, GameObjectPool gameObjectPool) 
         {
             _inputHandler = inputHandler;
             _weapon = weapon;
             _upgradesHandler = upgradesHandler;
             _pauseHandler = pauseHandler;
+            _gameObjectPool = new GameObjectPool();
         }
     }
 }

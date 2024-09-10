@@ -11,8 +11,9 @@ namespace Game.Enemy
 {
     public class EnemySpawner : MonoBehaviour, IPause, IActivatable
     {
-        [SerializeField] private Pool _enemyPool;
         [SerializeField] private float _spawnInterval;
+        [SerializeField] private GameObject _prefab;
+        private GameObjectPool _gameObjectPool;
         private List<GameObject> _enemyList = new List<GameObject>();
         private PauseHandler _pauseHandler;
         private Coroutine _spawnCoroutine;
@@ -59,14 +60,17 @@ namespace Game.Enemy
                     yield return null;
                 }
 
-                var enemy = _enemyPool.GetFromPool();
+                var enemy = _gameObjectPool.GetFromPool(_prefab, transform);
                 _enemyList.Add(enemy);
                 _time = 0;
                 yield return null;
             }
         }
         
-      [Inject]  private void Construct(PauseHandler pauseHandler) => _pauseHandler = pauseHandler;
-
+      [Inject]  private void Construct(PauseHandler pauseHandler, GameObjectPool gameObjectPool)
+      {
+          _gameObjectPool = gameObjectPool;
+          _pauseHandler = pauseHandler;
+      }
     }
 }

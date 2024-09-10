@@ -1,4 +1,5 @@
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using Player.Input;
@@ -13,19 +14,22 @@ namespace Player.Platform
         [SerializeField] private Rigidbody _platformRigidbody;
         private InputHandler _inputHandler; 
         private PauseHandler _pauseHandler;
-        private Coroutine _stunCoroutine;
+        private CancellationTokenSource _cts;
         private float _stunTimer;
         private bool _isPaused;
         private bool _isStunned;
         private float _turn;
 
-        private void OnEnable() => _pauseHandler.Add(this);
+        private void OnEnable()
+        {
+            _pauseHandler.Add(this);
+            _cts = new CancellationTokenSource();
+        }
 
         private void OnDisable()
         {
             _pauseHandler.Remove(this);
-            if(_stunCoroutine != null)
-                StopCoroutine(_stunCoroutine);
+            _cts.Cancel();
         }
 
         private void FixedUpdate()
@@ -44,23 +48,22 @@ namespace Player.Platform
         public bool IsMoving() => _turn != 0;
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        public void StunPlatform() => _stunCoroutine = StartCoroutine(Stun());
+        public async UniTask StunPlatform() => await Stunning();
 
-        private IEnumerator Stun()
+        private async UniTask Stunning()
         {
-            
             _isStunned = true;
             _stunTimer = 0;
-            while (true)
+            while (_stunTimer <= 3f)
             {
                 if(_isPaused == false)
                     _stunTimer += Time.deltaTime;
-                if (_stunTimer >= 2f) 
-                    _isStunned = false;
-                yield return null;
+                await UniTask.Yield(PlayerLoopTiming.Update, destroyCancellationToken);
             }
+            _isStunned = false;
+            _cts.Cancel();
         }
-        
+
         [Inject] private void Construct(InputHandler inputHandler, PauseHandler pauseHandler)
         {
             _inputHandler = inputHandler;
