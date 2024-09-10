@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: -7905698932860511926}
   - component: {fileID: 5979530898236724905}
   - component: {fileID: 5087728882082649850}
+  - component: {fileID: 6356886893598045908}
   m_Layer: 10
   m_Name: EnemyProjectile
   m_TagString: Untagged
@@ -335,5 +336,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 1
-  _speed: 5
-  _selfDestroyTimer: 7
+  _speed: 7
+--- !u!114 &6356886893598045908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7980782171304061121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timer: 6

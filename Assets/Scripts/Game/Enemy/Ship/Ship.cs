@@ -3,7 +3,6 @@ using Game.Enemy.Ship.States;
 using Game.GameCore.Pause;
 using Game.Health;
 using Game.Interfaces;
-using Game.ObjectPool;
 using Game.Weapons;
 using UnityEngine;
 using Zenject;
@@ -13,13 +12,11 @@ namespace Game.Enemy.Ship
     public class Ship : MonoBehaviour, IPause
     {
         [SerializeField] private List<Transform> _waypoints;
-        [SerializeField] private GameObject _shipProjectile;
         private ShipStateMachine _shipStateMachine;
-        private GameObjectPool _pool;
         private PauseHandler _pauseHandler;
         private EnemyHealth _enemyHealth;
         private ShipGun _shipGun;
-        private bool _isPaused;
+        public bool IsPaused { get; private set; }
         
         public List<Transform> Waypoints => _waypoints;
 
@@ -27,29 +24,20 @@ namespace Game.Enemy.Ship
         {
             _enemyHealth = GetComponent<EnemyHealth>();
             _shipGun = GetComponent<ShipGun>();
-            _shipStateMachine = new ShipStateMachine(this, _pool, _enemyHealth, _shipGun);
-        }
-
-        private void Update()
-        {
-            if(_isPaused)
-                return;
-            _shipStateMachine.Update();
+            _shipStateMachine = new ShipStateMachine(this, _enemyHealth, _shipGun);
         }
 
         private void OnEnable()
         {
-            _shipStateMachine.OnEnable();
             _pauseHandler.Add(this);
+            transform.position = Random.insideUnitCircle.normalized * 39f;
+            _shipStateMachine.SwitchState<ShipFollowState>();
         }
+
         private void OnDisable() => _pauseHandler.Remove(this);
 
-        public void SetPause(bool isPaused) => _isPaused = isPaused;
+        public void SetPause(bool isPaused) => IsPaused = isPaused;
 
-        [Inject] private void Construct(GameObjectPool pool,PauseHandler pauseHandler)
-        {
-            _pool = pool;
-            _pauseHandler = pauseHandler;
-        }
+        [Inject] private void Construct(PauseHandler pauseHandler) => _pauseHandler = pauseHandler;
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5536911251436235016}
   - component: {fileID: 4386794616624806350}
   - component: {fileID: 6156260207544001455}
-  - component: {fileID: 2925556104723824004}
+  - component: {fileID: -3703096615280708113}
   m_Layer: 9
   m_Name: BonusHeal
   m_TagString: Untagged
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotation: {x: 0, y: 100, z: 0}
---- !u!114 &2925556104723824004
+--- !u!114 &-3703096615280708113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,9 +146,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3827941960941356951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b35073223314abeaf7547b22dc70161, type: 3}
+  m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timer: 4
 --- !u!1 &6175494639978334197
 GameObject:
   m_ObjectHideFlags: 0

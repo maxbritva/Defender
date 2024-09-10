@@ -29,7 +29,6 @@ namespace DI
         [SerializeField] private LevelSystem _levelSystem;
         [SerializeField] private GameTimer _gameTimer;
         [SerializeField] private LevelsHandler _levelsHandler;
-        [SerializeField] private BonusSpawner _bonusSpawner;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private GameStartAnimation _gameStartAnimation;
         [SerializeField] private EndGameUI _endGameUI;
@@ -97,7 +96,7 @@ namespace DI
         private void Player()
         {
             Container.Bind<PlayerHealth>().FromInstance(_playerHealth);
-            Container.Bind<BonusSpawner>().FromInstance(_bonusSpawner).AsSingle().NonLazy();
+            Container.Bind<BonusSpawner>().FromNew().AsSingle().NonLazy();
             Container.Bind<Shield>().FromInstance(_shield).AsSingle().NonLazy();
             Container.Bind<Bomb>().FromInstance(_bomb).AsSingle().NonLazy();
         }

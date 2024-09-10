@@ -18,14 +18,8 @@ namespace Game.Enemy.Boss
         public virtual void Enter() => Debug.Log(GetType());
 
         public virtual void Exit() { }
-
-        public virtual void Update()
-        {
-           // _boss.transform.LookAt(Vector3.zero, Vector3.forward * -1);
-        }
-
+        
         protected void BossAim() => _boss.transform.LookAt(Vector3.zero, Vector3.forward * -1);
-
-        public virtual void OnEnable() { }
+        
     }
 }

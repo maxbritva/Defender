@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Game.Enemy.Boss
         private BossSpawner _bossSpawner;
         private PauseHandler _pauseHandler;
         private Coroutine _minionCoroutine;
+        private CancellationTokenSource _cts;
         private const float Speed = 4f;
         private bool _isPaused;
         
@@ -23,22 +25,29 @@ namespace Game.Enemy.Boss
         {
             _pauseHandler.Remove(this);
             _bossSpawner.RemoveMinionFromList(gameObject);
-            if(_minionCoroutine != null)
-                StopCoroutine(Attack());
+            _cts.Cancel();
         }
-        private void ActivateMinion() {
+        private async void ActivateMinion() 
+        {
             gameObject.transform.position = Random.insideUnitCircle.normalized * 24.0f;
             transform.LookAt(Vector3.zero, Vector3.forward * -1);
             gameObject.SetActive(true);
-            _minionCoroutine =  StartCoroutine(Attack());
+            _cts = new CancellationTokenSource();
+            await Attack().SuppressCancellationThrow();
         }
-        private IEnumerator Attack() 
+        
+        private async UniTask Attack()
         {
-            while (true) {
-                if(_isPaused == false)
+            
+            while (gameObject.activeInHierarchy)
+            {
+                if (_isPaused == false)
+                {
                     transform.position = Vector3.MoveTowards(transform.position,Vector3.zero, Speed * Time.deltaTime);
-                yield return null;
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
+            _cts.Cancel();
         }
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;

@@ -1,5 +1,4 @@
 using Game.Weapons.Bonus;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Bonus
@@ -8,7 +7,7 @@ namespace Game.Bonus
     {
         private Bomb _bomb;
        
-        protected override void ActivateBonus(GameObject playerProjectile) => _bomb.gameObject.SetActive(true);
+        protected override void ActivateBonus() => _bomb.gameObject.SetActive(true);
 
         [Inject] private void Construct(Bomb bomb) => _bomb = bomb;
     }

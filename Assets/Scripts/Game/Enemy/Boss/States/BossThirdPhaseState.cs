@@ -1,4 +1,6 @@
-﻿using Game.StateMachine;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Game.StateMachine;
 using Game.Weapons;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ namespace Game.Enemy.Boss.States
         private BossBigProjectile _bigProjectile;
         private float _currentTime;
         private const float PhaseTimer = 1.5f; 
+        private CancellationTokenSource _cts;
         
         public BossThirdPhaseState(IStateSwitcher stateSwitcher, Boss boss, BossBigGun bossBigGun, BossBigProjectile bossBigProjectile) : base(stateSwitcher, boss)
         {
@@ -17,21 +20,30 @@ namespace Game.Enemy.Boss.States
             _bigProjectile = bossBigProjectile;
         }
         
-        public override void Enter()
+        public override async void Enter()
         {
             base.Enter();
-            _bossBigGun.Shot(_bigProjectile.gameObject);
+            _cts = new CancellationTokenSource();
+            await ShotState().SuppressCancellationThrow();
         }
-
-        public override void Update()
+        private async UniTask ShotState()
         {
-            base.Update();
-            _currentTime += Time.deltaTime;
-            if (_currentTime >= PhaseTimer)
+            BossAim();
+            _bossBigGun.Shot(_bigProjectile.gameObject);
+            while (_boss.gameObject.activeInHierarchy)
             {
-                StateSwitcher.SwitchState<BossFirstPhaseState>();
-                _currentTime = 0;
+                if (_boss.IsPaused == false)
+                {
+                    _currentTime += Time.deltaTime;
+                    if (_currentTime >= PhaseTimer)
+                    {
+                        StateSwitcher.SwitchState<BossFirstPhaseState>();
+                        _cts.Cancel();
+                    }
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
+            _cts.Cancel();
         }
     }
 }

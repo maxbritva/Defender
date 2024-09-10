@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Game.Enemy.Boss.States;
 using Game.FX;
 using Game.ObjectPool;
@@ -22,10 +21,9 @@ namespace Game.Enemy.Boss
         private BossShield _bossShield;
         private BossBigGun _bossBigGun;
         private BossBigProjectile _bigProjectile;
-        private CancellationTokenSource _cts; // hz
 
         public BossStateMachine(Boss boss, GameObjectPool pool, BossLevelStartFX bossLevelStartFX, BossSpawner bossSpawner, 
-            GunMultiply gunMultiply, BossBigGun bossBigGun, BossBigProjectile bigProjectile, BossShield bossShield, CancellationTokenSource cts)
+            GunMultiply gunMultiply, BossBigGun bossBigGun, BossBigProjectile bigProjectile, BossShield bossShield)
         {
             _bossLevelStartFX = bossLevelStartFX;
             _enemyProjectilePool = pool;
@@ -35,7 +33,6 @@ namespace Game.Enemy.Boss
             _bossShield = bossShield;
             _bossBigGun = bossBigGun;
             _bigProjectile = bigProjectile;
-            _cts = cts;
             _states = new List<IState>()
             {
                 new BossPrepareState(this, _boss, _bossLevelStartFX, _bossShield),
@@ -54,14 +51,5 @@ namespace Game.Enemy.Boss
             _currentState = state;
             _currentState.Enter();
         }
-
-        public void Update() => _currentState.Update();
-
-        public void OnEnable()
-        {
-            _currentState = _states[0];
-            _currentState.OnEnable();
-        }
-
     }
 }

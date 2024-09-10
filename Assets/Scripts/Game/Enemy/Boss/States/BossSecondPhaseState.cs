@@ -2,7 +2,6 @@
 using Cysharp.Threading.Tasks;
 using Game.StateMachine;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Game.Enemy.Boss.States
 {
@@ -21,14 +20,14 @@ namespace Game.Enemy.Boss.States
             _bossSpawner = bossSpawner;
         }
         
-        public async override void Enter()
+        public override async void Enter()
         {
             base.Enter();
             _cts = new CancellationTokenSource();
             _bossShield.SetShield(true);
             _bossSpawner.StartSpawnMinions();
             _currentTime = 0;
-            await SaveState();
+            await SaveState().SuppressCancellationThrow();;
         }
 
         public override void Exit()
@@ -50,22 +49,13 @@ namespace Game.Enemy.Boss.States
                     {
                         StateSwitcher.SwitchState<BossThirdPhaseState>();
                         _cts.Cancel();
+                        _bossSpawner.StopSpawnMinions();
                     }
                 }
                 await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
             _cts.Cancel();
-        }
-
-        public override void Update()
-        {
-            // base.Update();
-            // _currentTime += Time.deltaTime;
-            // if (_currentTime >= PhaseTimer)
-            // {
-            //     StateSwitcher.SwitchState<BossThirdPhaseState>();
-            //     _currentTime = 0;
-            // }
+            _bossSpawner.StopSpawnMinions();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Health;
-using Game.ObjectPool;
 using Game.StateMachine;
 using Game.StateMachine.States;
 using Game.Weapons;
@@ -13,13 +12,13 @@ namespace Game.Enemy.Ship.States
         private List<IState> _states;
         private IState _currentState;
 
-        public ShipStateMachine(Ship ship, GameObjectPool pool, EnemyHealth health, ShipGun shipGun)
+        public ShipStateMachine(Ship ship, EnemyHealth health, ShipGun shipGun)
         {
             ShipData data = new ShipData();
             _states = new List<IState>()
             {
                 new ShipFollowState(this, data, ship),
-                new ShipAttackState(this, data, ship, pool, shipGun, health),
+                new ShipAttackState(this, data, ship, shipGun, health),
                 new ShipKamikazeState(this, data, ship)
                 
             };
@@ -34,13 +33,6 @@ namespace Game.Enemy.Ship.States
             _currentState = state;
             _currentState.Enter();
         }
-
-        public void Update() => _currentState.Update();
-
-        public void OnEnable()
-        {
-            _currentState = _states[0];
-            _currentState.OnEnable();
-        }
+        
     }
 }

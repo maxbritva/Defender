@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 5516885889875275420}
   - component: {fileID: 643891470741096598}
   - component: {fileID: -4128876875402348815}
-  - component: {fileID: 1167217129240796375}
+  - component: {fileID: -347128510492042978}
   m_Layer: 9
   m_Name: BonusBomb
   m_TagString: Untagged
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotation: {x: 0, y: 100, z: 0}
---- !u!114 &1167217129240796375
+--- !u!114 &-347128510492042978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6493078070771719878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b35073223314abeaf7547b22dc70161, type: 3}
+  m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints: []
+  _timer: 4

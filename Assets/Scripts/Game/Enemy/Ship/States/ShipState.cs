@@ -17,12 +17,8 @@ namespace Game.Enemy.Ship.States
             _ship = ship;
         }
         public virtual void Enter() => Debug.Log(GetType());
-
         public virtual void Exit() { }
-        
-        public virtual void OnEnable() => _ship.transform.position = Random.insideUnitCircle.normalized * 39f;
-
-        public virtual void Update() => _ship.transform.LookAt(Vector3.zero, Vector3.forward * -1);
+        protected void ShipAim() => _ship.transform.LookAt(Vector3.zero, Vector3.forward * -1);
 
         protected void MoveShip(Vector3 target, float speed) => 
             _ship.transform.position = Vector3.MoveTowards(_ship.transform.position, target, speed * Time.deltaTime);

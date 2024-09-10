@@ -11,7 +11,10 @@ namespace Game.Weapons
 	    
 	    public void Shot(GameObjectPool projectilePool)
 		{
-			for (int i = 0; i < _shootPoints.Count; i++) {
+			for (int i = 0; i < _shootPoints.Count; i++) 
+			
+			{
+				Debug.Log("boss shoot");
 				GameObject bulletFromPool = projectilePool.GetFromPool(_prefabProjectile);
 				bulletFromPool.transform.position = _shootPoints[i].position;
 				bulletFromPool.transform.rotation = _shootPoints[i].rotation;

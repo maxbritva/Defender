@@ -1,4 +1,4 @@
-﻿using System.Threading;
+﻿using Game.Enemy.Boss.States;
 using Game.FX;
 using Game.GameCore.Pause;
 using Game.Interfaces;
@@ -21,11 +21,13 @@ namespace Game.Enemy.Boss
         private BossShield _bossShield;
         private BossBigGun _bossBigGun;
         private Boss _boss;
-        public CancellationTokenSource CTS { get; private set; }
         public bool IsPaused { get; private set; }
         
-
-        private void OnEnable() => _pauseHandler.Add(this);
+        private void OnEnable()
+        {
+            _pauseHandler.Add(this);
+            _bossStateMachine.SwitchState<BossPrepareState>();
+        }
 
         private void OnDisable() => _pauseHandler.Remove(this);
 
@@ -34,16 +36,9 @@ namespace Game.Enemy.Boss
             _gunMultiply = GetComponent<GunMultiply>();
             _bossBigGun = GetComponent<BossBigGun>();
             _bossShield = GetComponent<BossShield>();
-            CTS = new CancellationTokenSource();
             _bossStateMachine = new BossStateMachine(this, _enemyProjectilePool, _bossLevelStartFX, 
-                _bossSpawner, _gunMultiply, _bossBigGun, _bigProjectile, _bossShield, CTS);
+                _bossSpawner, _gunMultiply, _bossBigGun, _bigProjectile, _bossShield);
             
-        }
-        private void Update()
-        {
-            if(IsPaused)
-                return;
-            _bossStateMachine.Update();
         }
 
         public void SetPause(bool isPaused) => IsPaused = isPaused;

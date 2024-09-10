@@ -8,10 +8,10 @@ namespace Game.Bonus
     {
         private void OnTriggerEnter(Collider other) {
             if (other.TryGetComponent(out PlayerProjectile playerProjectile) == false) return;
-            ActivateBonus(playerProjectile.gameObject);
+            ActivateBonus();
             gameObject.SetActive(false);
         }
-        protected virtual void ActivateBonus(GameObject playerProjectile) { }
+        protected virtual void ActivateBonus() { }
         
     }
 }

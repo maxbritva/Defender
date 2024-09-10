@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Enemy.Boss
 {
@@ -8,10 +7,7 @@ namespace Game.Enemy.Boss
         [SerializeField] private SphereCollider _bossShieldCollider;
         [SerializeField] private GameObject _particleSystemGameObject;
 
-        public void SetCollider(bool enable)
-        {
-            _bossShieldCollider.enabled = enable;
-        }
+        public void SetCollider(bool enable) => _bossShieldCollider.enabled = enable;
 
         public void SetShield(bool enable)
         {

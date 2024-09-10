@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.GameCore.Pause;
 using Game.Health;
 using Game.Interfaces;
@@ -16,23 +17,27 @@ namespace Game.Enemy
         private GameObjectPool _gameObjectPool;
         private List<GameObject> _enemyList = new List<GameObject>();
         private PauseHandler _pauseHandler;
-        private Coroutine _spawnCoroutine;
+        private CancellationTokenSource _cts;
         private bool _isPaused;
         private bool _isActive;
         private float _time;
 
         private void OnEnable() => _pauseHandler.Add(this);
 
-        private void OnDisable() => _pauseHandler.Remove(this);
-
-      
-        public void Activate() => _spawnCoroutine = StartCoroutine(Spawn());
-
-        public void Deactivate()
+        private void OnDisable()
         {
-            if(_spawnCoroutine != null)
-                StopCoroutine(_spawnCoroutine);
+            _pauseHandler.Remove(this);
+            _cts?.Cancel();
         }
+
+
+        public async void Activate()
+        {
+            _cts = new CancellationTokenSource();
+            await Spawn().SuppressCancellationThrow();
+        }
+
+        public void Deactivate() => _cts?.Cancel();
 
         public void ChangeSpawnInterval(float value) => _spawnInterval = value;
         public void SetPause(bool isPaused) => _isPaused = isPaused;
@@ -48,26 +53,24 @@ namespace Game.Enemy
             _enemyList.Clear();
         }
 
-        private IEnumerator Spawn()
+        private async UniTask Spawn()
         {
             _time = 0;
             while (true)
             {
-                while (_time < _spawnInterval)
-                {
-                    if (_isPaused == false) 
+                if (_isPaused == false) 
                         _time += Time.deltaTime;
-                    yield return null;
+                if(_time >= _spawnInterval)
+                {
+                    var enemy = _gameObjectPool.GetFromPool(_prefab);
+                    _enemyList.Add(enemy);
+                    _time = 0;
                 }
-
-                var enemy = _gameObjectPool.GetFromPool(_prefab);
-                _enemyList.Add(enemy);
-                _time = 0;
-                yield return null;
-            }
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
+            } 
         }
-        
-      [Inject]  private void Construct(PauseHandler pauseHandler, GameObjectPool gameObjectPool)
+
+        [Inject]  private void Construct(PauseHandler pauseHandler, GameObjectPool gameObjectPool)
       {
           _gameObjectPool = gameObjectPool;
           _pauseHandler = pauseHandler;

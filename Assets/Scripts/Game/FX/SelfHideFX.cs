@@ -27,10 +27,13 @@ namespace Game.FX
             _pauseHandler.Add(this);
         }
 
-        private void OnDisable() => _pauseHandler.Remove(this);
-        public void SetPause(bool isPaused) => _isPaused = isPaused;
+        private void OnDisable()
+        {
+            _pauseHandler.Remove(this);
+            _cancellationToken?.Cancel();
+        }
 
-        private void OnDestroy() => _cancellationToken.Cancel();
+        public void SetPause(bool isPaused) => _isPaused = isPaused;
 
         private async UniTask TimerToHide()
         {
@@ -42,7 +45,7 @@ namespace Game.FX
                 await UniTask.Yield(PlayerLoopTiming.Update, _cancellationToken.Token);
             }
             gameObject.SetActive(false);
-            _cancellationToken.Cancel();
+            _cancellationToken?.Cancel();
         }
         [Inject] private void Construct(PauseHandler pauseHandler) => _pauseHandler = pauseHandler;
     }

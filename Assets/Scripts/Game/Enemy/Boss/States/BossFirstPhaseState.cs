@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.ObjectPool;
 using Game.StateMachine;
@@ -26,7 +25,7 @@ namespace Game.Enemy.Boss.States
             _enemyProjectilePool = pool;
         }
 
-        public async override void Enter()
+        public override async void Enter()
         {
             base.Enter();
             _cts = new CancellationTokenSource();
@@ -47,6 +46,7 @@ namespace Game.Enemy.Boss.States
                     {
                         _boss.transform.position = _bossSpawner.SpawnPoints[Random.Range(0, _bossSpawner.SpawnPoints.Count)].position;
                         BossAim();
+                        Debug.Log("Shot");
                         _gunMultiply.Shot(_enemyProjectilePool);
                         _currentTime = 0;
                         _attackCounter++;
@@ -56,24 +56,6 @@ namespace Game.Enemy.Boss.States
             }
             _cts.Cancel();
             StateSwitcher.SwitchState<BossSecondPhaseState>();
-        }
-
-        public override void Update()
-        {
-            // base.Update();
-            // if(_attackCounter < 3)
-            // {
-            //     _currentTime += Time.deltaTime;
-            //     if (_currentTime >= 5f)
-            //     {
-            //         _boss.transform.position = _bossSpawner.SpawnPoints[Random.Range(0, _bossSpawner.SpawnPoints.Count)].position;
-            //         _gunMultiply.Shot(_enemyProjectilePool);
-            //         _currentTime = 0;
-            //         _attackCounter++;
-            //     }
-            // }
-            // else
-            //     StateSwitcher.SwitchState<BossSecondPhaseState>();
         }
     }
 }

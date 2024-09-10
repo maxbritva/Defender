@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Game.GameCore.GameStates;
 using Game.GameCore.Pause;
 using Game.Health;
@@ -13,7 +14,6 @@ namespace Game.Enemy.Boss
     public class BossSpawner : MonoBehaviour, IPause, IActivatable
     {
         [SerializeField] private List<Transform> _spawnPoints;
-        [SerializeField] private GameObject _bossPrefab;
         [SerializeField] private GameObject _minionsPrefab;
         private GameObjectPool _minionPool;
         private List<GameObject> _minions = new List<GameObject>();
@@ -23,6 +23,7 @@ namespace Game.Enemy.Boss
         private GameManager _gameManager;
         private bool _isPaused;
         private float _time;
+        private CancellationTokenSource _cts;
         
         private void OnEnable() => _pauseHandler.Add(this);
 
@@ -32,13 +33,9 @@ namespace Game.Enemy.Boss
 
         public void ChangeBossHealth(int value) => _boss.GetComponent<BossEnemyHealth>().SetMaxHealth(value);
 
-        public void StartSpawnMinions() => _minionsCoroutine = StartCoroutine(SpawnMinions());
+        public async void StartSpawnMinions() => await SpawnMinion().SuppressCancellationThrow();
 
-        public void StopSpawnMinions()
-        {
-            if(_minionsCoroutine != null )
-                StopCoroutine(_minionsCoroutine);
-        }
+        public void StopSpawnMinions() => _cts?.Cancel();
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
@@ -47,9 +44,15 @@ namespace Game.Enemy.Boss
             _gameManager.OnBossLevelStarted?.Invoke();
             _boss.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].position;
             _boss.gameObject.SetActive(true);
+            Debug.Log("spawner activated");
         }
 
-        public void Deactivate() => HideAllMinions();
+        public void Deactivate()
+        {
+            StopSpawnMinions();
+            HideAllMinions();
+            Debug.Log("spawner deactivated");
+        }
 
         public void RemoveMinionFromList(GameObject targetMinion) => _minions.Remove(targetMinion);
 
@@ -63,25 +66,27 @@ namespace Game.Enemy.Boss
             }
             _minions.Clear();
         }
-        
-        private IEnumerator SpawnMinions()
+
+        private async UniTask SpawnMinion()
         {
+            _cts = new CancellationTokenSource();
             _time = 0;
-            while (true)
+            while (_cts.IsCancellationRequested == false)
             {
-                while (_time < 1f)
-                {
-                    if (_isPaused == false) 
+                if (_isPaused == false) 
                         _time += Time.deltaTime;
-                    yield return null;
+                if (_time > 1f)
+                {
+                    var minion = _minionPool.GetFromPool(_minionsPrefab);
+                    _minions.Add(minion);
+                    minion.transform.SetParent(transform);
+                    _time = 0; 
                 }
-                var minion = _minionPool.GetFromPool(_minionsPrefab);
-                _minions.Add(minion);
-                minion.transform.SetParent(transform);
-                _time = 0;
-                yield return null;
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
+            _cts?.Cancel();
         }
+       
         [Inject] private void Construct(PauseHandler pauseHandler, GameManager gameManager, Boss boss, GameObjectPool gameObjectPool)
         {
             _minionPool = gameObjectPool;

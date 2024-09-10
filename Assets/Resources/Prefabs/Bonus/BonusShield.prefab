@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 437958468338943695}
   - component: {fileID: 813044195849517508}
   - component: {fileID: -9086521826081040240}
+  - component: {fileID: -5085765985147547360}
   m_Layer: 9
   m_Name: BonusShield
   m_TagString: Untagged
@@ -235,3 +236,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b35073223314abeaf7547b22dc70161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5085765985147547360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660851326076843620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timer: 4

@@ -1,4 +1,6 @@
-﻿using Game.FX;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Game.FX;
 using Game.StateMachine;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ namespace Game.Enemy.Boss.States
         private float _currentTime;
         private BossLevelStartFX _bossLevelStartFX;
         private BossShield _bossShield;
+        private CancellationTokenSource _cts;
 
 
         public BossPrepareState(IStateSwitcher stateSwitcher, Boss boss, BossLevelStartFX bossLevelStartFX, BossShield bossShield) : base(stateSwitcher, boss)
@@ -18,12 +21,14 @@ namespace Game.Enemy.Boss.States
             _bossShield = bossShield;
         }
 
-        public override void Enter()
+        public override async void Enter()
         {
             base.Enter();
+            _cts = new CancellationTokenSource();
             _bossLevelStartFX.StartBossLevelFX(_boss.transform);
             _currentTime = 0f;
             _bossShield.SetCollider(true);
+            await PrepareState().SuppressCancellationThrow();
         }
 
         public override void Exit()
@@ -32,13 +37,24 @@ namespace Game.Enemy.Boss.States
             _bossLevelStartFX.EndBossLevelFX();
             _bossShield.SetCollider(false);
         }
-
-        public override void Update()
+        
+        private async UniTask PrepareState()
         {
-            base.Update();
-            _currentTime += Time.deltaTime;
-            if(_currentTime >= PrepareWaitTimer)
-                StateSwitcher.SwitchState<BossFirstPhaseState>();
+            BossAim();
+            while (_boss.gameObject.activeInHierarchy)
+            {
+                if (_boss.IsPaused == false)
+                {
+                    _currentTime += Time.deltaTime;
+                    if (_currentTime >= PrepareWaitTimer)
+                    {
+                        StateSwitcher.SwitchState<BossFirstPhaseState>();
+                        _cts.Cancel();
+                    }
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
+            }
+            _cts.Cancel();
         }
     }
 }

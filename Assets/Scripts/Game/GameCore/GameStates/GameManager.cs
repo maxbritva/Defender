@@ -1,6 +1,7 @@
 ﻿using System;
 using Audio;
 using Game.Bonus;
+using Game.Enemy.Boss;
 using Game.GameCore.GameProgression;
 using Game.GameCore.Pause;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Game.GameCore.GameStates
         private LevelSystem _levelSystem;
         private BonusSpawner _bonusSpawner;
         private AudioManager _audioManager;
+        private BossSpawner _bossSpawner;
         private void Start() => _pauseHandler.SetPause(true);
 
         private void OnEnable()
@@ -56,6 +58,8 @@ namespace Game.GameCore.GameStates
         
         private void BossLevelEnd()
         {
+            _bossSpawner.Deactivate();
+            _bossSpawner.StopSpawnMinions();
             _gameTimer.Activate();
             _bonusSpawner.Activate();
             _gameTimer.LevelUp();
@@ -69,13 +73,15 @@ namespace Game.GameCore.GameStates
             _pauseHandler.SetPause(true);
         }
         
-        [Inject] private void Construct(PauseHandler pauseHandler, GameTimer gameTimer, LevelSystem levelSystem, BonusSpawner bonusSpawner, AudioManager audioManager)
+        [Inject] private void Construct(PauseHandler pauseHandler, GameTimer gameTimer, LevelSystem levelSystem, BonusSpawner bonusSpawner, 
+            AudioManager audioManager, BossSpawner bossSpawner)
         {
             _audioManager = audioManager;
             _bonusSpawner = bonusSpawner;
             _levelSystem = levelSystem;
             _gameTimer = gameTimer;
             _pauseHandler = pauseHandler;
+            _bossSpawner = bossSpawner;
         }
     }
 }
