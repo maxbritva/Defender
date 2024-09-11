@@ -336,4 +336,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _speed: 7
-  _timerToHide: 0
+  _timerToHide: 5

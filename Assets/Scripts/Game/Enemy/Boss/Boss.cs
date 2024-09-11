@@ -19,8 +19,9 @@ namespace Game.Enemy.Boss
         private GunMultiply _gunMultiply;
         private PauseHandler _pauseHandler;
         private BossShield _bossShield;
-        private BossBigGun _bossBigGun;
+        private GunSingle _bossBigGun;
         private Boss _boss;
+
         public bool IsPaused { get; private set; }
         
         private void OnEnable()
@@ -29,16 +30,19 @@ namespace Game.Enemy.Boss
             _bossStateMachine.SwitchState<BossPrepareState>();
         }
 
-        private void OnDisable() => _pauseHandler.Remove(this);
+        private void OnDisable()
+        {
+            _pauseHandler.Remove(this);
+            _bossStateMachine.ExitCurrentState();
+        }
 
         private void Awake()
         {
             _gunMultiply = GetComponent<GunMultiply>();
-            _bossBigGun = GetComponent<BossBigGun>();
+            _bossBigGun = GetComponent<GunSingle>();
             _bossShield = GetComponent<BossShield>();
             _bossStateMachine = new BossStateMachine(this, _enemyProjectilePool, _bossLevelStartFX, 
                 _bossSpawner, _gunMultiply, _bossBigGun, _bigProjectile, _bossShield);
-            
         }
 
         public void SetPause(bool isPaused) => IsPaused = isPaused;

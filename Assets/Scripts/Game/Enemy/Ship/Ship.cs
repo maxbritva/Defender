@@ -15,7 +15,7 @@ namespace Game.Enemy.Ship
         private ShipStateMachine _shipStateMachine;
         private PauseHandler _pauseHandler;
         private EnemyHealth _enemyHealth;
-        private ShipGun _shipGun;
+        private GunSingle _gunSingle;
         public bool IsPaused { get; private set; }
         
         public List<Transform> Waypoints => _waypoints;
@@ -23,8 +23,8 @@ namespace Game.Enemy.Ship
         private void Awake()
         {
             _enemyHealth = GetComponent<EnemyHealth>();
-            _shipGun = GetComponent<ShipGun>();
-            _shipStateMachine = new ShipStateMachine(this, _enemyHealth, _shipGun);
+            _gunSingle = GetComponent<GunSingle>();
+            _shipStateMachine = new ShipStateMachine(this, _enemyHealth, _gunSingle);
         }
 
         private void OnEnable()
@@ -34,7 +34,11 @@ namespace Game.Enemy.Ship
             _shipStateMachine.SwitchState<ShipFollowState>();
         }
 
-        private void OnDisable() => _pauseHandler.Remove(this);
+        private void OnDisable()
+        {
+            _shipStateMachine.ExitCurrentState();
+            _pauseHandler.Remove(this);
+        }
 
         public void SetPause(bool isPaused) => IsPaused = isPaused;
 

@@ -238,8 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 3
-  _speed: 12
-  _timerToHide: 4
+  _speed: 11
+  _timerToHide: 3
 --- !u!82 &267156114112419374
 AudioSource:
   m_ObjectHideFlags: 0

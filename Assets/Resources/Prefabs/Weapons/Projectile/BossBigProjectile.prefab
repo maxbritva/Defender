@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _speed: 5
-  _timerToHide: 0
+  _timerToHide: 6
 --- !u!114 &-3760088225571409979
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,11 +19,10 @@ namespace Game.Enemy.Boss
         private GunMultiply _gunMultiply;
         private Boss _boss;
         private BossShield _bossShield;
-        private BossBigGun _bossBigGun;
-        private BossBigProjectile _bigProjectile;
+        private GunSingle _bossGunSingle;
 
         public BossStateMachine(Boss boss, GameObjectPool pool, BossLevelStartFX bossLevelStartFX, BossSpawner bossSpawner, 
-            GunMultiply gunMultiply, BossBigGun bossBigGun, BossBigProjectile bigProjectile, BossShield bossShield)
+            GunMultiply gunMultiply, GunSingle bossBigGun, BossBigProjectile bigProjectile, BossShield bossShield)
         {
             _bossLevelStartFX = bossLevelStartFX;
             _enemyProjectilePool = pool;
@@ -31,18 +30,19 @@ namespace Game.Enemy.Boss
             _gunMultiply = gunMultiply;
             _boss = boss;
             _bossShield = bossShield;
-            _bossBigGun = bossBigGun;
-            _bigProjectile = bigProjectile;
+            _bossGunSingle = bossBigGun;
             _states = new List<IState>()
             {
                 new BossPrepareState(this, _boss, _bossLevelStartFX, _bossShield),
                 new BossFirstPhaseState(this, _boss, _bossSpawner, _gunMultiply,_enemyProjectilePool),
                 new BossSecondPhaseState(this,_boss, _bossSpawner, _bossShield),
-                new BossThirdPhaseState(this,_boss, _bossBigGun, _bigProjectile)
+                new BossThirdPhaseState(this,_boss, _bossGunSingle)
             };
             _currentState = _states[0];
             _currentState.Enter();
         }
+        
+        public void ExitCurrentState() => _currentState.Exit();
 
         public void SwitchState<T>() where T : IState
         {

@@ -2558,7 +2558,7 @@ MonoBehaviour:
   _bossLevelStartFX: {fileID: 165186794}
   _boss: {fileID: 342054178}
   _bossSpawner: {fileID: 1584075596}
-  _bossBigProjectile: {fileID: 785112376}
+  _bossBigProjectile: {fileID: 0}
   _platformFreezeFX: {fileID: 165186795}
 --- !u!114 &659941654
 MonoBehaviour:
@@ -2773,78 +2773,6 @@ Transform:
   - {fileID: 280794603}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &785112375
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 16.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1353998485344191674, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7980782171304061121, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_Name
-      value: BossBigProjectile
-      objectReference: {fileID: 0}
-    - target: {fileID: 7980782171304061121, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
---- !u!114 &785112376 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 69567750757577143, guid: eb6e5867ddf0ce64ca574a3d890210ac, type: 3}
-  m_PrefabInstance: {fileID: 785112375}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b97df283b44fc68c5ddbf1027aa126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &806389044
 GameObject:
   m_ObjectHideFlags: 0
@@ -5148,9 +5076,9 @@ MonoBehaviour:
   - _spawnIntervalAsteroids: 3
     _spawnIntervalShips: 15
     _setBossHealth: 100
-    _asteroidIsActive: 0
-    _shipIsActive: 0
-    _bossIsActive: 1
+    _asteroidIsActive: 1
+    _shipIsActive: 1
+    _bossIsActive: 0
   - _spawnIntervalAsteroids: 2.5
     _spawnIntervalShips: 15
     _setBossHealth: 0
@@ -5160,9 +5088,9 @@ MonoBehaviour:
   - _spawnIntervalAsteroids: 2.5
     _spawnIntervalShips: 10
     _setBossHealth: 100
-    _asteroidIsActive: 0
-    _shipIsActive: 0
-    _bossIsActive: 1
+    _asteroidIsActive: 1
+    _shipIsActive: 1
+    _bossIsActive: 0
   - _spawnIntervalAsteroids: 1.5
     _spawnIntervalShips: 10
     _setBossHealth: 0
@@ -5232,7 +5160,7 @@ MonoBehaviour:
   - _spawnIntervalAsteroids: 0.2
     _spawnIntervalShips: 10
     _setBossHealth: 250
-    _asteroidIsActive: 1
+    _asteroidIsActive: 0
     _shipIsActive: 0
     _bossIsActive: 1
   - _spawnIntervalAsteroids: 0.2
@@ -5270,7 +5198,7 @@ MonoBehaviour:
     _setBossHealth: 200
     _asteroidIsActive: 1
     _shipIsActive: 1
-    _bossIsActive: 0
+    _bossIsActive: 1
   _asteroidSpawner: {fileID: 1490795030}
   _shipSpawner: {fileID: 1855120777}
   _bossSpawner: {fileID: 1584075596}
@@ -8860,4 +8788,3 @@ SceneRoots:
   - {fileID: 1637536982}
   - {fileID: 719654122}
   - {fileID: 342054176}
-  - {fileID: 785112375}

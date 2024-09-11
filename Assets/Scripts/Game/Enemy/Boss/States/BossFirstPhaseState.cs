@@ -30,10 +30,13 @@ namespace Game.Enemy.Boss.States
         {
             base.Enter();
             _cts = new CancellationTokenSource();
+            
             _currentTime = 0;
             _attackCounter = 0;
-            await AttackState();
+            await AttackState().SuppressCancellationThrow();
         }
+
+        public override void Exit() => _cts.Cancel();
 
         private async UniTask AttackState()
         {

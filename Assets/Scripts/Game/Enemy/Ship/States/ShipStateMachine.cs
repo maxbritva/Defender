@@ -12,19 +12,21 @@ namespace Game.Enemy.Ship.States
         private List<IState> _states;
         private IState _currentState;
 
-        public ShipStateMachine(Ship ship, EnemyHealth health, ShipGun shipGun)
+        public ShipStateMachine(Ship ship, EnemyHealth health, GunSingle gunSingle)
         {
             ShipData data = new ShipData();
             _states = new List<IState>()
             {
                 new ShipFollowState(this, data, ship),
-                new ShipAttackState(this, data, ship, shipGun, health),
+                new ShipAttackState(this, data, ship, gunSingle, health),
                 new ShipKamikazeState(this, data, ship)
                 
             };
             _currentState = _states[0];
             _currentState.Enter();
         }
+        
+        public void ExitCurrentState() => _currentState.Exit();
 
         public void SwitchState<T>() where T : IState
         {

@@ -31,12 +31,16 @@ namespace Game.Bonus
 
         public async void Activate()
         {
-            InitializeBonuses();
             _cts = new CancellationTokenSource();
             await Spawn().SuppressCancellationThrow();
         }
 
-        public void Initialize() => _pauseHandler.Add(this);
+        public void Initialize()
+        {
+            _pauseHandler.Add(this);
+            InitializeBonuses();
+        }
+
         public void Dispose()
         {
             _cts?.Dispose();

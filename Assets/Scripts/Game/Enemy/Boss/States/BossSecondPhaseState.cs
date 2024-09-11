@@ -1,11 +1,12 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.StateMachine;
 using UnityEngine;
 
 namespace Game.Enemy.Boss.States
 {
-    public class BossSecondPhaseState: BossState
+    public class BossSecondPhaseState: BossState, IDisposable
     {
         private BossSpawner _bossSpawner;
         private BossShield _bossShield;
@@ -27,16 +28,17 @@ namespace Game.Enemy.Boss.States
             _bossShield.SetShield(true);
             _bossSpawner.StartSpawnMinions();
             _currentTime = 0;
-            await SaveState().SuppressCancellationThrow();;
+            await SaveState().SuppressCancellationThrow();
         }
 
         public override void Exit()
         {
             base.Exit();
+            _cts.Cancel();
             _bossShield.SetShield(false);
             _bossSpawner.StopSpawnMinions();
         }
-        
+
         private async UniTask SaveState()
         {
             BossAim();
@@ -57,5 +59,7 @@ namespace Game.Enemy.Boss.States
             _cts.Cancel();
             _bossSpawner.StopSpawnMinions();
         }
+
+        public void Dispose() => _cts?.Dispose();
     }
 }

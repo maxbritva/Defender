@@ -44,14 +44,12 @@ namespace Game.Enemy.Boss
             _gameManager.OnBossLevelStarted?.Invoke();
             _boss.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Count)].position;
             _boss.gameObject.SetActive(true);
-            Debug.Log("spawner activated");
         }
 
         public void Deactivate()
         {
             StopSpawnMinions();
             HideAllMinions();
-            Debug.Log("spawner deactivated");
         }
 
         public void RemoveMinionFromList(GameObject targetMinion) => _minions.Remove(targetMinion);

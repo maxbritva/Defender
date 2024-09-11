@@ -2,7 +2,6 @@
 using Player;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Game.Weapons
 {

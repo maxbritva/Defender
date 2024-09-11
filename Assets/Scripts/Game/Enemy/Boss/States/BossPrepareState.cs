@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.FX;
 using Game.StateMachine;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Enemy.Boss.States
 {
-    public class BossPrepareState : BossState
+    public class BossPrepareState : BossState, IDisposable
     {
         private const float PrepareWaitTimer = 2f;
         private float _currentTime;
@@ -36,6 +37,7 @@ namespace Game.Enemy.Boss.States
             base.Exit();
             _bossLevelStartFX.EndBossLevelFX();
             _bossShield.SetCollider(false);
+            _cts.Cancel();
         }
         
         private async UniTask PrepareState()
@@ -56,5 +58,7 @@ namespace Game.Enemy.Boss.States
             }
             _cts.Cancel();
         }
+
+        public void Dispose() => _cts?.Dispose();
     }
 }
