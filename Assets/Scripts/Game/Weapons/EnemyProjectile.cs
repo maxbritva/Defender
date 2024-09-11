@@ -15,6 +15,7 @@ namespace Game.Weapons
                 damageable.TakeDamage(_damage);
                 _playerHealth.OnPlayerHit?.Invoke();
             }
+            _CTS.Cancel();
             gameObject.SetActive(false);
         }
 

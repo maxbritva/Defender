@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 3
   _speed: 12
-  _selfDestroyTimer: 4
+  _timerToHide: 4
 --- !u!82 &267156114112419374
 AudioSource:
   m_ObjectHideFlags: 0
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980782171304061121}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
   m_Name: 

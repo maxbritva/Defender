@@ -1,6 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Game.FX;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using UnityEngine;
@@ -8,42 +8,55 @@ using Zenject;
 
 namespace Game.Weapons
 {
-    [RequireComponent(typeof(Rigidbody))]
     public abstract class Projectile : MonoBehaviour, IPause
     {
         [SerializeField] protected int _damage;
         [SerializeField] [Min(0)] private float _speed;
+        [SerializeField] private float _timerToHide;
         private PauseHandler _pauseHandler;
-        private CancellationTokenSource _cancellationToken;
+        protected CancellationTokenSource _CTS;
         private bool _isPaused;
 
         private async void OnEnable()
         {
-            _cancellationToken = new CancellationTokenSource();
+            _CTS = new CancellationTokenSource();
             _pauseHandler.Add(this);
-            try
-            {
-                await Move();
-            }
-            catch (OperationCanceledException) { }
+            await Move().SuppressCancellationThrow();
         }
         private void OnDisable()
         {
             _pauseHandler.Remove(this);
-            _cancellationToken.Cancel();
         }
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
         
         private async UniTask Move()
         {
-            while (_cancellationToken.IsCancellationRequested == false)
+            float currentTime = 0;
+            while (currentTime < _timerToHide)
             {
                 if (_isPaused == false)
+                {
+                    currentTime += Time.deltaTime;
                     transform.position += transform.forward * (_speed * Time.deltaTime);
-                await UniTask.Yield(PlayerLoopTiming.Update, _cancellationToken.Token);
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, _CTS.Token);
             }
-            //_cancellationToken.Cancel();
+            _CTS.Cancel();
+            gameObject.SetActive(false);
+        }
+        
+        private async UniTask TimerToHide()
+        {
+            float currentTime = 0;
+            while (currentTime < _timerToHide)
+            {
+                if(_isPaused == false)
+                    currentTime += Time.deltaTime;
+                await UniTask.Yield(PlayerLoopTiming.Update, _CTS.Token);
+            }
+            gameObject.SetActive(false);
+            _CTS.Cancel();
         }
 
         [Inject] private void Construct(PauseHandler pauseHandler) => 
