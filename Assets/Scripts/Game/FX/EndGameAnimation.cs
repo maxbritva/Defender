@@ -24,7 +24,7 @@ namespace Game.FX
         private float _soundFXTimerTick;
         private float _animateRate;
 
-        public async UniTask StartAnimation()
+        public async void StartAnimation()
         {
             _cancellationToken = new CancellationTokenSource();
             _durationAnimation = _endGameManager.BalanceToAdd < 10 ? 1f : 2.5f;

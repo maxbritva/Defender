@@ -31,6 +31,7 @@ namespace Game.Bonus
 
         public async void Activate()
         {
+            InitializeBonuses();
             _cts = new CancellationTokenSource();
             await Spawn().SuppressCancellationThrow();
         }
@@ -38,7 +39,7 @@ namespace Game.Bonus
         public void Initialize()
         {
             _pauseHandler.Add(this);
-            InitializeBonuses();
+          
         }
 
         public void Dispose()
@@ -58,6 +59,7 @@ namespace Game.Bonus
         
         private void InitializeBonuses()
         {
+            if (_bonuses.Count >= 3) return;
             for (int i = 0; i < _bonusPrefabs.Count; i++)
             {
                 var bonus = _diContainer.InstantiatePrefab(_bonusPrefabs[i]);

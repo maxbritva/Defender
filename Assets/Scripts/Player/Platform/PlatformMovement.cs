@@ -34,7 +34,7 @@ namespace Player.Platform
         public bool IsMoving() => _turn != 0;
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        public async UniTask StunPlatform() => await Stunning();
+        public async void StunPlatform() => await Stunning();
         
         private async UniTask Move()
         {
