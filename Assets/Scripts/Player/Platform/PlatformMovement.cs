@@ -8,10 +8,8 @@ using Zenject;
 
 namespace Player.Platform
 {
-    [RequireComponent(typeof(Rigidbody))]
-    public class PlatformMovement : MonoBehaviour, IMovable, IPause {
-    
-        [SerializeField] private Rigidbody _platformRigidbody;
+    public class PlatformMovement : MonoBehaviour, IPause 
+    {
         private InputHandler _inputHandler; 
         private PauseHandler _pauseHandler;
         private CancellationTokenSource _cts;
@@ -20,10 +18,11 @@ namespace Player.Platform
         private bool _isStunned;
         private float _turn;
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             _pauseHandler.Add(this);
             _cts = new CancellationTokenSource();
+            await Move().SuppressCancellationThrow();
         }
 
         private void OnDisable()
@@ -32,23 +31,21 @@ namespace Player.Platform
             _cts.Cancel();
         }
 
-        private void FixedUpdate()
-        {
-            if(_isStunned == false) 
-                Move(_inputHandler.Rotate());
-        }
-
-        public void Move(float value)
-        {
-            if (_isPaused) return;
-            _turn = value;
-            _platformRigidbody.AddTorque(Vector3.forward * (_turn * 3f * -1 * (90f * Time.deltaTime)), ForceMode.Impulse);
-        }
-
         public bool IsMoving() => _turn != 0;
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
         public async UniTask StunPlatform() => await Stunning();
+        
+        private async UniTask Move()
+        {
+            while (destroyCancellationToken.IsCancellationRequested == false)
+            {
+                _turn = _inputHandler.Rotate();
+                if (_isStunned == false && _isPaused == false)
+                    transform.Rotate(Vector3.forward * (_turn * 1.5f * -1 * (90f * Time.deltaTime)));
+                await UniTask.Yield(PlayerLoopTiming.Update, destroyCancellationToken);
+            }
+        }
 
         private async UniTask Stunning()
         {

@@ -1,4 +1,5 @@
-﻿using Game.GameCore.Pause;
+﻿using Cysharp.Threading.Tasks;
+using Game.GameCore.Pause;
 using Game.Interfaces;
 using Game.ObjectPool;
 using Game.Weapons;
@@ -21,22 +22,34 @@ namespace Player.Platform
 
         private void Start() => _fireRate = _upgradesHandler.GetCurrentUpgradeValue("ShootRate");
 
-        private void OnEnable() => _pauseHandler.Add(this);
+        private async void OnEnable()
+        {
+            _pauseHandler.Add(this);
+            _timeBetweenAttack = 0;  
+            await Shoot().SuppressCancellationThrow();
+        }
 
         private void OnDisable() => _pauseHandler.Remove(this);
-        private void Update() => Shot();
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
 
-        private void Shot() {
-            if(_isPaused) return;
-            _timeBetweenAttack += Time.deltaTime;
-            if (_timeBetweenAttack > _fireRate == false 
-                || _inputHandler.IsFire() == false) return;
-            _weapon.Shot(_gameObjectPool);
-            _timeBetweenAttack = 0;
+        private async UniTask Shoot()
+        {
+            while (destroyCancellationToken.IsCancellationRequested == false)
+            {
+                if (_isPaused == false)
+                {
+                    _timeBetweenAttack += Time.deltaTime;
+                    if (_timeBetweenAttack > _fireRate && _inputHandler.IsFire())
+                    {
+                        _weapon.Shot(_gameObjectPool);
+                        _timeBetweenAttack = 0;  
+                    }
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, destroyCancellationToken);
+            }
         }
-        
+
         [Inject] private void Construct(InputHandler inputHandler, GunMultiply weapon, PauseHandler pauseHandler, 
             UpgradesHandler upgradesHandler, GameObjectPool gameObjectPool) 
         {

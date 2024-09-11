@@ -16,14 +16,12 @@ namespace Game.Weapons
             {
                 damageable.TakeDamage(_damage);
                 _playerHealth.OnPlayerHit?.Invoke();
-                _CTS.Cancel();
                 gameObject.SetActive(false);
             }
             if (other.gameObject.TryGetComponent(out Platform platform))
             {
                 _platformMovement.StunPlatform();
                 _platformFreezeFX.ShowFreezeFX();
-                _CTS?.Cancel();
                 gameObject.SetActive(false);
             }
         }

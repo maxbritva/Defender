@@ -21,7 +21,6 @@ namespace Game.Weapons
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable)) 
                 damageable.TakeDamage(CalculateDamage());
-            _CTS.Cancel();
             gameObject.SetActive(false);
         }
 

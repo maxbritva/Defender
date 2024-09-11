@@ -100,7 +100,6 @@ GameObject:
   - component: {fileID: 5979530898236724905}
   - component: {fileID: 69567750757577143}
   - component: {fileID: -3760088225571409979}
-  - component: {fileID: 6529679300167858316}
   m_Layer: 8
   m_Name: BossBigProjectile
   m_TagString: Untagged
@@ -169,7 +168,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -284,6 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _speed: 5
+  _timerToHide: 0
 --- !u!114 &-3760088225571409979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,19 +299,6 @@ MonoBehaviour:
   _currentHealth: 0
   _maxHealth: 20
   _scoreForDestroy: 10
---- !u!114 &6529679300167858316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7980782171304061121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f40fd3aec14c62851ab0ad321d1698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timer: 8
 --- !u!1001 &958693115230219204
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.ObjectPool;
 using Game.StateMachine;
@@ -8,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.Enemy.Boss.States
 {
-    public class BossFirstPhaseState: BossState
+    public class BossFirstPhaseState: BossState, IDisposable
     {
         private GameObjectPool _enemyProjectilePool;
         private BossSpawner _bossSpawner;
@@ -57,5 +58,7 @@ namespace Game.Enemy.Boss.States
             _cts.Cancel();
             StateSwitcher.SwitchState<BossSecondPhaseState>();
         }
+
+        public void Dispose() => _cts?.Dispose();
     }
 }
