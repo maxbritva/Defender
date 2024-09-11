@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.FX;
 using Game.GameCore.Pause;
 using Game.Interfaces;
 using UnityEngine;
@@ -15,6 +14,7 @@ namespace Game.Weapons
         [SerializeField] private float _timerToHide;
         private PauseHandler _pauseHandler;
         protected CancellationTokenSource _CTS;
+        
         private bool _isPaused;
 
         private async void OnEnable()
@@ -23,10 +23,9 @@ namespace Game.Weapons
             _pauseHandler.Add(this);
             await Move().SuppressCancellationThrow();
         }
-        private void OnDisable()
-        {
-            _pauseHandler.Remove(this);
-        }
+        private void OnDisable() => _pauseHandler.Remove(this);
+
+        private void OnDestroy() => _CTS.Cancel();
 
         public void SetPause(bool isPaused) => _isPaused = isPaused;
         
@@ -44,19 +43,6 @@ namespace Game.Weapons
             }
             _CTS.Cancel();
             gameObject.SetActive(false);
-        }
-        
-        private async UniTask TimerToHide()
-        {
-            float currentTime = 0;
-            while (currentTime < _timerToHide)
-            {
-                if(_isPaused == false)
-                    currentTime += Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update, _CTS.Token);
-            }
-            gameObject.SetActive(false);
-            _CTS.Cancel();
         }
 
         [Inject] private void Construct(PauseHandler pauseHandler) => 
